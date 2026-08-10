@@ -177,7 +177,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             <div className="mt-8 flex flex-col items-center gap-3">
               <div className="flex flex-wrap justify-center gap-2">
                 <Link
-                  to="/group/invite/whatsapp/$code/join"
+                  to="/group/join/whatsapp/$code"
                   params={{ code }}
                   className="rounded-md bg-cta px-5 py-2.5 text-base text-cta-foreground transition-opacity hover:opacity-90"
                 >

@@ -27,6 +27,8 @@ import { Route as GroupCategorySlugRouteImport } from './routes/group.category.$
 import { Route as GroupCountrySlugRouteImport } from './routes/group.country.$slug'
 import { Route as GroupLanguageSlugRouteImport } from './routes/group.language.$slug'
 import { Route as GroupInviteWhatsappCodeRouteImport } from './routes/group.invite.whatsapp.$code'
+import { Route as GroupJoinWhatsappCodeRouteImport } from './routes/group.join.whatsapp.$code'
+import { Route as GroupRulesWhatsappCodeRouteImport } from './routes/group.rules.whatsapp.$code'
 import { Route as GroupInviteWhatsappCodeIndexRouteImport } from './routes/group.invite.whatsapp.$code.index'
 import { Route as GroupInviteWhatsappCodeJoinRouteImport } from './routes/group.invite.whatsapp.$code.join'
 import { Route as GroupInviteWhatsappCodeJoinNowRouteImport } from './routes/group.invite.whatsapp.$code.join-now'
@@ -121,6 +123,16 @@ const GroupInviteWhatsappCodeRoute = GroupInviteWhatsappCodeRouteImport.update({
   path: '/group/invite/whatsapp/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GroupJoinWhatsappCodeRoute = GroupJoinWhatsappCodeRouteImport.update({
+  id: '/group/join/whatsapp/$code',
+  path: '/group/join/whatsapp/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GroupRulesWhatsappCodeRoute = GroupRulesWhatsappCodeRouteImport.update({
+  id: '/group/rules/whatsapp/$code',
+  path: '/group/rules/whatsapp/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GroupInviteWhatsappCodeIndexRoute =
   GroupInviteWhatsappCodeIndexRouteImport.update({
     id: '/',
@@ -159,6 +171,8 @@ export interface FileRoutesByFullPath {
   '/group/country/$slug': typeof GroupCountrySlugRoute
   '/group/language/$slug': typeof GroupLanguageSlugRoute
   '/group/invite/whatsapp/$code': typeof GroupInviteWhatsappCodeRouteWithChildren
+  '/group/join/whatsapp/$code': typeof GroupJoinWhatsappCodeRoute
+  '/group/rules/whatsapp/$code': typeof GroupRulesWhatsappCodeRoute
   '/group/invite/whatsapp/$code/join': typeof GroupInviteWhatsappCodeJoinRoute
   '/group/invite/whatsapp/$code/join-now': typeof GroupInviteWhatsappCodeJoinNowRoute
   '/group/invite/whatsapp/$code/': typeof GroupInviteWhatsappCodeIndexRoute
@@ -181,6 +195,8 @@ export interface FileRoutesByTo {
   '/group/category/$slug': typeof GroupCategorySlugRoute
   '/group/country/$slug': typeof GroupCountrySlugRoute
   '/group/language/$slug': typeof GroupLanguageSlugRoute
+  '/group/join/whatsapp/$code': typeof GroupJoinWhatsappCodeRoute
+  '/group/rules/whatsapp/$code': typeof GroupRulesWhatsappCodeRoute
   '/group/invite/whatsapp/$code/join': typeof GroupInviteWhatsappCodeJoinRoute
   '/group/invite/whatsapp/$code/join-now': typeof GroupInviteWhatsappCodeJoinNowRoute
   '/group/invite/whatsapp/$code': typeof GroupInviteWhatsappCodeIndexRoute
@@ -205,6 +221,8 @@ export interface FileRoutesById {
   '/group/country/$slug': typeof GroupCountrySlugRoute
   '/group/language/$slug': typeof GroupLanguageSlugRoute
   '/group/invite/whatsapp/$code': typeof GroupInviteWhatsappCodeRouteWithChildren
+  '/group/join/whatsapp/$code': typeof GroupJoinWhatsappCodeRoute
+  '/group/rules/whatsapp/$code': typeof GroupRulesWhatsappCodeRoute
   '/group/invite/whatsapp/$code/join': typeof GroupInviteWhatsappCodeJoinRoute
   '/group/invite/whatsapp/$code/join-now': typeof GroupInviteWhatsappCodeJoinNowRoute
   '/group/invite/whatsapp/$code/': typeof GroupInviteWhatsappCodeIndexRoute
@@ -230,6 +248,8 @@ export interface FileRouteTypes {
     | '/group/country/$slug'
     | '/group/language/$slug'
     | '/group/invite/whatsapp/$code'
+    | '/group/join/whatsapp/$code'
+    | '/group/rules/whatsapp/$code'
     | '/group/invite/whatsapp/$code/join'
     | '/group/invite/whatsapp/$code/join-now'
     | '/group/invite/whatsapp/$code/'
@@ -252,6 +272,8 @@ export interface FileRouteTypes {
     | '/group/category/$slug'
     | '/group/country/$slug'
     | '/group/language/$slug'
+    | '/group/join/whatsapp/$code'
+    | '/group/rules/whatsapp/$code'
     | '/group/invite/whatsapp/$code/join'
     | '/group/invite/whatsapp/$code/join-now'
     | '/group/invite/whatsapp/$code'
@@ -275,6 +297,8 @@ export interface FileRouteTypes {
     | '/group/country/$slug'
     | '/group/language/$slug'
     | '/group/invite/whatsapp/$code'
+    | '/group/join/whatsapp/$code'
+    | '/group/rules/whatsapp/$code'
     | '/group/invite/whatsapp/$code/join'
     | '/group/invite/whatsapp/$code/join-now'
     | '/group/invite/whatsapp/$code/'
@@ -299,6 +323,8 @@ export interface RootRouteChildren {
   GroupCountrySlugRoute: typeof GroupCountrySlugRoute
   GroupLanguageSlugRoute: typeof GroupLanguageSlugRoute
   GroupInviteWhatsappCodeRoute: typeof GroupInviteWhatsappCodeRouteWithChildren
+  GroupJoinWhatsappCodeRoute: typeof GroupJoinWhatsappCodeRoute
+  GroupRulesWhatsappCodeRoute: typeof GroupRulesWhatsappCodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -429,6 +455,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupInviteWhatsappCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/group/join/whatsapp/$code': {
+      id: '/group/join/whatsapp/$code'
+      path: '/group/join/whatsapp/$code'
+      fullPath: '/group/join/whatsapp/$code'
+      preLoaderRoute: typeof GroupJoinWhatsappCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/group/rules/whatsapp/$code': {
+      id: '/group/rules/whatsapp/$code'
+      path: '/group/rules/whatsapp/$code'
+      fullPath: '/group/rules/whatsapp/$code'
+      preLoaderRoute: typeof GroupRulesWhatsappCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/group/invite/whatsapp/$code/': {
       id: '/group/invite/whatsapp/$code/'
       path: '/'
@@ -490,17 +530,18 @@ const rootRouteChildren: RootRouteChildren = {
   GroupCountrySlugRoute: GroupCountrySlugRoute,
   GroupLanguageSlugRoute: GroupLanguageSlugRoute,
   GroupInviteWhatsappCodeRoute: GroupInviteWhatsappCodeRouteWithChildren,
+  GroupJoinWhatsappCodeRoute: GroupJoinWhatsappCodeRoute,
+  GroupRulesWhatsappCodeRoute: GroupRulesWhatsappCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
+import type { createStart } from '@tanstack/react-start'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

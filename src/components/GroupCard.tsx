@@ -104,7 +104,7 @@ export function GroupCard({ group }: { group: Group }) {
       <div className="mt-4 flex items-center justify-between gap-3 border-t border-border/60 pt-3">
         {code ? (
           <Link
-            to="/group/invite/whatsapp/$code/join"
+            to="/group/join/whatsapp/$code"
             params={{ code }}
             className="text-sm font-bold text-link hover:underline"
           >
