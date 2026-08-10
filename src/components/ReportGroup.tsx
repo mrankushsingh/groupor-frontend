@@ -2,7 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Timer, X } from "lucide-react";
 import { getReportChallenge, submitReport } from "@/lib/report.functions";
-import { useRemovedGroups } from "@/lib/removed-groups";
+import {
+  getRemovedGroupsCache,
+  seedRemovedGroups,
+  useRemovedGroups,
+} from "@/lib/removed-groups";
 
 const COOLDOWN_SECONDS = 30;
 
@@ -109,6 +113,13 @@ export function ReportGroup({
         setDesc("");
         setAnswer("");
         setOpen(false);
+        const prev = getRemovedGroupsCache();
+        seedRemovedGroups({
+          ids: [...new Set([...prev.ids, String(groupId)])],
+          codes: [
+            ...new Set([...prev.codes, inviteCode.trim().toLowerCase()].filter(Boolean)),
+          ],
+        });
         await refresh();
         onReported?.();
       } else {

@@ -11,6 +11,11 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { getReportedGroups } from "@/lib/report.functions";
+import {
+  seedRemovedGroups,
+  type ReportedSnapshot,
+} from "@/lib/removed-groups";
 import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 function NotFoundComponent() {
@@ -73,7 +78,19 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+  reported?: ReportedSnapshot;
+}>()({
+  beforeLoad: async () => {
+    try {
+      const reported = await getReportedGroups();
+      seedRemovedGroups(reported);
+      return { reported };
+    } catch {
+      return { reported: { ids: [], codes: [] } satisfies ReportedSnapshot };
+    }
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -138,7 +155,12 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient, reported } = Route.useRouteContext();
+  // Re-seed on the client from dehydrated root beforeLoad data so refresh
+  // does not flash reported groups before the client fetch completes.
+  if (reported) {
+    seedRemovedGroups(reported);
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

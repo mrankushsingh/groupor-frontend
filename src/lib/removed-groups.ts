@@ -3,14 +3,58 @@ import { useServerFn } from "@tanstack/react-start";
 import { getReportedGroups } from "@/lib/report.functions";
 import { inviteCode } from "@/lib/submitted-groups";
 
-type Snapshot = { ids: string[]; codes: string[] };
+export type ReportedSnapshot = { ids: string[]; codes: string[] };
 
-let cache: Snapshot = { ids: [], codes: [] };
-const listeners = new Set<(next: Snapshot) => void>();
+const STORAGE_KEY = "groupor-reported-groups";
 
-function publish(next: Snapshot) {
+let cache: ReportedSnapshot = { ids: [], codes: [] };
+let seeded = false;
+const listeners = new Set<(next: ReportedSnapshot) => void>();
+
+function normalizeSnapshot(input: Partial<ReportedSnapshot> | null | undefined): ReportedSnapshot {
+  return {
+    ids: Array.isArray(input?.ids) ? input.ids.map(String) : [],
+    codes: Array.isArray(input?.codes)
+      ? input.codes.map((c) => String(c).trim().toLowerCase()).filter(Boolean)
+      : [],
+  };
+}
+
+function readLocalSnapshot(): ReportedSnapshot | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return normalizeSnapshot(JSON.parse(raw) as ReportedSnapshot);
+  } catch {
+    return null;
+  }
+}
+
+function writeLocalSnapshot(next: ReportedSnapshot) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+/** Seed the in-memory cache before list pages render (root beforeLoad / report success). */
+export function seedRemovedGroups(snapshot: ReportedSnapshot) {
+  const next = normalizeSnapshot(snapshot);
   cache = next;
+  seeded = true;
+  writeLocalSnapshot(next);
   listeners.forEach((listener) => listener(next));
+}
+
+export function publishRemovedGroups(snapshot: ReportedSnapshot) {
+  seedRemovedGroups(snapshot);
+}
+
+export function getRemovedGroupsCache() {
+  return cache;
 }
 
 /**
@@ -19,26 +63,45 @@ function publish(next: Snapshot) {
  */
 export function useRemovedGroups() {
   const fetchReported = useServerFn(getReportedGroups);
-  const [ids, setIds] = useState<string[]>(cache.ids);
-  const [codes, setCodes] = useState<string[]>(cache.codes);
+  const [ids, setIds] = useState<string[]>(() => cache.ids);
+  const [codes, setCodes] = useState<string[]>(() => cache.codes);
+  const [ready, setReady] = useState(() => seeded || cache.ids.length > 0 || cache.codes.length > 0);
 
   const refresh = useCallback(async () => {
     try {
       const snapshot = await fetchReported();
-      publish(snapshot);
+      seedRemovedGroups(snapshot);
+      setReady(true);
     } catch {
-      /* keep last known */
+      const local = readLocalSnapshot();
+      if (local) {
+        seedRemovedGroups(local);
+        setReady(true);
+      }
     }
   }, [fetchReported]);
 
   useEffect(() => {
-    const listener = (next: Snapshot) => {
+    const listener = (next: ReportedSnapshot) => {
       setIds(next.ids);
       setCodes(next.codes);
+      setReady(true);
     };
     listeners.add(listener);
-    setIds(cache.ids);
-    setCodes(cache.codes);
+
+    // Prefer already-seeded SSR/root data; otherwise hydrate from localStorage
+    // before the network round-trip so a refresh doesn't flash reported groups.
+    if (!seeded) {
+      const local = readLocalSnapshot();
+      if (local && (local.ids.length > 0 || local.codes.length > 0)) {
+        seedRemovedGroups(local);
+      }
+    } else {
+      setIds(cache.ids);
+      setCodes(cache.codes);
+      setReady(true);
+    }
+
     void refresh();
     return () => {
       listeners.delete(listener);
@@ -65,7 +128,14 @@ export function useRemovedGroups() {
     [codes],
   );
 
-  return { removedIds: ids, removedCodes: codes, isRemoved, isCodeRemoved, refresh };
+  return {
+    removedIds: ids,
+    removedCodes: codes,
+    isRemoved,
+    isCodeRemoved,
+    refresh,
+    ready,
+  };
 }
 
 /** @deprecated Reports now persist server-side; kept as no-op for old imports. */
