@@ -1,0 +1,21 @@
+{
+  "name": "Groupor",
+  "short_name": "Groupor",
+  "description": "Find active WhatsApp groups by category, country and language.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#112233",
+  "theme_color": "#17D292",
+  "icons": [
+    {
+      "src": "/groupor-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
