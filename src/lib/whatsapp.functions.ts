@@ -130,16 +130,27 @@ export const fetchGroupPreview = createServerFn({ method: "POST" })
       } catch {
         image = "";
       }
+      // WhatsApp often returns only a generic site icon — not the group photo.
+      if (
+        /static\.whatsapp\.net\/rsrc\.php/i.test(image) ||
+        /whatsapp\.net\/.*\.(svg|png)$/i.test(image)
+      ) {
+        image = "";
+      }
       const description = metaContent(html, "og:description");
 
-      const generic = /^whatsapp( group invite)?$/i.test(title.trim());
-      if (!title || generic) {
+      const generic =
+        !title.trim() ||
+        /^whatsapp( group invite)?$/i.test(title.trim()) ||
+        /^whatsapp\.com$/i.test(title.trim());
+      if (generic) {
         return {
           ok: false,
           name: "",
           image,
           description,
-          error: "This invite link is invalid or expired",
+          error:
+            "WhatsApp no longer shares this group's public name. Enter the group name manually.",
         };
       }
 

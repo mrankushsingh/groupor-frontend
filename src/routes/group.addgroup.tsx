@@ -56,6 +56,10 @@ function fallbackName(value: string) {
 function SubmitPage() {
   const navigate = useNavigate();
   const [link, setLink] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [groupImage, setGroupImage] = useState("");
+  const [previewNote, setPreviewNote] = useState("");
+  const [previewLoading, setPreviewLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("");
   const [country, setCountry] = useState("");
@@ -71,6 +75,7 @@ function SubmitPage() {
   // Split guard pieces live only in memory — not as a readable "csrf_token" input.
   const guardParts = useRef<{ a: string; b: string } | null>(null);
   const decoyRef = useRef<HTMLSpanElement>(null);
+  const previewSeq = useRef(0);
 
   async function refreshGuard() {
     const issued = await getGuard();
@@ -106,6 +111,50 @@ function SubmitPage() {
     );
   }, [link, isCodeRemoved]);
 
+  // Try to auto-fill name/image when a valid invite link is pasted.
+  useEffect(() => {
+    const value = normalizeLink(link);
+    const code = inviteCode(value);
+    if (!code || !/^https:\/\/chat\.whatsapp\.com\//i.test(value)) {
+      setGroupName("");
+      setGroupImage("");
+      setPreviewNote("");
+      setPreviewLoading(false);
+      return;
+    }
+
+    const seq = ++previewSeq.current;
+    setPreviewLoading(true);
+    setPreviewNote("");
+    const timer = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const result = await getPreview({ data: { link: value } });
+          if (seq !== previewSeq.current) return;
+          if (result.ok && result.name) {
+            setGroupName(result.name);
+            setGroupImage(result.image || "");
+            setPreviewNote(result.image ? "Name and image loaded from WhatsApp." : "Name loaded. Add an image URL if you want.");
+          } else {
+            setGroupName((prev) => prev || "");
+            setGroupImage(result.image || "");
+            setPreviewNote(
+              result.error ||
+                "WhatsApp did not share this group's name/image. Type the real group name below.",
+            );
+          }
+        } catch {
+          if (seq !== previewSeq.current) return;
+          setPreviewNote("Could not reach WhatsApp. Type the group name manually.");
+        } finally {
+          if (seq === previewSeq.current) setPreviewLoading(false);
+        }
+      })();
+    }, 450);
+
+    return () => window.clearTimeout(timer);
+  }, [link, getPreview]);
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -139,14 +188,20 @@ function SubmitPage() {
                 return;
               }
 
-              let finalName = fallbackName(href);
-              let finalImage = "";
-              try {
-                const result = await getPreview({ data: { link: href } });
-                finalName = result.name || fallbackName(href);
-                finalImage = result.image;
-              } catch {
-                // Keep fallback name/image when WhatsApp preview is unavailable.
+              let finalName = groupName.trim() || fallbackName(href);
+              let finalImage = groupImage.trim();
+              if (!groupName.trim() || !finalImage) {
+                try {
+                  const result = await getPreview({ data: { link: href } });
+                  if (result.name) finalName = result.name;
+                  if (result.image) finalImage = result.image;
+                } catch {
+                  // Keep typed/fallback values when WhatsApp preview is unavailable.
+                }
+              }
+              if (!groupName.trim() && finalName === fallbackName(href)) {
+                setBlocked("Enter the real WhatsApp group name. WhatsApp no longer shares it automatically.");
+                return;
               }
 
               const guard = assembleGuard();
@@ -254,12 +309,54 @@ function SubmitPage() {
               </p>
             </div>
 
-            {loading && (
+            {(previewLoading || previewNote) && (
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Loader2 className="size-4 animate-spin" />
-                Fetching group name and image…
+                {previewLoading ? <Loader2 className="size-4 animate-spin" /> : null}
+                {previewLoading ? "Fetching group name and image…" : previewNote}
               </p>
             )}
+
+            <div>
+              <input
+                required
+                type="text"
+                name="name"
+                maxLength={80}
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+                className={inputClass}
+                placeholder="Group name (required)"
+                disabled={loading}
+              />
+              <p className="mt-1 text-[11px] text-link">
+                Use the exact WhatsApp group title. Auto-fill only works when WhatsApp still shares
+                public preview data.
+              </p>
+            </div>
+
+            {groupImage ? (
+              <div className="flex items-center gap-3">
+                <img
+                  src={groupImage}
+                  alt=""
+                  className="size-14 rounded-full border border-border object-cover"
+                />
+                <p className="text-xs text-muted-foreground">Group image preview</p>
+              </div>
+            ) : null}
+
+            <div>
+              <input
+                type="url"
+                name="image"
+                maxLength={1000}
+                value={groupImage}
+                onChange={(e) => setGroupImage(e.target.value)}
+                className={inputClass}
+                placeholder="Group image URL (optional)"
+                disabled={loading}
+              />
+            </div>
 
             {duplicate && (
               <div className="flex items-start gap-2 border border-destructive/40 bg-destructive/5 p-3 text-xs text-destructive">
