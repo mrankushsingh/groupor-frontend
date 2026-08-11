@@ -113,13 +113,17 @@ export function ReportGroup({
         setDesc("");
         setAnswer("");
         setOpen(false);
-        const prev = getRemovedGroupsCache();
-        seedRemovedGroups({
-          ids: [...new Set([...prev.ids, String(groupId)])],
-          codes: [
-            ...new Set([...prev.codes, inviteCode.trim().toLowerCase()].filter(Boolean)),
-          ],
-        });
+        if ("snapshot" in res && res.snapshot) {
+          seedRemovedGroups(res.snapshot as { ids: string[]; codes: string[] });
+        } else {
+          const prev = getRemovedGroupsCache();
+          seedRemovedGroups({
+            ids: [...new Set([...prev.ids, String(groupId)])],
+            codes: [
+              ...new Set([...prev.codes, inviteCode.trim().toLowerCase()].filter(Boolean)),
+            ],
+          });
+        }
         await refresh();
         onReported?.();
       } else {

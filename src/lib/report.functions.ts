@@ -170,7 +170,7 @@ export const submitReport = createServerFn({ method: "POST" })
     }
 
     const already = await isInviteReported(data.inviteCode);
-    await addReportedGroup({
+    const saved = await addReportedGroup({
       groupId: data.groupId,
       inviteCode: data.inviteCode,
       reason: data.reason,
@@ -193,16 +193,33 @@ export const submitReport = createServerFn({ method: "POST" })
       already,
     });
 
+    const remoteAlready =
+      saved && typeof saved === "object" && "already" in saved
+        ? Boolean((saved as { already?: boolean }).already)
+        : already;
+    const remoteMessage =
+      saved && typeof saved === "object" && "message" in saved
+        ? String((saved as { message?: string }).message || "")
+        : "";
+
     return {
       ok: true as const,
       remainingMs: COOLDOWN_MS,
       remainingSeconds: Math.ceil(COOLDOWN_MS / 1000),
       totalMs: COOLDOWN_MS,
-      message: already
-        ? "This group was already reported. It stays removed for everyone."
-        : "Thanks — the group was reported and removed for all visitors.",
+      message:
+        remoteMessage ||
+        (remoteAlready
+          ? "This group was already reported. It stays removed for everyone."
+          : "Thanks — the group was reported and removed for all visitors."),
       inviteCode: data.inviteCode.toLowerCase(),
       groupId: data.groupId,
       dailyRemaining: recorded.ok ? recorded.remaining : 0,
+      ...(saved &&
+      typeof saved === "object" &&
+      "snapshot" in saved &&
+      saved.snapshot
+        ? { snapshot: (saved as { snapshot: { ids: string[]; codes: string[] } }).snapshot }
+        : {}),
     };
   });
