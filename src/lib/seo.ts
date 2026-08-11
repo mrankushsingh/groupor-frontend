@@ -1,6 +1,6 @@
 import { categories, groups, inviteCodeOf, slugify, type Group } from "@/data/groups";
 
-export const SITE_URL = "https://groupor.link";
+export const SITE_URL = "https://www.groupor.link";
 export const SITE_NAME = "Groupor";
 export const DEFAULT_OG_IMAGE = SITE_URL + "/og-image.png";
 export const MIN_LANDING_PAGE_GROUPS = 1;

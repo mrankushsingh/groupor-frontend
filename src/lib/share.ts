@@ -1,6 +1,6 @@
 import { categories, type Group } from "@/data/groups";
 
-const SITE = "https://groupor.link";
+const SITE = "https://www.groupor.link";
 
 /** Share copy like Groupsor: filter find-page link, not WhatsApp invite. */
 export function groupFindShare(group: Group) {
