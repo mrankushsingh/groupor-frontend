@@ -99,14 +99,16 @@ export const Route = createRootRouteWithContext<{
       { title: "Groupor.link — WhatsApp Group Links Directory" },
       { name: "description", content: "Browse and submit active WhatsApp group invite links by category, country and language." },
       { name: "author", content: "Groupor.link" },
-      { name: "robots", content: "index, follow" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
       { property: "og:site_name", content: "Groupor.link" },
+      { property: "og:locale", content: "en_US" },
       { property: "og:title", content: "Groupor.link — WhatsApp Group Links Directory" },
       { property: "og:description", content: "Browse and submit active WhatsApp group invite links by category, country and language." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
       { property: "og:image", content: DEFAULT_OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@groupor_link" },
       { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
     links: [
@@ -118,6 +120,7 @@ export const Route = createRootRouteWithContext<{
       { rel: "icon", href: "/groupor-logo.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "manifest", href: "/site.webmanifest" },
+      { rel: "alternate", type: "text/plain", href: "/llms.txt" },
     ],
     scripts: [
       {

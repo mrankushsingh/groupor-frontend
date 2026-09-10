@@ -1,3 +1,4 @@
+# Allow search crawlers and AI bots
 User-agent: Googlebot
 Allow: /
 
@@ -10,13 +11,37 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# AI Crawlers & LLM Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CoHereBot
+Allow: /
+
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_serverFn/
-Disallow: /group/join/
-Disallow: /group/rules/
 
-# Prefer the www canonical host in Search Console.
+# Canonical Sitemap & LLM Index
 Sitemap: https://www.groupor.link/sitemap.xml
+LLMs-txt: https://www.groupor.link/llms.txt
