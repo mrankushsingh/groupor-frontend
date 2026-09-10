@@ -170,12 +170,29 @@ export const submitReport = createServerFn({ method: "POST" })
     }
 
     const already = await isInviteReported(data.inviteCode);
-    const saved = await addReportedGroup({
-      groupId: data.groupId,
-      inviteCode: data.inviteCode,
-      reason: data.reason,
-      description: data.description,
-    });
+    let saved: unknown = null;
+    try {
+      saved = await addReportedGroup({
+        groupId: data.groupId,
+        inviteCode: data.inviteCode,
+        reason: data.reason,
+        description: data.description,
+      });
+    } catch (err: unknown) {
+      let msg = err instanceof Error ? err.message : String(err);
+      try {
+        const parsed = JSON.parse(msg);
+        if (parsed.detail) msg = parsed.detail;
+      } catch {}
+      return {
+        ok: false as const,
+        code: "daily_limit" as const,
+        remainingMs: 0,
+        remainingSeconds: 0,
+        totalMs: COOLDOWN_MS,
+        message: msg || "Failed to submit report.",
+      };
+    }
     // Keep the listing record so the group page can show “Reported for review”.
     // Home/category feeds hide it via the reported-codes check.
     const recorded = await recordIpQuota(resolveIp(), "report");

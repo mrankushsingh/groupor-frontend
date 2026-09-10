@@ -7,6 +7,7 @@ import {
   seedRemovedGroups,
   useRemovedGroups,
 } from "@/lib/removed-groups";
+import { purgeSubmittedByCode } from "@/lib/submitted-groups";
 
 const COOLDOWN_SECONDS = 30;
 
@@ -113,6 +114,7 @@ export function ReportGroup({
         setDesc("");
         setAnswer("");
         setOpen(false);
+        purgeSubmittedByCode(inviteCode);
         if ("snapshot" in res && res.snapshot) {
           seedRemovedGroups(res.snapshot as { ids: string[]; codes: string[] });
         } else {

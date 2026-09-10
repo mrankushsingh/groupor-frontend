@@ -99,12 +99,15 @@ export async function isGroupReported(groupId: string, inviteCode?: string): Pro
   return false;
 }
 
-/** Persist a report and ban the invite code + group id for everyone. */
+import { removeSubmittedByCode } from "@/lib/submitted-groups.store";
+
 export async function addReportedGroup(
   entry: Omit<ReportedEntry, "reportedAt"> & { reportedAt?: string },
 ) {
   const inviteCode = normalizeCode(entry.inviteCode);
   const groupId = String(entry.groupId);
+
+  await removeSubmittedByCode(inviteCode);
 
   if (hasRemoteApi()) {
     const res = await fetch(apiUrl("/api/reports"), {

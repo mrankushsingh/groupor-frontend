@@ -43,7 +43,7 @@ export async function findSubmittedByCode(code: string): Promise<Group | undefin
   const normalized = (code ?? "").trim().toLowerCase();
   if (!normalized) return undefined;
   const groups = await listSubmittedGroups();
-  return groups.find((g) => inviteCodeOf(g.link) === normalized);
+  return groups.find((g) => inviteCodeOf(g.link).toLowerCase() === normalized);
 }
 
 export type AddGroupInput = {
@@ -128,7 +128,8 @@ export async function addGroupToStore(input: AddGroupInput): Promise<AddGroupRes
   };
 
   const store = await readStore();
-  store.groups = [group, ...store.groups.filter((g) => inviteCodeOf(g.link) !== code)];
+  const codeLower = code.toLowerCase();
+  store.groups = [group, ...store.groups.filter((g) => inviteCodeOf(g.link).toLowerCase() !== codeLower)];
   await writeStore(store);
 
   return {
@@ -143,6 +144,6 @@ export async function removeSubmittedByCode(code: string) {
   const normalized = (code ?? "").trim().toLowerCase();
   if (!normalized) return;
   const store = await readStore();
-  store.groups = store.groups.filter((g) => inviteCodeOf(g.link) !== normalized);
+  store.groups = store.groups.filter((g) => inviteCodeOf(g.link).toLowerCase() !== normalized);
   await writeStore(store);
 }
