@@ -119,9 +119,45 @@ export function addSubmittedGroup(group: Omit<Group, "id" | "platform"> & { id?:
   return cacheSubmittedGroup(entry);
 }
 
-/** Groups from the server store (+ brief local cache). Empty during SSR/first paint. */
-export function useSubmittedGroups() {
-  const [list, setList] = useState<Group[]>(() => readLocal());
+export function mergeSubmittedGroups(server: Group[], local: Group[]): Group[] {
+  const serverCodes = new Set(server.map((g) => inviteCode(g.link).toLowerCase()));
+  const localOnly = local.filter((g) => !serverCodes.has(inviteCode(g.link).toLowerCase()));
+  return [...server, ...localOnly];
+}
+
+export async function fetchSubmittedForSsr(): Promise<Group[]> {
+  if (typeof window !== "undefined") return [];
+  try {
+    const { listSubmittedGroups } = await import("@/lib/submitted-groups.store");
+    const local = await listSubmittedGroups();
+    if (local.length > 0) return local;
+  } catch {}
+
+  if (hasRemoteApi()) {
+    try {
+      const res = await fetch(apiUrl("/api/groups?page_size=50"), {
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        const json = (await res.json()) as { groups?: unknown[] };
+        if (Array.isArray(json?.groups)) {
+          return json.groups.map(normalizeApiGroup).filter((g): g is Group => Boolean(g));
+        }
+      }
+    } catch {}
+  }
+  return [];
+}
+
+/** Groups from the server store (+ brief local cache). Empty during SSR/first paint unless seeded. */
+export function useSubmittedGroups(initialServerGroups?: Group[]) {
+  const [list, setList] = useState<Group[]>(() => {
+    const local = readLocal();
+    if (initialServerGroups && initialServerGroups.length > 0) {
+      return mergeSubmittedGroups(initialServerGroups, local);
+    }
+    return local;
+  });
 
   useEffect(() => {
     let alive = true;
@@ -131,14 +167,16 @@ export function useSubmittedGroups() {
 
     const listener = (next: Group[]) => apply(next);
     listeners.add(listener);
-    apply(readLocal());
+
+    const currentLocal = readLocal();
+    const base = initialServerGroups && initialServerGroups.length > 0
+      ? mergeSubmittedGroups(initialServerGroups, currentLocal)
+      : currentLocal;
+    apply(base);
 
     void fetchServerGroups().then((server) => {
       if (!alive) return;
-      // Server wins; keep any ultra-fresh local-only items not yet reflected.
-      const serverCodes = new Set(server.map((g) => inviteCode(g.link).toLowerCase()));
-      const localOnly = readLocal().filter((g) => !serverCodes.has(inviteCode(g.link).toLowerCase()));
-      const merged = [...server, ...localOnly];
+      const merged = mergeSubmittedGroups(server, readLocal());
       writeLocal(merged);
       apply(merged);
     });
@@ -152,7 +190,7 @@ export function useSubmittedGroups() {
       listeners.delete(listener);
       window.removeEventListener("storage", onStorage);
     };
-  }, []);
+  }, [initialServerGroups]);
 
   return list;
 }

@@ -5,10 +5,14 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { GroupCard } from "@/components/GroupCard";
 import { categories, countries, groups, languages, sortGroups } from "@/data/groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
-import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { absoluteUrl, categoryPath, countryPath, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const submitted = await fetchSubmittedForSsr();
+    return { submitted };
+  },
   validateSearch: (search: Record<string, unknown>) => {
     const q = typeof search.q === "string" ? search.q.trim() : "";
     return q ? { q } : {};
@@ -63,13 +67,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const loaderData = Route.useLoaderData();
   const navigate = useNavigate();
   const { q: searchQ } = Route.useSearch();
   const [country, setCountry] = React.useState("");
   const [language, setLanguage] = React.useState("");
   const [category, setCategory] = React.useState("");
   const { isRemoved } = useRemovedGroups();
-  const submitted = useSubmittedGroups();
+  const submitted = useSubmittedGroups(loaderData?.submitted);
   const PAGE_SIZE = 10;
   const [visible, setVisible] = React.useState(PAGE_SIZE);
 

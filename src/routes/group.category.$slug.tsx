@@ -4,14 +4,15 @@ import { GroupLandingPage } from "@/components/GroupLandingPage";
 import { categories, groups, sortGroups } from "@/data/groups";
 import { getCategoryIntro } from "@/data/category-intros";
 import { absoluteUrl, categoryPath } from "@/lib/seo";
-import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 
 export const Route = createFileRoute("/group/category/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const category = categories.find((item) => item.slug === params.slug && item.slug !== "all");
     if (!category) throw notFound();
-    return { category };
+    const submitted = await fetchSubmittedForSsr();
+    return { category, submitted };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
@@ -49,8 +50,9 @@ export const Route = createFileRoute("/group/category/$slug")({
 });
 
 function GroupCategoryComponent() {
-  const { category } = Route.useLoaderData();
-  const submitted = useSubmittedGroups();
+  const loaderData = Route.useLoaderData();
+  const { category } = loaderData;
+  const submitted = useSubmittedGroups(loaderData?.submitted);
   const { isRemoved } = useRemovedGroups();
 
   const categoryGroups = useMemo(() => {

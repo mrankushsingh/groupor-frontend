@@ -12,8 +12,8 @@ import {
   sortGroups,
   type Group,
 } from "@/data/groups";
+import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
-import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { absoluteUrl } from "@/lib/seo";
 
 type FindSearch = {
@@ -24,6 +24,10 @@ type FindSearch = {
 };
 
 export const Route = createFileRoute("/group/find")({
+  loader: async () => {
+    const submitted = await fetchSubmittedForSsr();
+    return { submitted };
+  },
   validateSearch: (search: Record<string, unknown>): FindSearch => {
     const out: FindSearch = {};
     if (typeof search.category === "string" && search.category.trim()) {
@@ -83,13 +87,14 @@ function matchesQuery(group: Group, q: string) {
 }
 
 function FindPage() {
+  const loaderData = Route.useLoaderData();
   const navigate = useNavigate();
   const search = Route.useSearch();
   const [category, setCategory] = React.useState(search.category ?? "");
   const [country, setCountry] = React.useState(search.country ?? "");
   const [language, setLanguage] = React.useState(search.language ?? "");
   const { isRemoved } = useRemovedGroups();
-  const submitted = useSubmittedGroups();
+  const submitted = useSubmittedGroups(loaderData?.submitted);
   const PAGE_SIZE = 10;
   const [visible, setVisible] = React.useState(PAGE_SIZE);
 
