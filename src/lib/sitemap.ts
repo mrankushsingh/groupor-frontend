@@ -1,4 +1,4 @@
-import { categories, groups as staticGroups, groupPath, inviteCodeOf, type Group } from "@/data/groups";
+import { categories, countries as staticCountries, languages as staticLanguages, groups as staticGroups, groupPath, inviteCodeOf, type Group } from "@/data/groups";
 import { apiUrl, hasRemoteApi } from "@/lib/api";
 import {
   categoryPath,
@@ -157,37 +157,33 @@ export async function buildSitemapUrls(): Promise<SitemapUrl[]> {
     { loc: `${SITE_URL}/disclaimer`, changefreq: "yearly", priority: "0.3" },
   ];
 
-  const categorySlugs = new Set(
-    allGroups.map((g) => g.category).filter((slug) => slug && slug !== "all"),
-  );
-  for (const slug of [...categorySlugs].sort()) {
-    if (!categories.some((c) => c.slug === slug)) continue;
+  // All 28 defined category landing pages
+  for (const c of categories) {
+    if (c.slug === "all") continue;
     urls.push({
-      loc: `${SITE_URL}${categoryPath(slug)}`,
+      loc: `${SITE_URL}${categoryPath(c.slug)}`,
       lastmod: today,
       changefreq: "daily",
       priority: "0.8",
     });
   }
 
-  const countries = [
-    ...new Set(allGroups.map((g) => g.country).filter(Boolean)),
-  ].sort();
-  for (const country of countries) {
+  // All predefined country hub landing pages
+  for (const c of staticCountries) {
+    if (!c.code || !c.name) continue;
     urls.push({
-      loc: `${SITE_URL}${countryPath(country)}`,
+      loc: `${SITE_URL}${countryPath(c.name)}`,
       lastmod: today,
       changefreq: "daily",
       priority: "0.7",
     });
   }
 
-  const languages = [
-    ...new Set(allGroups.map((g) => g.language).filter(Boolean) as string[]),
-  ].sort();
-  for (const language of languages) {
+  // All predefined language hub pages
+  for (const lang of staticLanguages) {
+    if (!lang || lang === "Any Language") continue;
     urls.push({
-      loc: `${SITE_URL}${languagePath(language)}`,
+      loc: `${SITE_URL}${languagePath(lang)}`,
       lastmod: today,
       changefreq: "weekly",
       priority: "0.6",
