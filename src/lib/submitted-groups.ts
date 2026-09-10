@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { groups as staticGroups, type Group } from "@/data/groups";
+import { groups as staticGroups, inviteCodeOf, type Group } from "@/data/groups";
 import { apiUrl, hasRemoteApi } from "@/lib/api";
 
 const KEY = "submitted-groups";
@@ -27,11 +27,13 @@ function writeLocal(list: Group[]) {
   listeners.forEach((l) => l(list));
 }
 
-/** Normalised WhatsApp invite code, used to detect duplicate submissions. */
-export function inviteCode(link: string) {
-  const value = (link ?? "").trim().toLowerCase();
-  const match = value.match(/chat\.whatsapp\.com\/(?:invite\/)?([a-z0-9_-]+)/i);
-  if (match && match[1]) return match[1].toLowerCase();
+/** Normalised WhatsApp invite code, preserving exact character case. */
+export function inviteCode(link: string): string {
+  const code = inviteCodeOf(link);
+  if (code) return code;
+  const value = (link ?? "").trim();
+  const match = value.match(/chat\.whatsapp\.com\/(?:invite\/)?([A-Za-z0-9_-]+)/i);
+  if (match && match[1]) return match[1];
   return value.replace(/[?#].*$/, "").replace(/\/+$/, "");
 }
 
@@ -78,16 +80,16 @@ async function fetchServerGroups(): Promise<Group[]> {
 
 /** Existing group with the same invite link, from demo data, server, or this browser. */
 export function findGroupByLink(link: string): Group | undefined {
-  const code = inviteCode(link);
+  const code = inviteCode(link).toLowerCase();
   if (!code) return undefined;
-  return [...readLocal(), ...staticGroups].find((g) => inviteCode(g.link) === code);
+  return [...readLocal(), ...staticGroups].find((g) => inviteCode(g.link).toLowerCase() === code);
 }
 
 /** Remove a submitted group from this browser after it was reported. */
 export function purgeSubmittedByCode(code: string) {
   const normalized = (code ?? "").trim().toLowerCase();
   if (!normalized) return;
-  writeLocal(readLocal().filter((g) => inviteCode(g.link) !== normalized));
+  writeLocal(readLocal().filter((g) => inviteCode(g.link).toLowerCase() !== normalized));
 }
 
 /**
@@ -95,8 +97,8 @@ export function purgeSubmittedByCode(code: string) {
  * Source of truth is the server store.
  */
 export function cacheSubmittedGroup(group: Group) {
-  const code = inviteCode(group.link);
-  const next = [group, ...readLocal().filter((g) => inviteCode(g.link) !== code)];
+  const code = inviteCode(group.link).toLowerCase();
+  const next = [group, ...readLocal().filter((g) => inviteCode(g.link).toLowerCase() !== code)];
   writeLocal(next);
   return group;
 }
@@ -131,8 +133,8 @@ export function useSubmittedGroups() {
     void fetchServerGroups().then((server) => {
       if (!alive) return;
       // Server wins; keep any ultra-fresh local-only items not yet reflected.
-      const serverCodes = new Set(server.map((g) => inviteCode(g.link)));
-      const localOnly = readLocal().filter((g) => !serverCodes.has(inviteCode(g.link)));
+      const serverCodes = new Set(server.map((g) => inviteCode(g.link).toLowerCase()));
+      const localOnly = readLocal().filter((g) => !serverCodes.has(inviteCode(g.link).toLowerCase()));
       const merged = [...server, ...localOnly];
       writeLocal(merged);
       apply(merged);
