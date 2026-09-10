@@ -66,7 +66,7 @@ export function normalizeApiGroup(raw: unknown): Group | null {
 
 async function fetchServerGroups(): Promise<Group[]> {
   try {
-    const endpoint = hasRemoteApi() ? apiUrl("/api/groups?page_size=50") : "/data/addgroup";
+    const endpoint = hasRemoteApi() ? apiUrl("/api/groups?page_size=1000") : "/data/addgroup";
     const res = await fetch(endpoint, {
       headers: { Accept: "application/json" },
     });
@@ -135,7 +135,7 @@ export async function fetchSubmittedForSsr(): Promise<Group[]> {
 
   if (hasRemoteApi()) {
     try {
-      const res = await fetch(apiUrl("/api/groups?page_size=50"), {
+      const res = await fetch(apiUrl("/api/groups?page_size=1000"), {
         headers: { Accept: "application/json" },
       });
       if (res.ok) {

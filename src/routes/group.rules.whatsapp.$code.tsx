@@ -21,7 +21,7 @@ export const Route = createFileRoute("/group/rules/whatsapp/$code")({
       if (!group && hasRemoteApi()) {
         try {
           const codeNorm = (params.code ?? "").trim().toLowerCase();
-          const res = await fetch(apiUrl("/api/groups?page_size=50"), {
+          const res = await fetch(apiUrl("/api/groups?page_size=1000"), {
             headers: { Accept: "application/json" },
           });
           if (res.ok) {

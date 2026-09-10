@@ -91,7 +91,7 @@ async function fetchRemoteGroups(): Promise<Group[]> {
   let page = 1;
   let pages = 1;
   while (page <= pages && page <= 200) {
-    const res = await fetch(apiUrl(`/api/groups?page=${page}&page_size=50`), {
+    const res = await fetch(apiUrl(`/api/groups?page=${page}&page_size=1000`), {
       headers: { Accept: "application/json" },
     });
     if (!res.ok) break;
