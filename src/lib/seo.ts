@@ -121,3 +121,132 @@ export function indexableLanguages() {
   return [...new Set(groups.filter((group) => group.status !== "inactive").map((group) => group.language).filter(Boolean) as string[])]
     .filter((language) => groupsForLanguage(slugify(language)).length >= MIN_LANDING_PAGE_GROUPS);
 }
+
+/** Map common languages to ISO 639-1 language codes & Open Graph locales */
+export const LANGUAGE_METADATA: Record<string, { code: string; ogLocale: string }> = {
+  English: { code: "en", ogLocale: "en_US" },
+  Spanish: { code: "es", ogLocale: "es_ES" },
+  Hindi: { code: "hi", ogLocale: "hi_IN" },
+  Portuguese: { code: "pt", ogLocale: "pt_BR" },
+  French: { code: "fr", ogLocale: "fr_FR" },
+  German: { code: "de", ogLocale: "de_DE" },
+  Arabic: { code: "ar", ogLocale: "ar_SA" },
+  Urdu: { code: "ur", ogLocale: "ur_PK" },
+  Turkish: { code: "tr", ogLocale: "tr_TR" },
+  Indonesian: { code: "id", ogLocale: "id_ID" },
+  Russian: { code: "ru", ogLocale: "ru_RU" },
+  Italian: { code: "it", ogLocale: "it_IT" },
+  Chinese: { code: "zh", ogLocale: "zh_CN" },
+  Japanese: { code: "ja", ogLocale: "ja_JP" },
+  Korean: { code: "ko", ogLocale: "ko_KR" },
+  Bangla: { code: "bn", ogLocale: "bn_BD" },
+  Bengali: { code: "bn", ogLocale: "bn_BD" },
+  Dutch: { code: "nl", ogLocale: "nl_NL" },
+  Polish: { code: "pl", ogLocale: "pl_PL" },
+  Tamil: { code: "ta", ogLocale: "ta_IN" },
+  Telugu: { code: "te", ogLocale: "te_IN" },
+  Marathi: { code: "mr", ogLocale: "mr_IN" },
+  Gujarati: { code: "gu", ogLocale: "gu_IN" },
+  Kannada: { code: "kn", ogLocale: "kn_IN" },
+  Malayalam: { code: "ml", ogLocale: "ml_IN" },
+  Punjabi: { code: "pa", ogLocale: "pa_IN" },
+  Vietnamese: { code: "vi", ogLocale: "vi_VN" },
+  Thai: { code: "th", ogLocale: "th_TH" },
+  Filipino: { code: "fil", ogLocale: "fil_PH" },
+  Swahili: { code: "sw", ogLocale: "sw_KE" },
+  Persian: { code: "fa", ogLocale: "fa_IR" },
+  Ukrainian: { code: "uk", ogLocale: "uk_UA" },
+  Greek: { code: "el", ogLocale: "el_GR" },
+  Hebrew: { code: "he", ogLocale: "he_IL" },
+  Swedish: { code: "sv", ogLocale: "sv_SE" },
+  Danish: { code: "da", ogLocale: "da_DK" },
+  Finnish: { code: "fi", ogLocale: "fi_FI" },
+  Norwegian: { code: "no", ogLocale: "no_NO" },
+  Romanian: { code: "ro", ogLocale: "ro_RO" },
+  Czech: { code: "cs", ogLocale: "cs_CZ" },
+  Hungarian: { code: "hu", ogLocale: "hu_HU" },
+};
+
+/** Get ISO 639-1 code for language string */
+export function getLanguageCode(languageName?: string): string {
+  if (!languageName) return "en";
+  const meta = LANGUAGE_METADATA[languageName];
+  return meta ? meta.code : "en";
+}
+
+/** Get Open Graph locale string (e.g. es_ES, hi_IN, pt_BR) */
+export function getOgLocale(languageOrCountry?: string): string {
+  if (!languageOrCountry) return "en_US";
+  if (LANGUAGE_METADATA[languageOrCountry]) {
+    return LANGUAGE_METADATA[languageOrCountry].ogLocale;
+  }
+  const lower = languageOrCountry.toLowerCase();
+  if (lower.includes("spain") || lower.includes("mexico") || lower.includes("argentina") || lower.includes("colombia")) return "es_ES";
+  if (lower.includes("brazil") || lower.includes("portugal")) return "pt_BR";
+  if (lower.includes("france")) return "fr_FR";
+  if (lower.includes("germany") || lower.includes("austria")) return "de_DE";
+  if (lower.includes("india")) return "hi_IN";
+  if (lower.includes("saudi") || lower.includes("egypt") || lower.includes("uae")) return "ar_SA";
+  if (lower.includes("pakistan")) return "ur_PK";
+  if (lower.includes("indonesia")) return "id_ID";
+  if (lower.includes("turkey")) return "tr_TR";
+  if (lower.includes("russia")) return "ru_RU";
+  return "en_US";
+}
+
+/** Generate hreflang alternate link objects for Country pages */
+export function getCountryHreflangs() {
+  const links: Array<{ rel: "alternate"; hreflang: string; href: string }> = [
+    { rel: "alternate", hreflang: "x-default", href: absoluteUrl("/group/find") },
+  ];
+  // Include major regional country hubs
+  const featuredCountries = [
+    { name: "United States", code: "en-US" },
+    { name: "United Kingdom", code: "en-GB" },
+    { name: "India", code: "hi-IN" },
+    { name: "Brazil", code: "pt-BR" },
+    { name: "Spain", code: "es-ES" },
+    { name: "Mexico", code: "es-MX" },
+    { name: "Germany", code: "de-DE" },
+    { name: "France", code: "fr-FR" },
+    { name: "Indonesia", code: "id-ID" },
+    { name: "Pakistan", code: "ur-PK" },
+    { name: "Nigeria", code: "en-NG" },
+    { name: "Saudi Arabia", code: "ar-SA" },
+    { name: "United Arab Emirates", code: "ar-AE" },
+    { name: "Canada", code: "en-CA" },
+    { name: "Australia", code: "en-AU" },
+    { name: "Turkey", code: "tr-TR" },
+    { name: "Bangladesh", code: "bn-BD" },
+    { name: "Egypt", code: "ar-EG" },
+  ];
+
+  for (const item of featuredCountries) {
+    links.push({
+      rel: "alternate",
+      hreflang: item.code,
+      href: absoluteUrl(countryPath(item.name)),
+    });
+  }
+  return links;
+}
+
+/** Generate hreflang alternate link objects for Language pages */
+export function getLanguageHreflangs() {
+  const links: Array<{ rel: "alternate"; hreflang: string; href: string }> = [
+    { rel: "alternate", hreflang: "x-default", href: absoluteUrl("/group/find") },
+  ];
+  const featuredLangs = ["English", "Spanish", "Hindi", "Portuguese", "French", "German", "Arabic", "Urdu", "Indonesian", "Turkish", "Russian", "Bangla", "Italian"];
+  for (const lang of featuredLangs) {
+    const meta = LANGUAGE_METADATA[lang];
+    if (meta) {
+      links.push({
+        rel: "alternate",
+        hreflang: meta.code,
+        href: absoluteUrl(languagePath(lang)),
+      });
+    }
+  }
+  return links;
+}
+

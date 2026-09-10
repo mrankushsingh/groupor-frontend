@@ -29,6 +29,7 @@ export const Route = createFileRoute("/group/category/$slug")({
         { property: "og:description", content: description },
         { property: "og:url", content: url },
         { property: "og:type", content: "website" },
+        { property: "og:locale", content: "en_US" },
         { name: "twitter:card", content: "summary" },
       ],
       links: [{ rel: "canonical", href: url }],
@@ -37,10 +38,22 @@ export const Route = createFileRoute("/group/category/$slug")({
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: title,
-            description: description,
-            url: url,
+            "@graph": [
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                  { "@type": "ListItem", position: 2, name: "Categories", item: absoluteUrl("/group/find") },
+                  { "@type": "ListItem", position: 3, name: loaderData.category.name, item: url },
+                ],
+              },
+              {
+                "@type": "CollectionPage",
+                name: title,
+                description: description,
+                url: url,
+              },
+            ],
           }),
         },
       ],

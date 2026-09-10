@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
 import { countries, groups, slugify, sortGroups } from "@/data/groups";
-import { absoluteUrl, countryPath } from "@/lib/seo";
+import { absoluteUrl, countryPath, getCountryHreflangs, getOgLocale } from "@/lib/seo";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 
@@ -12,13 +12,17 @@ export const Route = createFileRoute("/group/country/$slug")({
       (c) => slugify(c.name) === params.slug || c.code.toLowerCase() === params.slug,
     );
     const countryName = match ? match.name : params.slug.replace(/-/g, " ");
-    return { country: countryName, slug: params.slug };
+    const countryCode = match ? match.code : "";
+    return { country: countryName, code: countryCode, slug: params.slug };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
     const title = `WhatsApp Groups in ${loaderData.country} (2026) | Groupor`;
     const description = `Join active WhatsApp groups in ${loaderData.country} (2026). Discover verified local communities for jobs, networking, education, and social discussion.`;
     const url = absoluteUrl(countryPath(loaderData.country));
+    const ogLocale = getOgLocale(loaderData.country);
+    const hreflangs = getCountryHreflangs();
+
     return {
       meta: [
         { title },
@@ -28,18 +32,36 @@ export const Route = createFileRoute("/group/country/$slug")({
         { property: "og:description", content: description },
         { property: "og:url", content: url },
         { property: "og:type", content: "website" },
+        { property: "og:locale", content: ogLocale },
         { name: "twitter:card", content: "summary" },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [{ rel: "canonical", href: url }, ...hreflangs],
       scripts: [
         {
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            name: title,
-            description: description,
-            url: url,
+            "@graph": [
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                  { "@type": "ListItem", position: 2, name: "Countries", item: absoluteUrl("/group/find") },
+                  { "@type": "ListItem", position: 3, name: loaderData.country, item: url },
+                ],
+              },
+              {
+                "@type": "CollectionPage",
+                name: title,
+                description: description,
+                url: url,
+                areaServed: {
+                  "@type": "Country",
+                  name: loaderData.country,
+                  ...(loaderData.code ? { identifier: loaderData.code } : {}),
+                },
+              },
+            ],
           }),
         },
       ],

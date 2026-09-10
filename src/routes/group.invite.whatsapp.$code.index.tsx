@@ -3,7 +3,7 @@ import { GroupDetail, GroupNotFound } from "@/components/GroupDetail";
 import { apiUrl, hasRemoteApi } from "@/lib/api";
 import { normalizeApiGroup, useSubmittedGroups } from "@/lib/submitted-groups";
 import { categories, findGroupByCode, inviteCodeOf } from "@/data/groups";
-import { DEFAULT_OG_IMAGE, groupSeo, SITE_URL } from "@/lib/seo";
+import { DEFAULT_OG_IMAGE, getLanguageCode, getOgLocale, groupSeo, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
   loader: async ({ params }) => {
@@ -33,14 +33,15 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
               }
             }
           }
-        } catch {
-          /* fallback */
-        }
+        } catch {}
       }
     }
-    const categorySlug = group?.category ?? "";
-    const category = categories.find((c) => c.slug === categorySlug);
-    return { group, categoryName: category?.name ?? categorySlug, code: params.code };
+
+    const categoryName = group
+      ? categories.find((c) => c.slug === group.category)?.name ?? "Community"
+      : "";
+
+    return { group, categoryName, code: params.code };
   },
   head: ({ loaderData }) => {
     const url = `${SITE_URL}/group/invite/whatsapp/${loaderData?.code ?? ""}`;
@@ -56,6 +57,9 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
     const seo = groupSeo(group);
     const title = seo.title;
     const description = seo.description;
+    const ogLocale = getOgLocale(group.language || group.country);
+    const langCode = getLanguageCode(group.language);
+
     return {
       meta: [
         { title },
@@ -65,6 +69,7 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
         { property: "og:description", content: description },
         { property: "og:url", content: url },
         { property: "og:type", content: "website" },
+        { property: "og:locale", content: ogLocale },
         { property: "og:image", content: group.image ?? DEFAULT_OG_IMAGE },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:image", content: group.image ?? DEFAULT_OG_IMAGE },
@@ -90,10 +95,13 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
                 ],
               },
               {
-                "@type": "WebPage",
+                "@type": "DiscussionForumPosting",
                 name: title,
+                headline: group.name,
                 description,
                 url,
+                inLanguage: langCode,
+                ...(group.country ? { areaServed: { "@type": "Country", name: group.country } } : {}),
                 ...(group.image ? { image: group.image } : {}),
               },
             ],
