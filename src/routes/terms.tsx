@@ -6,16 +6,16 @@ import { absoluteUrl, SITE_URL } from "@/lib/seo";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — Groupor.link WhatsApp Group Directory" },
+      { title: "Terms of Service | Groupor" },
       {
         name: "description",
         content:
-          "Terms of Service for Groupor.link, the free WhatsApp group links directory: acceptance, user conduct, submitted content, warranties and liability.",
+          "Terms of Service for Groupor directory: user conduct, group submission guidelines, platform rules, and disclaimers.",
       },
-      { property: "og:title", content: "Terms of Service — Groupor.link" },
+      { property: "og:title", content: "Terms of Service | Groupor" },
       {
         property: "og:description",
-        content: "Rules for submitting and browsing WhatsApp group links on Groupor.link.",
+        content: "Rules for submitting and browsing WhatsApp group links on Groupor.",
       },
       { property: "og:url", content: absoluteUrl("/terms") },
       { property: "og:type", content: "website" },
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/terms")({
           {
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "Groupor.link",
+            name: "Groupor",
             url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",

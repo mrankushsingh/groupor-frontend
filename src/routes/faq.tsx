@@ -52,17 +52,17 @@ const FAQS = [
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — Groupor.link WhatsApp Group Directory" },
+      { title: "Frequently Asked Questions (FAQ) | Groupor" },
       {
         name: "description",
         content:
-          "Find answers about submitting WhatsApp groups, viewing group listings, moderation, privacy, and reporting on Groupor.link.",
+          "Find answers about submitting WhatsApp groups, group listings, moderation guidelines, member safety, and reporting on Groupor.",
       },
-      { property: "og:title", content: "FAQ — Groupor.link" },
+      { property: "og:title", content: "Frequently Asked Questions (FAQ) | Groupor" },
       {
         property: "og:description",
         content:
-          "Common questions about Groupor.link: submitting groups, finding groups, moderation, and privacy.",
+          "Common questions about Groupor: submitting groups, finding groups, moderation, and privacy.",
       },
       { property: "og:url", content: absoluteUrl("/faq") },
       { property: "og:type", content: "website" },

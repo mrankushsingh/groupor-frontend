@@ -19,16 +19,17 @@ import { absoluteUrl } from "@/lib/seo";
 export const Route = createFileRoute("/group/addgroup")({
   head: () => ({
     meta: [
-      { title: "Add Your WhatsApp Group — Groupor.link" },
+      { title: "Add Your WhatsApp Group | Groupor" },
       {
         name: "description",
         content:
-          "Add your WhatsApp group invite link to Groupor.link for free and reach thousands of new members.",
+          "Submit your WhatsApp group invite link to Groupor for free and connect with thousands of active new members.",
       },
-      { property: "og:title", content: "Add Your WhatsApp Group — Groupor.link" },
+      { property: "og:title", content: "Add Your WhatsApp Group | Groupor" },
       {
         property: "og:description",
-        content: "Share your WhatsApp group link with thousands of people, free.",
+        content:
+          "Submit your WhatsApp group invite link to Groupor for free.",
       },
       { property: "og:url", content: absoluteUrl("/group/addgroup") },
       { property: "og:type", content: "website" },

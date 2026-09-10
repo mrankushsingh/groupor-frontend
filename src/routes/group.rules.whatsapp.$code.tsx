@@ -11,10 +11,10 @@ export const Route = createFileRoute("/group/rules/whatsapp/$code")({
   loader: ({ params }) => ({ code: params.code }),
   head: ({ params }) => ({
     meta: [
-      { title: "Join Group Now — Groupor.link" },
+      { title: "Join Group Now | Groupor" },
       {
         name: "description",
-        content: "Learn about Groupor, then join the WhatsApp group.",
+        content: "Learn about Groupor guidelines, then join the WhatsApp group.",
       },
       { name: "robots", content: "noindex, follow" },
     ],

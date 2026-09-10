@@ -5,15 +5,15 @@ import { absoluteUrl, SITE_URL } from "@/lib/seo";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us — Groupor.link" },
+      { title: "Contact Us | Groupor" },
       {
         name: "description",
-        content: "Contact Groupor.link for support at support@groupor.link.",
+        content: "Contact Groupor support team at support@groupor.link for assistance, community reports, or media inquiries.",
       },
-      { property: "og:title", content: "Contact Us — Groupor.link" },
+      { property: "og:title", content: "Contact Us | Groupor" },
       {
         property: "og:description",
-        content: "Contact Groupor.link for support at support@groupor.link.",
+        content: "Contact Groupor support team at support@groupor.link for assistance.",
       },
       { property: "og:url", content: absoluteUrl("/contact") },
       { property: "og:type", content: "website" },
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/contact")({
           {
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "Groupor.link",
+            name: "Groupor",
             url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",
@@ -35,8 +35,8 @@ export const Route = createFileRoute("/contact")({
           {
             "@context": "https://schema.org",
             "@type": "ContactPage",
-            name: "Contact Us — Groupor.link",
-            description: "Contact Groupor.link for support at support@groupor.link.",
+            name: "Contact Us | Groupor",
+            description: "Contact Groupor support team at support@groupor.link.",
             url: absoluteUrl("/contact"),
             mainEntity: { "@id": `${SITE_URL}/#organization` },
             contactPoint: {

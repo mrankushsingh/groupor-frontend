@@ -43,14 +43,14 @@ export const Route = createFileRoute("/group/find")({
     const s = match.search;
     const bits = [s.category, s.country, s.language, s.q].filter(Boolean);
     const label = bits.length ? bits.join(" · ") : "All filters";
-    const title = `Find WhatsApp Groups — ${label} | Groupor.link`;
+    const title = `Find WhatsApp Groups — ${label} | Groupor`;
     return {
       meta: [
         { title },
         {
           name: "description",
           content:
-            "Find WhatsApp groups by category, country and language on Groupor.link.",
+            "Find WhatsApp groups by category, country and language on Groupor.",
         },
         { name: "robots", content: "noindex, follow" },
         { property: "og:title", content: title },

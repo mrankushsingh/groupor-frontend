@@ -6,16 +6,16 @@ import { absoluteUrl, SITE_URL } from "@/lib/seo";
 export const Route = createFileRoute("/disclaimer")({
   head: () => ({
     meta: [
-      { title: "Disclaimer — Groupor.link WhatsApp Group Directory" },
+      { title: "Disclaimer & Legal Notice | Groupor" },
       {
         name: "description",
         content:
-          "Groupor.link lists user-submitted WhatsApp group links and is not affiliated with WhatsApp Inc. or Meta Platforms Inc.",
+          "Groupor lists public WhatsApp group links and is an independent directory not affiliated with WhatsApp Inc. or Meta Platforms Inc.",
       },
-      { property: "og:title", content: "Disclaimer — Groupor.link" },
+      { property: "og:title", content: "Disclaimer & Legal Notice | Groupor" },
       {
         property: "og:description",
-        content: "Groupor.link is an independent link directory and is not associated with WhatsApp Messenger.",
+        content: "Groupor is an independent link directory not associated with WhatsApp Messenger.",
       },
       { property: "og:url", content: absoluteUrl("/disclaimer") },
       { property: "og:type", content: "website" },
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/disclaimer")({
           {
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "Groupor.link",
+            name: "Groupor",
             url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",
