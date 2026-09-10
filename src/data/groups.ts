@@ -46,9 +46,13 @@ export function joinUrl(link: string): string {
  * Uses WhatsApp's `/invite/CODE` form and opens it in a new tab.
  */
 export function joinHref(link: string): { url: string; target: "_blank" | "_self" } {
-  const canonical = joinUrl(link);
+  const value = (link ?? "").trim().replace(/\s+/g, "");
+  if (!value) return { url: "", target: "_blank" };
+  const withScheme = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  const canonical = joinUrl(withScheme);
   if (!canonical) return { url: "", target: "_blank" };
-  return { url: canonical, target: "_blank" };
+  const finalUrl = /^https:\/\/chat\.whatsapp\.com\//i.test(withScheme) ? withScheme : canonical;
+  return { url: finalUrl, target: "_blank" };
 }
 
 

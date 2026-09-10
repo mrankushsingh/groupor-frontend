@@ -71,7 +71,9 @@ function normalizeTags(tags: string[] | string | undefined): string[] | undefine
 }
 
 export async function addGroupToStore(input: AddGroupInput): Promise<AddGroupResult> {
-  const canonical = joinUrl(input.link);
+  const rawLink = (input.link ?? "").trim().replace(/\s+/g, "");
+  const withScheme = /^https?:\/\//i.test(rawLink) ? rawLink : `https://${rawLink}`;
+  const canonical = joinUrl(withScheme);
   if (!canonical) {
     return {
       ok: false,
@@ -107,6 +109,7 @@ export async function addGroupToStore(input: AddGroupInput): Promise<AddGroupRes
     (input.name ?? "").trim() ||
     `WhatsApp Group ${code.slice(0, 8)}`;
   const tags = normalizeTags(input.tags);
+  const finalLink = /^https:\/\/chat\.whatsapp\.com\//i.test(withScheme) ? withScheme : canonical;
   const group: Group = {
     id: `u${now}`,
     name: name.slice(0, 80),
@@ -118,7 +121,7 @@ export async function addGroupToStore(input: AddGroupInput): Promise<AddGroupRes
     country: (input.country ?? "").trim(),
     ...(input.language?.trim() ? { language: input.language.trim() } : {}),
     ...(tags ? { tags } : {}),
-    link: canonical,
+    link: finalLink,
     source: "user_submission",
     createdAt: new Date(now).toISOString(),
     status: "active",
