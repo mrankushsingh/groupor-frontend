@@ -56,7 +56,12 @@ function RulesJoinPage() {
 
   if (!group || isCodeRemoved(code)) return <GroupNotFound />;
 
-  const { url, target } = joinHref(group.link);
+  const actualLink =
+    code && /[A-Z]/.test(code) && inviteCodeOf(group.link) !== code
+      ? `https://chat.whatsapp.com/${code}`
+      : group.link;
+
+  const { url, target } = joinHref(actualLink);
   if (!url) return <GroupNotFound />;
 
   return (

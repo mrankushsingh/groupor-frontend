@@ -55,7 +55,13 @@ function JoinAgreePage() {
 
   if (!group || isCodeRemoved(code)) return <GroupNotFound />;
 
-  const { url } = joinHref(group.link);
+  const actualLink =
+    code && /[A-Z]/.test(code) && inviteCodeOf(group.link) !== code
+      ? `https://chat.whatsapp.com/${code}`
+      : group.link;
+
+  const effectiveCode = inviteCodeOf(actualLink) || code;
+  const { url } = joinHref(actualLink);
   if (!url) return <GroupNotFound />;
 
   return (
@@ -141,7 +147,7 @@ function JoinAgreePage() {
           <div className="flex justify-center py-4">
             <Link
               to="/group/rules/whatsapp/$code"
-              params={{ code }}
+              params={{ code: effectiveCode }}
               className="rounded-md bg-cta px-6 py-3 text-base font-bold text-cta-foreground transition-opacity hover:opacity-90"
             >
               I Agree &amp; Join Group
