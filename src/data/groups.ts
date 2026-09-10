@@ -48,9 +48,7 @@ export function joinUrl(link: string): string {
 export function joinHref(link: string): { url: string; target: "_blank" | "_self" } {
   const canonical = joinUrl(link);
   if (!canonical) return { url: "", target: "_blank" };
-  const code = canonical.split("/").pop();
-  if (!code) return { url: "", target: "_blank" };
-  return { url: `https://chat.whatsapp.com/invite/${code}`, target: "_blank" };
+  return { url: canonical, target: "_blank" };
 }
 
 
