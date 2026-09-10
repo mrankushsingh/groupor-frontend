@@ -104,74 +104,119 @@ export function GroupLandingPage({
         )}
 
         {/* Comprehensive Text Expansion Block (High Text-to-HTML Ratio Upgrade) */}
-        <section className="mt-16 border-t border-border pt-10 space-y-8 text-foreground">
-          <div>
+        <section className="mt-16 border-t border-border pt-10 space-y-10 text-foreground">
+          <article className="space-y-4">
             <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Understanding {heading} Communities
+              Comprehensive Directory Guide: {heading}
             </h2>
-            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-              WhatsApp messaging groups have become the world's most accessible medium for real-time peer discussion, professional networking, and instant information sharing. Finding reliable public invite links for <strong>{heading}</strong> allows you to engage with like-minded individuals, exchange valuable study resources, discover career openings, or simply share passion projects without algorithm interference.
+            <p className="text-base leading-relaxed text-muted-foreground">
+              WhatsApp messaging groups have established themselves as the world's primary instant communication standard for real-time peer discussion, localized community coordination, professional networking, and direct information exchange. Accessing high-quality, verified public invite links for <strong>{heading}</strong> allows users to connect with active interest groups, share expert insights, receive instant community updates, and participate in peer-to-peer discussions without algorithmic content filtering or paywalls.
             </p>
-            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-              Unlike social media feeds controlled by recommendation algorithms, joining a dedicated WhatsApp group puts you directly in touch with active community members. Whether you are seeking daily updates, regional meetups, expert advice, or interactive chat groups, Groupor ensures that every invite link listed in our <strong>{heading}</strong> directory is verified and active.
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Unlike open social media platforms where discovery algorithms prioritize sponsored content or clickbait, joining a dedicated WhatsApp group listed under <strong>{heading}</strong> puts you directly in contact with active, real-time community members. Whether you are looking for localized group chats, global topic discussions, skill-building networks, or active social hubs, Groupor verifies invite links to ensure a safe, accessible, and seamless joining experience.
             </p>
-          </div>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              For specialized topics—including mature, adult, or 18+ social hubs—Groupor maintains strict moderation guidelines requiring age verification awareness, explicit mutual consent, and zero-tolerance policies against illegal content, non-consensual media sharing, or harassment. All listed communities must adhere to international digital safety guidelines and respect user privacy at all times.
+            </p>
+          </article>
 
           <div className="grid gap-6 sm:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
               <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <MessageSquare className="size-5 text-primary" />
-                Why Join Communities on Groupor?
+                <MessageSquare className="size-5 text-primary shrink-0" />
+                Why Discover Communities on Groupor?
               </h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Many online directories suffer from broken links, spam redirects, or unmoderated malicious content. Groupor eliminates these risks through multi-layer link health monitoring and strict community safety guidelines. We automatically purge inactive invite links and triage user reports within 24 hours.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Navigating open web searches for active messaging groups often leads to broken invite links, deceptive redirect loops, or unmoderated spam feeds. Groupor solves these friction points through automated link format validation, continuous uptime monitoring, and active community moderation. Inactive or full groups (exceeding WhatsApp's 1,024 member capacity) are flagged and updated promptly to maintain directory reliability.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-3">
               <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <ShieldCheck className="size-5 text-primary" />
-                Member Privacy & Security Best Practices
+                <ShieldCheck className="size-5 text-primary shrink-0" />
+                Member Privacy & Security Protocols
               </h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                When participating in public messaging groups, always protect your personal privacy. Adjust your WhatsApp privacy settings (`Settings &rarr; Privacy`) to hide your profile photo and status from unknown contacts. Never share bank details, OTP codes, passwords, or personal financial documents in public group chats.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                When participating in public or semi-private messaging groups, protecting your digital privacy is essential. We strongly recommend adjusting your personal WhatsApp privacy settings (`Settings &rarr; Privacy`) to restrict your profile photo, about info, and online status to contacts only before joining public group invite links. Never disclose financial credentials, bank details, passwords, or one-time passcodes (OTPs) in group discussions.
               </p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm space-y-4">
+            <h2 className="text-xl font-bold text-foreground">
+              Community Etiquette & Group Participation Standards
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-3 text-sm">
+              <div className="space-y-1">
+                <h3 className="font-semibold text-foreground">1. Respect Member Boundaries</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Treat all group participants with courtesy. Do not send unsolicited private direct messages (DMs) to co-members without explicit prior consent.
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="font-semibold text-foreground">2. Zero Tolerance for Spam</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Avoid repetitive promotional posting, deceptive affiliate links, unverified financial schemes, or bulk messaging in public group chats.
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="font-semibold text-foreground">3. Follow Admin Rules</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Every group operates under specific topic guidelines set by its administrators. Adhere strictly to pin posts and group descriptions.
+                </p>
+              </div>
             </div>
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <HelpCircle className="size-6 text-primary" />
+              <HelpCircle className="size-6 text-primary shrink-0" />
               <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Frequently Asked Questions about {heading}
+                Frequently Asked Questions regarding {heading}
               </h2>
             </div>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 text-sm">
-              <div className="rounded-xl border border-border bg-card p-5">
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 text-sm">
+              <div className="rounded-xl border border-border bg-card p-5 space-y-1">
                 <h3 className="font-bold text-foreground">How do I join a group listed under {heading}?</h3>
-                <p className="mt-1 text-muted-foreground leading-relaxed">
-                  Click on any group card above, review the group description and rules, then tap "Join Group". You will be redirected safely to WhatsApp to confirm your entry.
+                <p className="text-muted-foreground leading-relaxed">
+                  Browse the verified group cards listed above, review the group description and member guidelines, and click the "Join Group" button. You will be redirected safely to WhatsApp to preview the group and confirm your entry.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-border bg-card p-5">
+              <div className="rounded-xl border border-border bg-card p-5 space-y-1">
                 <h3 className="font-bold text-foreground">Is it free to join or list a group on Groupor?</h3>
-                <p className="mt-1 text-muted-foreground leading-relaxed">
-                  Yes! All listings and group joins on Groupor are 100% free. We never charge subscription fees or require personal account creation.
+                <p className="text-muted-foreground leading-relaxed">
+                  Yes, 100%! All group discovery, link validation, and group submissions on Groupor are completely free. We do not require registration, credit card details, or paid subscriptions.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-border bg-card p-5">
-                <h3 className="font-bold text-foreground">What should I do if a group invite link is full or broken?</h3>
-                <p className="mt-1 text-muted-foreground leading-relaxed">
-                  WhatsApp groups have a capacity limit of 1,024 members. If an invite link has expired or reached capacity, click "Report Group" so our moderators can update or remove the link.
+              <div className="rounded-xl border border-border bg-card p-5 space-y-1">
+                <h3 className="font-bold text-foreground">What should I do if a group invite link is full or invalid?</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  WhatsApp groups have an upper limit of 1,024 participants. If a link has expired or the group is full, click the "Report Group" button on the group page. Our moderation team will test and update or replace the link within 24 hours.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-border bg-card p-5">
-                <h3 className="font-bold text-foreground">Can I submit my own WhatsApp group for free?</h3>
-                <p className="mt-1 text-muted-foreground leading-relaxed">
-                  Absolutly! If you are a group admin, click "+ Add WhatsApp Group" in the header to submit your public invite link to our global search directory.
+              <div className="rounded-xl border border-border bg-card p-5 space-y-1">
+                <h3 className="font-bold text-foreground">Can group administrators submit custom WhatsApp links?</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Yes! Community managers and group admins can click "+ Add WhatsApp Group" in our main navigation menu to submit active invite links for instant indexing and global discovery.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border bg-card p-5 space-y-1">
+                <h3 className="font-bold text-foreground">How does Groupor moderate adult or 18+ category listings?</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Adult and 18+ category listings are restricted to consenting adult users. Groupor enforces strict zero-tolerance screening against non-consensual content, hate speech, or exploitation. Violating groups are permanently removed.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border bg-card p-5 space-y-1">
+                <h3 className="font-bold text-foreground">How often is the Groupor directory updated?</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Our directory system processes link health checks daily, automatically re-verifying invite codes and incorporating new community submissions continuously.
                 </p>
               </div>
             </div>
