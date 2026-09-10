@@ -22,14 +22,27 @@ export function languagePath(language: string) {
 }
 
 /**
- * Decodes all numeric hex/decimal and named HTML entities (including unclosed or truncated fragments like &#x1d5f),
+ * Decodes all numeric hex/decimal and named HTML entities, strips truncated Mathematical entity fragments,
  * and normalizes fancy mathematical Unicode characters (e.g. 𝙰𝚕𝚕 𝙲𝚊𝚝𝚎𝚐𝚘𝚛𝚒𝚎𝚜) into clean standard text.
  */
 export function cleanText(value?: string | null): string {
   if (!value) return "";
   let text = String(value);
 
-  // Decode valid hex entities with or without trailing semicolon
+  // 1. Decode full 5-digit Mathematical Alphanumeric Symbols (0x1D400 - 0x1D7FF)
+  text = text.replace(/&#x(1[dD][4-7][0-9a-fA-F]{2});?/gi, (_, hex) => {
+    try {
+      const codePoint = parseInt(hex, 16);
+      return String.fromCodePoint(codePoint);
+    } catch {
+      return "";
+    }
+  });
+
+  // 2. Strip any incomplete/truncated Mathematical Alphanumeric entity fragments (e.g. &#x1d5f, &#x1d5)
+  text = text.replace(/&#x1[dD][4-7][0-9a-fA-F]{0,2};?/gi, "");
+
+  // 3. Decode remaining valid 2-6 digit hex entities
   text = text.replace(/&#x([0-9a-fA-F]{2,6});?/gi, (_, hex) => {
     try {
       const codePoint = parseInt(hex, 16);
@@ -42,7 +55,7 @@ export function cleanText(value?: string | null): string {
     return "";
   });
 
-  // Decode valid decimal entities with or without trailing semicolon
+  // 4. Decode decimal entities
   text = text.replace(/&#([0-9]{2,7});?/g, (_, dec) => {
     try {
       const codePoint = parseInt(dec, 10);
@@ -55,10 +68,10 @@ export function cleanText(value?: string | null): string {
     return "";
   });
 
-  // Strip any remaining truncated/broken entity fragments (e.g. &#x1d5f)
+  // 5. Strip any generic unclosed entity fragments
   text = text.replace(/&#x?[0-9a-fA-F]*/gi, "");
 
-  // Decode named HTML entities
+  // 6. Decode named HTML entities
   text = text
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -68,7 +81,7 @@ export function cleanText(value?: string | null): string {
     .replace(/&apos;/g, "'")
     .replace(/&nbsp;/g, " ");
 
-  // Normalize fancy mathematical unicode fonts (A-Z, a-z, 0-9) to clean ASCII
+  // 7. Normalize fancy mathematical unicode fonts (A-Z, a-z, 0-9) to clean ASCII
   return text.normalize("NFKD").trim();
 }
 
