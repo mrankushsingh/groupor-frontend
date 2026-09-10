@@ -6,6 +6,7 @@ import { GroupCard } from "@/components/GroupCard";
 import { categories, countries, groups, languages } from "@/data/groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { absoluteUrl, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => {
@@ -25,11 +26,11 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Browse thousands of active WhatsApp group invite links by category.",
       },
-      { property: "og:url", content: "https://groupor.link/" },
+      { property: "og:url", content: absoluteUrl("/") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -37,10 +38,10 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Groupor.link",
-          url: "https://groupor.link/",
+          url: absoluteUrl("/"),
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://groupor.link/group/find?q={search_term_string}",
+            target: `${SITE_URL}/group/find?q={search_term_string}`,
             "query-input": "required name=search_term_string",
           },
         }),

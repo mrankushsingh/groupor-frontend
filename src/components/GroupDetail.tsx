@@ -111,37 +111,39 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             )}
           </div>
 
-          <h1 className="mt-5 text-[22px] font-bold leading-snug text-foreground">
-            {group.name}
+          <h1 className="mt-5 text-2xl font-bold leading-snug text-foreground">
+            {group.name} WhatsApp Group Invite Link
           </h1>
 
           <p className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[13px] text-[#777]">
             <Link
               to="/group/category/$slug"
               params={{ slug: group.category }}
-              className="inline-flex items-center gap-1.5 hover:text-primary"
+              className="inline-flex items-center gap-1.5 hover:text-primary font-medium"
             >
               <LayoutGrid className="size-3.5" />
               {categoryName}
             </Link>
-            <Link
-              to="/group/country/$slug"
-              params={{ slug: group.country.toLowerCase().replace(/[^a-z0-9]+/g, "-") }}
-              className="inline-flex items-center gap-1.5 hover:text-primary"
-            >
-              <Globe className="size-3.5" />
-              {group.country}
-            </Link>
-            {group.language && (
+            {group.country ? (
+              <Link
+                to="/group/country/$slug"
+                params={{ slug: group.country.toLowerCase().replace(/[^a-z0-9]+/g, "-") }}
+                className="inline-flex items-center gap-1.5 hover:text-primary font-medium"
+              >
+                <Globe className="size-3.5" />
+                {group.country}
+              </Link>
+            ) : null}
+            {group.language ? (
               <Link
                 to="/group/language/$slug"
-                params={{ slug: group.language.toLowerCase() }}
-                className="inline-flex items-center gap-1.5 hover:text-primary"
+                params={{ slug: group.language.toLowerCase().replace(/[^a-z0-9]+/g, "-") }}
+                className="inline-flex items-center gap-1.5 hover:text-primary font-medium"
               >
                 <Languages className="size-3.5" />
                 {group.language}
               </Link>
-            )}
+            ) : null}
             {timing ? (
               <span className="inline-flex items-center gap-1.5">
                 <Calendar className="size-3.5" />
@@ -151,19 +153,25 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
           </p>
 
           {group.description.trim() ? (
-            <div className="mx-auto mt-5 w-full max-w-2xl rounded border border-[#ddd] bg-white px-4 py-3 text-left text-[15px] leading-relaxed text-[#333] whitespace-pre-wrap">
+            <div className="mx-auto mt-5 w-full max-w-2xl rounded border border-border bg-card px-4 py-3 text-left text-sm leading-relaxed text-foreground whitespace-pre-wrap">
+              <h2 className="text-base font-semibold text-foreground mb-1">About {group.name}</h2>
               {group.description}
             </div>
-          ) : null}
+          ) : (
+            <div className="mx-auto mt-5 w-full max-w-2xl rounded border border-border bg-card px-4 py-3 text-left text-sm leading-relaxed text-muted-foreground">
+              <h2 className="text-base font-semibold text-foreground mb-1">About {group.name}</h2>
+              Join the official public invite link for <strong>{group.name}</strong> on Groupor.link. Connect with like-minded members in {categoryName}{group.country ? ` based in ${group.country}` : ""}{group.language ? ` speaking ${group.language}` : ""}.
+            </div>
+          )}
 
           {group.tags && group.tags.length > 0 ? (
             <ul className="mx-auto mt-4 flex max-w-2xl flex-wrap justify-center gap-2">
               {group.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full bg-[#5bc0de] px-3 py-1 text-[13px] font-normal leading-none text-white"
+                  className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[13px] font-normal leading-none text-primary"
                 >
-                  {tag}
+                  #{tag}
                 </li>
               ))}
             </ul>
@@ -179,26 +187,26 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
                 <Link
                   to="/group/join/whatsapp/$code"
                   params={{ code }}
-                  className="rounded-md bg-cta px-5 py-2.5 text-base text-cta-foreground transition-opacity hover:opacity-90"
+                  className="rounded-md bg-cta px-6 py-3 text-base font-bold text-cta-foreground transition-opacity hover:opacity-90 shadow-md"
                 >
-                  Join group
+                  Join {group.name} Group Now
                 </Link>
                 <a
                   href={`https://api.whatsapp.com/send?text=${share.encoded}`}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  className="rounded-md bg-cta px-5 py-2.5 text-base text-cta-foreground transition-opacity hover:opacity-90"
+                  className="rounded-md bg-card border border-border px-5 py-3 text-base font-semibold text-foreground transition-colors hover:bg-accent"
                 >
-                  Share group
+                  Share Group
                 </a>
               </div>
-              <div className="flex justify-center gap-2">
+              <div className="flex justify-center gap-2 mt-2">
                 <a
                   href={`https://api.whatsapp.com/send?text=${share.encoded}`}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   aria-label="Share on WhatsApp"
-                  className="flex size-8 items-center justify-center rounded-md bg-[#25D366] text-primary-foreground"
+                  className="flex size-9 items-center justify-center rounded-md bg-[#25D366] text-white hover:opacity-90"
                 >
                   <MessageCircle className="size-4" />
                 </a>
@@ -207,7 +215,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   aria-label="Share on Twitter"
-                  className="flex size-8 items-center justify-center rounded-md bg-[#1DA1F2] text-primary-foreground"
+                  className="flex size-9 items-center justify-center rounded-md bg-[#1DA1F2] text-white hover:opacity-90"
                 >
                   <Twitter className="size-4" />
                 </a>
@@ -219,7 +227,43 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             </p>
           )}
 
-          <div className="mt-10 text-left">
+          {/* Educational & SEO Content Block */}
+          <div className="mx-auto mt-10 w-full max-w-2xl text-left border-t border-border pt-6 space-y-6">
+            <section>
+              <h2 className="text-lg font-bold text-foreground">How to Join {group.name} WhatsApp Group</h2>
+              <ol className="mt-2 list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
+                <li>Click on the <strong>Join {group.name} Group Now</strong> button above.</li>
+                <li>Review the group rules and guidelines on the confirmation page.</li>
+                <li>Tap <strong>I Agree & Join Group</strong> to open WhatsApp and join the community.</li>
+              </ol>
+            </section>
+
+            <section>
+              <h2 className="text-lg font-bold text-foreground">WhatsApp Group Safety & Etiquette</h2>
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
+                <li>Be respectful to all group members and admins.</li>
+                <li>Keep conversations relevant to <strong>{categoryName}</strong>.</li>
+                <li>Do not share personal financial details or unverified promotional links.</li>
+                <li>Use WhatsApp privacy settings to protect your profile information.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-lg font-bold text-foreground">Frequently Asked Questions</h2>
+              <div className="mt-3 space-y-3 text-sm text-muted-foreground">
+                <div>
+                  <h3 className="font-semibold text-foreground">Is joining {group.name} free?</h3>
+                  <p>Yes, all WhatsApp group invite links listed on Groupor.link are 100% free to join.</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground">What if the WhatsApp group is full?</h3>
+                  <p>If the group has reached its maximum member limit (1,024 members), explore other groups in the <Link to="/group/category/$slug" params={{ slug: group.category }} className="text-primary underline">{categoryName}</Link> category.</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div className="mt-8 text-left">
             {code ? <ReportGroup groupId={group.id} inviteCode={code} reported={reported} /> : null}
           </div>
         </article>

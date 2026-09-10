@@ -16,7 +16,7 @@ export const Route = createFileRoute("/group/category/$slug")({
     const description = "Browse active " + loaderData.category.name.toLowerCase() + " WhatsApp groups on Groupor. Find communities by country and language.";
     const url = absoluteUrl(categoryPath(loaderData.category.slug));
     return {
-      meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }, { property: "og:type", content: "website" }],
+      meta: [{ title }, { name: "description", content: description }, { name: "robots", content: "index, follow" }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }, { property: "og:type", content: "website" }],
       links: [{ rel: "canonical", href: url }],
       scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", name: title, url, mainEntity: { "@type": "ItemList", numberOfItems: loaderData.groups.length, itemListElement: loaderData.groups.map((group, position) => ({ "@type": "ListItem", position: position + 1, name: group.name, url: absoluteUrl("/group/invite/whatsapp/" + group.link.split("/").pop()) })) } }) }],
     };

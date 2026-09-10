@@ -23,10 +23,13 @@ export function languagePath(language: string) {
 
 export function groupSeo(group: Group) {
   const code = inviteCodeOf(group.link);
-  const path = "/group/invite/whatsapp/" + code;
+  const path = code ? "/group/invite/whatsapp/" + code : "/";
   const categoryName = categories.find((category) => category.slug === group.category)?.name ?? "Community";
-  const title = group.name + " WhatsApp Group – Join " + categoryName + " | " + SITE_NAME;
-  const description = ("Join the " + group.name + " WhatsApp group on " + SITE_NAME + ". " + group.description).slice(0, 155);
+  const countryText = group.country ? ` in ${group.country}` : "";
+  const languageText = group.language ? ` (${group.language})` : "";
+  const title = `${group.name} WhatsApp Group Invite Link – ${categoryName}${countryText} | ${SITE_NAME}`;
+  const descBase = group.description ? group.description.trim() : `Join active ${group.name} WhatsApp group for ${categoryName}${countryText}${languageText}. Discover active communities on Groupor.`;
+  const description = (`Join ${group.name} WhatsApp group${countryText}${languageText}. ${descBase}`).slice(0, 155);
   return { url: absoluteUrl(path), title, description };
 }
 

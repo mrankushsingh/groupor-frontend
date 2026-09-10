@@ -2,9 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { GroupDetail, GroupNotFound } from "@/components/GroupDetail";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { categories, findGroupByCode, inviteCodeOf } from "@/data/groups";
-import { DEFAULT_OG_IMAGE, groupSeo } from "@/lib/seo";
-
-const BASE_URL = "https://groupor.link";
+import { DEFAULT_OG_IMAGE, groupSeo, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
   loader: ({ params }) => {
@@ -14,7 +12,7 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
     return { group, categoryName: category?.name ?? categorySlug, code: params.code };
   },
   head: ({ loaderData }) => {
-    const url = `${BASE_URL}/group/invite/whatsapp/${loaderData?.code ?? ""}`;
+    const url = `${SITE_URL}/group/invite/whatsapp/${loaderData?.code ?? ""}`;
     if (!loaderData?.group || loaderData.group.status === "inactive") {
       return {
         meta: [
@@ -31,6 +29,7 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
       meta: [
         { title },
         { name: "description", content: description },
+        { name: "robots", content: "index, follow" },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:url", content: url },
@@ -49,22 +48,22 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
               {
                 "@type": "BreadcrumbList",
                 itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
+                  { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
                   {
                     "@type": "ListItem",
                     position: 2,
                     name: categoryName,
-                    item: `${BASE_URL}/category/${group.category}`,
+                    item: `${SITE_URL}/group/category/${group.category}`,
                   },
                   { "@type": "ListItem", position: 3, name: group.name, item: url },
                 ],
               },
               {
-                "@type": "WebPage",
-                name: title,
+                "@type": "SocialMediaPosting",
+                headline: title,
                 description,
                 url,
-                ...(group.image ? { primaryImageOfPage: group.image } : {}),
+                ...(group.image ? { image: group.image } : {}),
               },
             ],
           }),

@@ -125,9 +125,9 @@ export const Route = createRootRouteWithContext<{
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "@id": "https://groupor.link/#organization",
+          "@id": `${SITE_URL}/#organization`,
           name: "Groupor.link",
-          url: "https://groupor.link",
+          url: SITE_URL,
           email: "support@groupor.link",
           description:
             "Free directory of active WhatsApp group invite links by category, country and language.",

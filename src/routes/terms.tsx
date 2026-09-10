@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { LegalPage } from "@/components/LegalPage";
+import { absoluteUrl, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -16,11 +17,11 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "Rules for submitting and browsing WhatsApp group links on Groupor.link.",
       },
-      { property: "og:url", content: "https://groupor.link/terms" },
+      { property: "og:url", content: absoluteUrl("/terms") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/terms" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/terms") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/terms")({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Groupor.link",
-            url: "https://groupor.link",
+            url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",
           },
@@ -39,16 +40,16 @@ export const Route = createFileRoute("/terms")({
             name: "Terms of Service — Groupor.link",
             description:
               "Terms of Service for Groupor.link, the free WhatsApp group links directory.",
-            url: "https://groupor.link/terms",
-            publisher: { "@id": "https://groupor.link/#organization" },
+            url: absoluteUrl("/terms"),
+            publisher: { "@id": `${SITE_URL}/#organization` },
           },
           {
             "@context": "https://schema.org",
             "@type": "LegalService",
             name: "Terms of Service",
-            provider: { "@id": "https://groupor.link/#organization" },
-            url: "https://groupor.link/terms",
-            termsOfService: "https://groupor.link/terms",
+            provider: { "@id": `${SITE_URL}/#organization` },
+            url: absoluteUrl("/terms"),
+            termsOfService: absoluteUrl("/terms"),
             serviceType: "Terms and Conditions",
           },
         ]),

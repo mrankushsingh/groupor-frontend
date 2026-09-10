@@ -4,6 +4,7 @@ import { GroupNotFound } from "@/components/GroupDetail";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { findGroupByCode, inviteCodeOf, joinHref } from "@/data/groups";
+import { SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/group/join/whatsapp/$code")({
   loader: ({ params }) => ({ code: params.code }),
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/group/join/whatsapp/$code")({
     links: [
       {
         rel: "canonical",
-        href: `https://groupor.link/group/join/whatsapp/${params.code}`,
+        href: `${SITE_URL}/group/join/whatsapp/${params.code}`,
       },
     ],
   }),

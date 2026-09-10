@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { LegalPage } from "@/components/LegalPage";
+import { absoluteUrl, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/disclaimer")({
   head: () => ({
@@ -16,11 +17,11 @@ export const Route = createFileRoute("/disclaimer")({
         property: "og:description",
         content: "Groupor.link is an independent link directory and is not associated with WhatsApp Messenger.",
       },
-      { property: "og:url", content: "https://groupor.link/disclaimer" },
+      { property: "og:url", content: absoluteUrl("/disclaimer") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/disclaimer" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/disclaimer") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/disclaimer")({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Groupor.link",
-            url: "https://groupor.link",
+            url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",
           },
@@ -39,15 +40,15 @@ export const Route = createFileRoute("/disclaimer")({
             name: "Disclaimer — Groupor.link",
             description:
               "Groupor.link is an independent link directory and is not associated with WhatsApp Messenger.",
-            url: "https://groupor.link/disclaimer",
-            publisher: { "@id": "https://groupor.link/#organization" },
+            url: absoluteUrl("/disclaimer"),
+            publisher: { "@id": `${SITE_URL}/#organization` },
           },
           {
             "@context": "https://schema.org",
             "@type": "LegalService",
             name: "Disclaimer",
-            provider: { "@id": "https://groupor.link/#organization" },
-            url: "https://groupor.link/disclaimer",
+            provider: { "@id": `${SITE_URL}/#organization` },
+            url: absoluteUrl("/disclaimer"),
             serviceType: "Disclaimer",
           },
         ]),

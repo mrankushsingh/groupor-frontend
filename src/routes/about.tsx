@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShieldCheck, Users, Zap } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 
+import { absoluteUrl } from "@/lib/seo";
+
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -16,11 +18,11 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "A hand-reviewed, free directory of active WhatsApp group links.",
       },
-      { property: "og:url", content: "https://groupor.link/about" },
+      { property: "og:url", content: absoluteUrl("/about") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/about" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/about") }],
   }),
   component: AboutPage,
 });

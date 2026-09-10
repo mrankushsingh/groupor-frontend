@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { LegalPage } from "@/components/LegalPage";
+import { absoluteUrl, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -16,11 +17,11 @@ export const Route = createFileRoute("/privacy")({
         property: "og:description",
         content: "How Groupor.link collects and uses visitor information.",
       },
-      { property: "og:url", content: "https://groupor.link/privacy" },
+      { property: "og:url", content: absoluteUrl("/privacy") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/privacy" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/privacy") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/privacy")({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Groupor.link",
-            url: "https://groupor.link",
+            url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",
           },
@@ -38,15 +39,15 @@ export const Route = createFileRoute("/privacy")({
             "@type": "WebPage",
             name: "Privacy Policy — Groupor.link",
             description: "How Groupor.link collects and uses visitor information.",
-            url: "https://groupor.link/privacy",
-            publisher: { "@id": "https://groupor.link/#organization" },
+            url: absoluteUrl("/privacy"),
+            publisher: { "@id": `${SITE_URL}/#organization` },
           },
           {
             "@context": "https://schema.org",
             "@type": "PrivacyPolicy",
             name: "Privacy Policy",
-            publisher: { "@id": "https://groupor.link/#organization" },
-            url: "https://groupor.link/privacy",
+            publisher: { "@id": `${SITE_URL}/#organization` },
+            url: absoluteUrl("/privacy"),
           },
         ]),
       },

@@ -2,6 +2,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Menu, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
+import { categories, countries, slugify } from "@/data/groups";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -100,13 +101,58 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const topCategories = categories.filter((c) => c.slug !== "all");
+  const topCountries = countries.filter((c) => Boolean(c.code)).slice(0, 18);
+
   return (
     <footer className="mt-16 border-t border-border bg-card">
-      <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-8 text-sm text-muted-foreground">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 text-sm text-muted-foreground">
         <BrandLogo size="sm" showTagline />
-        <div className="flex flex-wrap gap-4 sm:gap-6">
+
+        {/* Category Links for Crawler Discovery */}
+        <div className="border-t border-border/60 pt-6">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-foreground mb-3">
+            Browse WhatsApp Groups by Category
+          </h3>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
+            {topCategories.map((cat) => (
+              <Link
+                key={cat.slug}
+                to="/group/category/$slug"
+                params={{ slug: cat.slug }}
+                className="hover:text-primary transition-colors"
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Country Links */}
+        <div className="border-t border-border/60 pt-6">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-foreground mb-3">
+            Browse WhatsApp Groups by Country
+          </h3>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
+            {topCountries.map((c) => (
+              <Link
+                key={c.code}
+                to="/group/country/$slug"
+                params={{ slug: slugify(c.name) }}
+                className="hover:text-primary transition-colors"
+              >
+                {c.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-4 border-t border-border/60 pt-6 text-xs sm:gap-6">
           <Link to="/" className="transition-colors hover:text-foreground">
             Home
+          </Link>
+          <Link to="/group/find" className="transition-colors hover:text-foreground">
+            Find Groups
           </Link>
           <Link to="/group/addgroup" className="transition-colors hover:text-foreground">
             Submit Group
@@ -127,7 +173,7 @@ export function SiteFooter() {
             Contact
           </Link>
         </div>
-        <p>© {new Date().getFullYear()} Groupor — Find. Connect. Grow together.</p>
+        <p className="text-xs">© {new Date().getFullYear()} Groupor — Find. Connect. Grow together.</p>
       </div>
     </footer>
   );

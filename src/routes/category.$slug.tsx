@@ -8,6 +8,8 @@ import { useRemovedGroups } from "@/lib/removed-groups";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 
 
+import { absoluteUrl, categoryPath, SITE_URL } from "@/lib/seo";
+
 function findCategory(slug: string) {
   return categories.find((c) => c.slug === slug);
 }
@@ -24,12 +26,12 @@ export const Route = createFileRoute("/category/$slug")({
     }
     const title = `${loaderData.name} — WhatsApp Groups | Groupor.link`;
     const description = `Join active ${loaderData.name.toLowerCase()} WhatsApp groups. Fresh invite links, updated daily.`;
-    const url = `https://groupor.link/category/${loaderData.slug}`;
+    const url = absoluteUrl(categoryPath(loaderData.slug));
     return {
       meta: [
         { title },
         { name: "description", content: description },
-        { name: "robots", content: "noindex, follow" },
+        { name: "robots", content: "index, follow" },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:url", content: url },
@@ -48,7 +50,7 @@ export const Route = createFileRoute("/category/$slug")({
                 "@type": "ListItem",
                 position: 1,
                 name: "Home",
-                item: "https://groupor.link",
+                item: SITE_URL,
               },
               { "@type": "ListItem", position: 2, name: loaderData.name, item: url },
             ],

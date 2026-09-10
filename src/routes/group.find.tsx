@@ -13,6 +13,7 @@ import {
 } from "@/data/groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { absoluteUrl } from "@/lib/seo";
 
 type FindSearch = {
   category?: string;
@@ -55,7 +56,7 @@ export const Route = createFileRoute("/group/find")({
         { property: "og:title", content: title },
         { property: "og:type", content: "website" },
       ],
-      links: [{ rel: "canonical", href: "https://groupor.link/group/find" }],
+      links: [{ rel: "canonical", href: absoluteUrl("/group/find") }],
     };
   },
   component: FindPage,

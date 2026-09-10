@@ -185,7 +185,9 @@ export async function buildSitemapUrls(): Promise<SitemapUrl[]> {
   }
 
   for (const group of allGroups) {
-    const path = groupPath(group);
+    const code = inviteCodeOf(group.link);
+    if (!code) continue;
+    const path = `/group/invite/whatsapp/${code}`;
     const entry: SitemapUrl = {
       loc: `${SITE_URL}${path}`,
       lastmod: toIsoDay(group.createdAt) ?? today,

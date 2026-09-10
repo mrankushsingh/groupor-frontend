@@ -14,7 +14,7 @@ export const Route = createFileRoute("/group/language/$slug")({
     const description = "Browse active " + loaderData.language + " WhatsApp groups on Groupor.";
     const url = absoluteUrl(languagePath(loaderData.language));
     return {
-      meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }, { property: "og:type", content: "website" }],
+      meta: [{ title }, { name: "description", content: description }, { name: "robots", content: "index, follow" }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }, { property: "og:type", content: "website" }],
       links: [{ rel: "canonical", href: url }],
       scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", name: title, url, mainEntity: { "@type": "ItemList", numberOfItems: loaderData.groups.length } }) }],
     };

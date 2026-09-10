@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
+import { absoluteUrl, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -14,11 +15,11 @@ export const Route = createFileRoute("/contact")({
         property: "og:description",
         content: "Contact Groupor.link for support at support@groupor.link.",
       },
-      { property: "og:url", content: "https://groupor.link/contact" },
+      { property: "og:url", content: absoluteUrl("/contact") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/contact" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/contact")({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Groupor.link",
-            url: "https://groupor.link",
+            url: SITE_URL,
             email: "mailto:support@groupor.link",
             description: "Free WhatsApp group links directory.",
           },
@@ -36,8 +37,8 @@ export const Route = createFileRoute("/contact")({
             "@type": "ContactPage",
             name: "Contact Us — Groupor.link",
             description: "Contact Groupor.link for support at support@groupor.link.",
-            url: "https://groupor.link/contact",
-            mainEntity: { "@id": "https://groupor.link/#organization" },
+            url: absoluteUrl("/contact"),
+            mainEntity: { "@id": `${SITE_URL}/#organization` },
             contactPoint: {
               "@type": "ContactPoint",
               contactType: "Customer Support",

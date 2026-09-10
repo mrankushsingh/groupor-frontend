@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
+import { absoluteUrl } from "@/lib/seo";
 
 const FAQS = [
   {
@@ -63,11 +64,11 @@ export const Route = createFileRoute("/faq")({
         content:
           "Common questions about Groupor.link: submitting groups, finding groups, moderation, and privacy.",
       },
-      { property: "og:url", content: "https://groupor.link/faq" },
+      { property: "og:url", content: absoluteUrl("/faq") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/faq" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/faq") }],
     scripts: [
       {
         type: "application/ld+json",

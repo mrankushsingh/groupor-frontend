@@ -12,6 +12,7 @@ import { apiUrl, hasRemoteApi } from "@/lib/api";
 import { cacheSubmittedGroup, findGroupByLink, inviteCode, normalizeApiGroup } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { trackEvent } from "@/lib/analytics";
+import { absoluteUrl } from "@/lib/seo";
 
 
 
@@ -29,12 +30,12 @@ export const Route = createFileRoute("/group/addgroup")({
         property: "og:description",
         content: "Share your WhatsApp group link with thousands of people, free.",
       },
-      { property: "og:url", content: "https://groupor.link/group/addgroup" },
+      { property: "og:url", content: absoluteUrl("/group/addgroup") },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "robots", content: "noindex, follow" },
+      { name: "robots", content: "index, follow" },
     ],
-    links: [{ rel: "canonical", href: "https://groupor.link/group/addgroup" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/group/addgroup") }],
   }),
   component: SubmitPage,
 });
