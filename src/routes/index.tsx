@@ -92,11 +92,17 @@ function Index() {
     });
   };
 
-  const results = React.useMemo(() => {
-    return [...submitted, ...[...groups].sort((a, b) => Number(b.id) - Number(a.id))].filter(
+  const filteredResults = React.useMemo(() => {
+    const all = [...submitted, ...[...groups].sort((a, b) => Number(b.id) - Number(a.id))].filter(
       (g) => !isRemoved(g.id, g.link),
     );
-  }, [isRemoved, submitted]);
+    return all.filter((g) => {
+      if (category && g.category !== category) return false;
+      if (country && g.country !== country) return false;
+      if (language && g.language !== language) return false;
+      return true;
+    });
+  }, [category, country, language, isRemoved, submitted]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -174,31 +180,50 @@ function Index() {
         {/* Group Listings */}
         <section className="mt-8">
           <div className="flex flex-col gap-3">
-            {results.slice(0, visible).map((g) => (
+            {filteredResults.slice(0, visible).map((g) => (
               <GroupCard key={g.id} group={g} />
             ))}
           </div>
 
-          {results.length > 0 && (
+          {filteredResults.length > 0 && (
             <button
               type="button"
               onClick={() => setVisible((v) => v + PAGE_SIZE)}
-              disabled={visible >= results.length}
+              disabled={visible >= filteredResults.length}
               className="mt-6 rounded-md bg-cta px-5 py-3 text-lg font-normal text-cta-foreground transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-70"
             >
-              {visible >= results.length ? "No more groups" : "Show more"}
+              {visible >= filteredResults.length ? "No more groups" : "Show more"}
             </button>
           )}
 
-          {results.length === 0 && (
+          {filteredResults.length === 0 && (
             <div className="mt-14 flex flex-col items-center justify-center rounded-3xl border border-dashed border-border bg-card p-10 text-center shadow-card">
               <div className="flex size-16 items-center justify-center rounded-full bg-muted">
                 <SearchX className="size-8 text-muted-foreground" />
               </div>
-              <h3 className="mt-5 text-lg font-semibold text-foreground">No groups found</h3>
+              <h3 className="mt-5 text-lg font-semibold text-foreground">No matching groups found</h3>
               <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-                Try finding groups by category, country, or language.
+                No groups found matching your selected filters. Try clearing your filters or submit a group!
               </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCategory("");
+                    setCountry("");
+                    setLanguage("");
+                  }}
+                  className="rounded-md border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground hover:border-primary"
+                >
+                  Reset Filters
+                </button>
+                <Link
+                  to="/group/addgroup"
+                  className="rounded-md bg-cta px-4 py-2 text-sm font-bold text-cta-foreground hover:opacity-90"
+                >
+                  + Add WhatsApp Group
+                </Link>
+              </div>
             </div>
           )}
         </section>
