@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { MessageCircle, LayoutGrid, Globe, Languages } from "lucide-react";
 import { groupSlug, categories, inviteCodeOf, type Group } from "@/data/groups";
 import { groupFindShare } from "@/lib/share";
+import { cleanText } from "@/lib/seo";
 
 function ShareButton({
   href,
@@ -31,6 +32,8 @@ export function GroupCard({ group }: { group: Group }) {
   const categoryName = categories.find((c) => c.slug === group.category)?.name ?? group.category;
   const code = inviteCodeOf(group.link);
   const share = groupFindShare(group);
+  const name = cleanText(group.name);
+  const description = cleanText(group.description);
 
   return (
     <article className="rounded-sm border border-border/70 bg-card px-4 py-4">
@@ -38,7 +41,7 @@ export function GroupCard({ group }: { group: Group }) {
         {group.image ? (
           <img
             src={group.image}
-            alt={`${group.name} WhatsApp Group`}
+            alt={`${name} WhatsApp Group`}
             loading="lazy"
             width="56"
             height="56"
@@ -57,7 +60,7 @@ export function GroupCard({ group }: { group: Group }) {
               params={{ code }}
               className="text-lg font-bold leading-snug text-foreground transition-colors hover:text-primary"
             >
-              <h3>{group.name}</h3>
+              <h3>{name}</h3>
             </Link>
           ) : (
             <Link
