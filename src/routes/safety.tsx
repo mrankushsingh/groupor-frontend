@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Shield, Lock, AlertTriangle, UserCheck, Eye, CheckCircle } from "lucide-react";
+import { Shield, Lock, AlertTriangle, UserCheck, Eye, CheckCircle, Calendar } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -32,9 +32,14 @@ export function SafetyPage() {
       <SiteHeader />
       <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <header className="border-b border-border pb-8">
-          <div className="flex items-center gap-2 text-sm font-semibold text-primary">
-            <Shield className="size-4" />
-            <span>Groupor Trust & Safety</span>
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-primary">
+            <span className="inline-flex items-center gap-1">
+              <Shield className="size-4" />
+              Groupor Trust & Safety
+            </span>
+            <span className="inline-flex items-center gap-1 text-muted-foreground">
+              <Calendar className="size-3.5" /> Last Reviewed: September 2026
+            </span>
           </div>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             WhatsApp Group Safety Center

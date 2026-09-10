@@ -4,7 +4,7 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { categories, countries, type Group } from "@/data/groups";
 import type { CategoryIntro } from "@/data/category-intros";
 import { categoryPath, countryPath } from "@/lib/seo";
-import { ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, CheckCircle2, BookOpen } from "lucide-react";
 
 export function GroupLandingPage({
   heading,
@@ -21,6 +21,11 @@ export function GroupLandingPage({
   categoryIntro?: CategoryIntro;
   categorySlug?: string;
 }) {
+  const relatedCategories = categories
+    .filter((c) => c.slug !== categorySlug && c.slug !== "all")
+    .slice(0, 6);
+  const topCountries = countries.filter((c) => Boolean(c.code)).slice(0, 4);
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -90,31 +95,94 @@ export function GroupLandingPage({
           </div>
         )}
 
-        {/* Contextual Internal Links */}
-        <section className="mt-16 border-t border-border pt-8">
-          <h2 className="text-xl font-bold text-foreground">Explore More WhatsApp Communities</h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm">
-            {categories
-              .filter((c) => c.slug !== categorySlug && c.slug !== "all")
-              .slice(0, 8)
-              .map((c) => (
-                <Link
-                  key={c.slug}
-                  to={categoryPath(c.slug)}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {c.name} WhatsApp Groups
-                </Link>
-              ))}
-            {countries.slice(1, 9).map((cnt) => (
-              <Link
-                key={cnt.code}
-                to={countryPath(cnt.name)}
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                WhatsApp Groups in {cnt.name}
-              </Link>
-            ))}
+        {/* Enhanced Contextual Internal Linking (12-18 Links) */}
+        <section className="mt-16 border-t border-border pt-10 space-y-8">
+          <h2 className="text-2xl font-bold text-foreground">Explore Related Categories, Country Hubs & Guides</h2>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Related Category Links (6 links) */}
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">Related Categories</h3>
+              <ul className="space-y-2 text-sm">
+                {relatedCategories.map((c) => (
+                  <li key={c.slug}>
+                    <Link
+                      to={categoryPath(c.slug)}
+                      className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+                    >
+                      <span className="size-1.5 rounded-full bg-primary/60" />
+                      {c.name} WhatsApp Groups
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Regional Country Hubs (4 links) */}
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">Popular Country Hubs</h3>
+              <ul className="space-y-2 text-sm">
+                {topCountries.map((cnt) => (
+                  <li key={cnt.code}>
+                    <Link
+                      to={countryPath(cnt.name)}
+                      className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+                    >
+                      <span className="size-1.5 rounded-full bg-primary/60" />
+                      WhatsApp Groups in {cnt.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Authority Guides & Actions (8 links) */}
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">Community Guides & Safety</h3>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link to="/guides/how-to-join-whatsapp-groups-safely" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                    <BookOpen className="size-3.5 text-primary shrink-0" />
+                    How to Join Groups Safely
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/guides/whatsapp-community-vs-group" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                    <BookOpen className="size-3.5 text-primary shrink-0" />
+                    WhatsApp Community vs Group
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/guides/how-to-avoid-whatsapp-scams" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                    <BookOpen className="size-3.5 text-primary shrink-0" />
+                    Avoid WhatsApp Scams & Fraud
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/guides/whatsapp-group-admin-guidelines" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                    <BookOpen className="size-3.5 text-primary shrink-0" />
+                    Group Admin Guidelines
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/safety" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                    <ShieldCheck className="size-3.5 text-primary shrink-0" />
+                    Groupor Trust & Safety Center
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/how-reporting-works" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+                    <ShieldCheck className="size-3.5 text-primary shrink-0" />
+                    How Group Reporting Works
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/group/addgroup" className="text-primary font-semibold hover:underline flex items-center gap-1.5">
+                    + Submit Your WhatsApp Group
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
       </main>

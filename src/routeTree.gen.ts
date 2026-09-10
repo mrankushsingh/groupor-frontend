@@ -27,6 +27,12 @@ import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as DataAddgroupRouteImport } from './routes/data.addgroup'
 import { Route as GroupAddgroupRouteImport } from './routes/group.addgroup'
 import { Route as GroupFindRouteImport } from './routes/group.find'
+import { Route as GuidesIndexRouteImport } from './routes/guides.index'
+import { Route as GuidesHowToAvoidWhatsappScamsRouteImport } from './routes/guides.how-to-avoid-whatsapp-scams'
+import { Route as GuidesHowToJoinWhatsappGroupsSafelyRouteImport } from './routes/guides.how-to-join-whatsapp-groups-safely'
+import { Route as GuidesWhatsappCommunityVsGroupRouteImport } from './routes/guides.whatsapp-community-vs-group'
+import { Route as GuidesWhatsappGroupAdminGuidelinesRouteImport } from './routes/guides.whatsapp-group-admin-guidelines'
+import { Route as GuidesWhatsappGroupsCountryJoiningGuideRouteImport } from './routes/guides.whatsapp-groups-country-joining-guide'
 import { Route as CategorySlugGroupRouteImport } from './routes/category.$slug_.$group'
 import { Route as GroupCategorySlugRouteImport } from './routes/group.category.$slug'
 import { Route as GroupCountrySlugRouteImport } from './routes/group.country.$slug'
@@ -128,6 +134,41 @@ const GroupFindRoute = GroupFindRouteImport.update({
   path: '/group/find',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesHowToAvoidWhatsappScamsRoute =
+  GuidesHowToAvoidWhatsappScamsRouteImport.update({
+    id: '/guides/how-to-avoid-whatsapp-scams',
+    path: '/guides/how-to-avoid-whatsapp-scams',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuidesHowToJoinWhatsappGroupsSafelyRoute =
+  GuidesHowToJoinWhatsappGroupsSafelyRouteImport.update({
+    id: '/guides/how-to-join-whatsapp-groups-safely',
+    path: '/guides/how-to-join-whatsapp-groups-safely',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuidesWhatsappCommunityVsGroupRoute =
+  GuidesWhatsappCommunityVsGroupRouteImport.update({
+    id: '/guides/whatsapp-community-vs-group',
+    path: '/guides/whatsapp-community-vs-group',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuidesWhatsappGroupAdminGuidelinesRoute =
+  GuidesWhatsappGroupAdminGuidelinesRouteImport.update({
+    id: '/guides/whatsapp-group-admin-guidelines',
+    path: '/guides/whatsapp-group-admin-guidelines',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuidesWhatsappGroupsCountryJoiningGuideRoute =
+  GuidesWhatsappGroupsCountryJoiningGuideRouteImport.update({
+    id: '/guides/whatsapp-groups-country-joining-guide',
+    path: '/guides/whatsapp-groups-country-joining-guide',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CategorySlugGroupRoute = CategorySlugGroupRouteImport.update({
   id: '/category/$slug_/$group',
   path: '/category/$slug/$group',
@@ -201,6 +242,12 @@ export interface FileRoutesByFullPath {
   '/data/addgroup': typeof DataAddgroupRoute
   '/group/addgroup': typeof GroupAddgroupRoute
   '/group/find': typeof GroupFindRoute
+  '/guides/how-to-avoid-whatsapp-scams': typeof GuidesHowToAvoidWhatsappScamsRoute
+  '/guides/how-to-join-whatsapp-groups-safely': typeof GuidesHowToJoinWhatsappGroupsSafelyRoute
+  '/guides/whatsapp-community-vs-group': typeof GuidesWhatsappCommunityVsGroupRoute
+  '/guides/whatsapp-group-admin-guidelines': typeof GuidesWhatsappGroupAdminGuidelinesRoute
+  '/guides/whatsapp-groups-country-joining-guide': typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  '/guides/': typeof GuidesIndexRoute
   '/category/$slug/$group': typeof CategorySlugGroupRoute
   '/group/category/$slug': typeof GroupCategorySlugRoute
   '/group/country/$slug': typeof GroupCountrySlugRoute
@@ -231,6 +278,12 @@ export interface FileRoutesByTo {
   '/data/addgroup': typeof DataAddgroupRoute
   '/group/addgroup': typeof GroupAddgroupRoute
   '/group/find': typeof GroupFindRoute
+  '/guides/how-to-avoid-whatsapp-scams': typeof GuidesHowToAvoidWhatsappScamsRoute
+  '/guides/how-to-join-whatsapp-groups-safely': typeof GuidesHowToJoinWhatsappGroupsSafelyRoute
+  '/guides/whatsapp-community-vs-group': typeof GuidesWhatsappCommunityVsGroupRoute
+  '/guides/whatsapp-group-admin-guidelines': typeof GuidesWhatsappGroupAdminGuidelinesRoute
+  '/guides/whatsapp-groups-country-joining-guide': typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  '/guides': typeof GuidesIndexRoute
   '/category/$slug/$group': typeof CategorySlugGroupRoute
   '/group/category/$slug': typeof GroupCategorySlugRoute
   '/group/country/$slug': typeof GroupCountrySlugRoute
@@ -261,6 +314,12 @@ export interface FileRoutesById {
   '/data/addgroup': typeof DataAddgroupRoute
   '/group/addgroup': typeof GroupAddgroupRoute
   '/group/find': typeof GroupFindRoute
+  '/guides/how-to-avoid-whatsapp-scams': typeof GuidesHowToAvoidWhatsappScamsRoute
+  '/guides/how-to-join-whatsapp-groups-safely': typeof GuidesHowToJoinWhatsappGroupsSafelyRoute
+  '/guides/whatsapp-community-vs-group': typeof GuidesWhatsappCommunityVsGroupRoute
+  '/guides/whatsapp-group-admin-guidelines': typeof GuidesWhatsappGroupAdminGuidelinesRoute
+  '/guides/whatsapp-groups-country-joining-guide': typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  '/guides/': typeof GuidesIndexRoute
   '/category/$slug_/$group': typeof CategorySlugGroupRoute
   '/group/category/$slug': typeof GroupCategorySlugRoute
   '/group/country/$slug': typeof GroupCountrySlugRoute
@@ -293,6 +352,12 @@ export interface FileRouteTypes {
     | '/data/addgroup'
     | '/group/addgroup'
     | '/group/find'
+    | '/guides/how-to-avoid-whatsapp-scams'
+    | '/guides/how-to-join-whatsapp-groups-safely'
+    | '/guides/whatsapp-community-vs-group'
+    | '/guides/whatsapp-group-admin-guidelines'
+    | '/guides/whatsapp-groups-country-joining-guide'
+    | '/guides/'
     | '/category/$slug/$group'
     | '/group/category/$slug'
     | '/group/country/$slug'
@@ -323,6 +388,12 @@ export interface FileRouteTypes {
     | '/data/addgroup'
     | '/group/addgroup'
     | '/group/find'
+    | '/guides/how-to-avoid-whatsapp-scams'
+    | '/guides/how-to-join-whatsapp-groups-safely'
+    | '/guides/whatsapp-community-vs-group'
+    | '/guides/whatsapp-group-admin-guidelines'
+    | '/guides/whatsapp-groups-country-joining-guide'
+    | '/guides'
     | '/category/$slug/$group'
     | '/group/category/$slug'
     | '/group/country/$slug'
@@ -352,6 +423,12 @@ export interface FileRouteTypes {
     | '/data/addgroup'
     | '/group/addgroup'
     | '/group/find'
+    | '/guides/how-to-avoid-whatsapp-scams'
+    | '/guides/how-to-join-whatsapp-groups-safely'
+    | '/guides/whatsapp-community-vs-group'
+    | '/guides/whatsapp-group-admin-guidelines'
+    | '/guides/whatsapp-groups-country-joining-guide'
+    | '/guides/'
     | '/category/$slug_/$group'
     | '/group/category/$slug'
     | '/group/country/$slug'
@@ -383,6 +460,12 @@ export interface RootRouteChildren {
   DataAddgroupRoute: typeof DataAddgroupRoute
   GroupAddgroupRoute: typeof GroupAddgroupRoute
   GroupFindRoute: typeof GroupFindRoute
+  GuidesHowToAvoidWhatsappScamsRoute: typeof GuidesHowToAvoidWhatsappScamsRoute
+  GuidesHowToJoinWhatsappGroupsSafelyRoute: typeof GuidesHowToJoinWhatsappGroupsSafelyRoute
+  GuidesWhatsappCommunityVsGroupRoute: typeof GuidesWhatsappCommunityVsGroupRoute
+  GuidesWhatsappGroupAdminGuidelinesRoute: typeof GuidesWhatsappGroupAdminGuidelinesRoute
+  GuidesWhatsappGroupsCountryJoiningGuideRoute: typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
   CategorySlugGroupRoute: typeof CategorySlugGroupRoute
   GroupCategorySlugRoute: typeof GroupCategorySlugRoute
   GroupCountrySlugRoute: typeof GroupCountrySlugRoute
@@ -520,6 +603,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupFindRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/how-to-avoid-whatsapp-scams': {
+      id: '/guides/how-to-avoid-whatsapp-scams'
+      path: '/guides/how-to-avoid-whatsapp-scams'
+      fullPath: '/guides/how-to-avoid-whatsapp-scams'
+      preLoaderRoute: typeof GuidesHowToAvoidWhatsappScamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/how-to-join-whatsapp-groups-safely': {
+      id: '/guides/how-to-join-whatsapp-groups-safely'
+      path: '/guides/how-to-join-whatsapp-groups-safely'
+      fullPath: '/guides/how-to-join-whatsapp-groups-safely'
+      preLoaderRoute: typeof GuidesHowToJoinWhatsappGroupsSafelyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/whatsapp-community-vs-group': {
+      id: '/guides/whatsapp-community-vs-group'
+      path: '/guides/whatsapp-community-vs-group'
+      fullPath: '/guides/whatsapp-community-vs-group'
+      preLoaderRoute: typeof GuidesWhatsappCommunityVsGroupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/whatsapp-group-admin-guidelines': {
+      id: '/guides/whatsapp-group-admin-guidelines'
+      path: '/guides/whatsapp-group-admin-guidelines'
+      fullPath: '/guides/whatsapp-group-admin-guidelines'
+      preLoaderRoute: typeof GuidesWhatsappGroupAdminGuidelinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/whatsapp-groups-country-joining-guide': {
+      id: '/guides/whatsapp-groups-country-joining-guide'
+      path: '/guides/whatsapp-groups-country-joining-guide'
+      fullPath: '/guides/whatsapp-groups-country-joining-guide'
+      preLoaderRoute: typeof GuidesWhatsappGroupsCountryJoiningGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$slug_/$group': {
       id: '/category/$slug_/$group'
       path: '/category/$slug/$group'
@@ -630,6 +755,15 @@ const rootRouteChildren: RootRouteChildren = {
   DataAddgroupRoute: DataAddgroupRoute,
   GroupAddgroupRoute: GroupAddgroupRoute,
   GroupFindRoute: GroupFindRoute,
+  GuidesHowToAvoidWhatsappScamsRoute: GuidesHowToAvoidWhatsappScamsRoute,
+  GuidesHowToJoinWhatsappGroupsSafelyRoute:
+    GuidesHowToJoinWhatsappGroupsSafelyRoute,
+  GuidesWhatsappCommunityVsGroupRoute: GuidesWhatsappCommunityVsGroupRoute,
+  GuidesWhatsappGroupAdminGuidelinesRoute:
+    GuidesWhatsappGroupAdminGuidelinesRoute,
+  GuidesWhatsappGroupsCountryJoiningGuideRoute:
+    GuidesWhatsappGroupsCountryJoiningGuideRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
   CategorySlugGroupRoute: CategorySlugGroupRoute,
   GroupCategorySlugRoute: GroupCategorySlugRoute,
   GroupCountrySlugRoute: GroupCountrySlugRoute,

@@ -70,6 +70,7 @@ export function SiteHeader() {
             {[
               { to: "/", label: "Home" },
               { to: "/group/addgroup", label: "Add Group" },
+              { to: "/guides", label: "Guides Hub" },
               { to: "/safety", label: "Safety" },
               { to: "/moderation-policy", label: "Moderation" },
               { to: "/editorial-policy", label: "Editorial" },
@@ -150,12 +151,27 @@ export function SiteFooter() {
           </div>
         </div>
 
-        {/* E-E-A-T Trust & Safety Links */}
+        {/* E-E-A-T Trust & Safety Links & Guides */}
         <div className="border-t border-border/60 pt-6">
           <h3 className="text-xs font-bold uppercase tracking-wider text-foreground mb-3">
-            Trust, Safety & Editorial Standards
+            Topical Guides & E-E-A-T Standards
           </h3>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-foreground">
+            <Link to="/guides" className="text-primary hover:underline">
+              Guides Hub
+            </Link>
+            <Link to="/guides/how-to-join-whatsapp-groups-safely" className="hover:text-primary transition-colors">
+              Safety Guide
+            </Link>
+            <Link to="/guides/whatsapp-community-vs-group" className="hover:text-primary transition-colors">
+              Community vs Group
+            </Link>
+            <Link to="/guides/how-to-avoid-whatsapp-scams" className="hover:text-primary transition-colors">
+              Avoid Scams
+            </Link>
+            <Link to="/guides/whatsapp-group-admin-guidelines" className="hover:text-primary transition-colors">
+              Admin Guidelines
+            </Link>
             <Link to="/safety" className="hover:text-primary transition-colors">
               Safety Center
             </Link>
@@ -164,9 +180,6 @@ export function SiteFooter() {
             </Link>
             <Link to="/editorial-policy" className="hover:text-primary transition-colors">
               Editorial Policy
-            </Link>
-            <Link to="/how-reporting-works" className="hover:text-primary transition-colors">
-              How Reporting Works
             </Link>
           </div>
         </div>
@@ -180,6 +193,9 @@ export function SiteFooter() {
           </Link>
           <Link to="/group/addgroup" className="transition-colors hover:text-foreground">
             Submit Group
+          </Link>
+          <Link to="/guides" className="transition-colors hover:text-foreground">
+            Guides
           </Link>
           <Link to="/faq" className="transition-colors hover:text-foreground">
             FAQ
