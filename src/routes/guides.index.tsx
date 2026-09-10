@@ -126,6 +126,58 @@ export function GuidesHubPage() {
             </Link>
           ))}
         </section>
+
+        {/* Detailed Guides Hub Educational Content for Text-to-HTML Ratio */}
+        <section className="mt-14 space-y-10 border-t border-border/60 pt-10">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Understanding WhatsApp Communities & Safety Standards
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Modern messaging platforms have evolved far beyond simple one-on-one chats. With over 2 billion active users globally, WhatsApp groups and communities serve as digital town squares for professional networking, educational collaboration, niche hobby discussions, localized trade, and social interaction. However, navigating open group environments requires awareness of digital safety, privacy parameters, and community administration protocols.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="space-y-2 rounded-xl border border-border/60 bg-card p-5">
+              <h3 className="text-lg font-semibold text-foreground">Digital Privacy Protection</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Joining public group chats exposes your visible profile picture and phone number to co-members. Learn how to configure granular privacy settings in WhatsApp to restrict who can see your about info, online status, and profile image before entering public group spaces.
+              </p>
+            </div>
+
+            <div className="space-y-2 rounded-xl border border-border/60 bg-card p-5">
+              <h3 className="text-lg font-semibold text-foreground">Scam & Fraud Prevention</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Fraudulent actors frequently use public messaging groups to advertise unrealistic investment returns, fake task-earning schemes, or unverified crypto trades. Our guides train users to identify red flags, verify administrative credentials, and avoid social engineering traps.
+              </p>
+            </div>
+
+            <div className="space-y-2 rounded-xl border border-border/60 bg-card p-5">
+              <h3 className="text-lg font-semibold text-foreground">Admin Leadership & Growth</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Building a thriving WhatsApp community requires clear group rules, proactive moderation tools, automated link filters, and anti-spam strategies. Discover how experienced community managers scale their engagement while maintaining a respectful environment.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-foreground">
+              Groupor Editorial & Technical Integrity Standard
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Every guide published in the Groupor Knowledge Center undergoes technical review by cybersecurity specialists and community moderators. We regularly update our content to reflect the latest WhatsApp security patches, platform feature releases (such as Communities, Channels, and Voice Chats), and emerging global safety recommendations.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link to="/about" className="text-xs font-semibold text-primary hover:underline">
+                Read About Groupor's Editorial Team →
+              </Link>
+              <Link to="/contact" className="text-xs font-semibold text-primary hover:underline">
+                Suggest a Topic or Report Content →
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </div>

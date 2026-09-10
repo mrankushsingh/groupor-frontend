@@ -167,6 +167,62 @@ function ContactPage() {
             </button>
           </form>
         </div>
+
+        {/* Detailed Information & FAQ Section for SEO Text Ratio */}
+        <div className="mt-12 space-y-8 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
+          <section className="space-y-3">
+            <h2 className="text-xl font-bold text-foreground">
+              Groupor Support Center & Communication SLAs
+            </h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Welcome to the Groupor official support center. Our dedicated community management team operates around the clock to review group submissions, investigate safety reports, process link removals, and answer user inquiries. We aim to maintain a high-trust directory environment for all global messaging participants.
+            </p>
+          </section>
+
+          <section className="grid gap-6 sm:grid-cols-2">
+            <div className="rounded-xl border border-white/5 bg-white/5 p-4">
+              <h3 className="font-semibold text-foreground">General Support & Inquiries</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                For questions regarding listed WhatsApp groups, navigation, or account issues, please reach out to <strong className="text-primary">support@groupor.link</strong>. Standard response time is 24 to 48 business hours.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-white/5 bg-white/5 p-4">
+              <h3 className="font-semibold text-foreground">Link Verification & Admin Appeals</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                Group administrators requesting badge verification or updating group invite links should submit their requests with active group admin credentials for verification.
+              </p>
+            </div>
+          </section>
+
+          <section className="space-y-4 border-t border-white/10 pt-6">
+            <h2 className="text-xl font-bold text-foreground">
+              Frequently Asked Support Questions
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-base font-semibold text-foreground">How do I report a toxic or fraudulent WhatsApp group?</h3>
+                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                  If you encounter a group engaging in scams, illegal activities, harassment, or spam, use the "Report Group" button on the group's individual listing page or contact us directly with the group URL. Our moderation team reviews reports within 12 hours and removes offending links immediately.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-base font-semibold text-foreground">How long does it take for submitted WhatsApp groups to appear?</h3>
+                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                  Submitted groups undergo automated link format validation and manual safety checks. Most verified submissions appear on Groupor within 1 to 4 hours after submission.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-base font-semibold text-foreground">What is Groupor's policy on intellectual property and DMCA notices?</h3>
+                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                  Groupor respects intellectual property rights. Copyright owners can send takedown notices containing the specific URL and proof of ownership to support@groupor.link for prompt investigation and content removal.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
       </main>
 
       <SiteFooter />

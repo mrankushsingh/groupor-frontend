@@ -4,7 +4,7 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { categories, countries, type Group } from "@/data/groups";
 import type { CategoryIntro } from "@/data/category-intros";
 import { categoryPath, countryPath } from "@/lib/seo";
-import { ShieldCheck, CheckCircle2, BookOpen } from "lucide-react";
+import { ShieldCheck, CheckCircle2, BookOpen, HelpCircle, MessageSquare } from "lucide-react";
 
 export function GroupLandingPage({
   heading,
@@ -30,14 +30,18 @@ export function GroupLandingPage({
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <main className="mx-auto max-w-6xl px-4 py-12">
+        {/* Breadcrumb Navigation */}
         <nav className="text-sm text-muted-foreground">
           <Link to="/" className="hover:text-foreground">Home</Link>
           <span className="px-2">/</span>
           <span className="text-foreground">{parent}</span>
         </nav>
+
+        {/* Primary Page Header */}
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">{heading}</h1>
         <p className="mt-3 max-w-4xl text-base leading-relaxed text-muted-foreground">{intro}</p>
 
+        {/* Category Intro & Structured Data Block */}
         {categoryIntro && (
           <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">
             <div className="grid gap-6 sm:grid-cols-2">
@@ -76,16 +80,20 @@ export function GroupLandingPage({
           </div>
         )}
 
-        <p className="mt-6 text-sm text-muted-foreground">{groups.length} active group{groups.length === 1 ? "" : "s"} available</p>
-        
-        <section className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label={heading}>
+        {/* Group Listings Count */}
+        <p className="mt-6 text-sm text-muted-foreground font-medium">
+          {groups.length} active public group{groups.length === 1 ? "" : "s"} listed in this directory
+        </p>
+
+        {/* Group Grid */}
+        <section className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label={heading}>
           {groups.map((group) => <GroupCard key={group.id} group={group} />)}
         </section>
 
         {groups.length === 0 && (
-          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card p-10 text-center shadow-card">
+          <div className="mt-8 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card p-10 text-center shadow-card">
             <h3 className="text-lg font-semibold text-foreground">No groups listed here yet</h3>
-            <p className="mt-2 text-sm text-muted-foreground">Be the first to submit a group for this community!</p>
+            <p className="mt-2 text-sm text-muted-foreground">Be the first community manager to submit a WhatsApp group for this hub!</p>
             <Link
               to="/group/addgroup"
               className="mt-5 inline-block rounded-md bg-cta px-6 py-2.5 text-sm font-bold text-cta-foreground transition-opacity hover:opacity-90"
@@ -95,7 +103,82 @@ export function GroupLandingPage({
           </div>
         )}
 
-        {/* Enhanced Contextual Internal Linking (12-18 Links) */}
+        {/* Comprehensive Text Expansion Block (High Text-to-HTML Ratio Upgrade) */}
+        <section className="mt-16 border-t border-border pt-10 space-y-8 text-foreground">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Understanding {heading} Communities
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              WhatsApp messaging groups have become the world's most accessible medium for real-time peer discussion, professional networking, and instant information sharing. Finding reliable public invite links for <strong>{heading}</strong> allows you to engage with like-minded individuals, exchange valuable study resources, discover career openings, or simply share passion projects without algorithm interference.
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              Unlike social media feeds controlled by recommendation algorithms, joining a dedicated WhatsApp group puts you directly in touch with active community members. Whether you are seeking daily updates, regional meetups, expert advice, or interactive chat groups, Groupor ensures that every invite link listed in our <strong>{heading}</strong> directory is verified and active.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <MessageSquare className="size-5 text-primary" />
+                Why Join Communities on Groupor?
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Many online directories suffer from broken links, spam redirects, or unmoderated malicious content. Groupor eliminates these risks through multi-layer link health monitoring and strict community safety guidelines. We automatically purge inactive invite links and triage user reports within 24 hours.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <ShieldCheck className="size-5 text-primary" />
+                Member Privacy & Security Best Practices
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                When participating in public messaging groups, always protect your personal privacy. Adjust your WhatsApp privacy settings (`Settings &rarr; Privacy`) to hide your profile photo and status from unknown contacts. Never share bank details, OTP codes, passwords, or personal financial documents in public group chats.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-2">
+              <HelpCircle className="size-6 text-primary" />
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                Frequently Asked Questions about {heading}
+              </h2>
+            </div>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 text-sm">
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-bold text-foreground">How do I join a group listed under {heading}?</h3>
+                <p className="mt-1 text-muted-foreground leading-relaxed">
+                  Click on any group card above, review the group description and rules, then tap "Join Group". You will be redirected safely to WhatsApp to confirm your entry.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-bold text-foreground">Is it free to join or list a group on Groupor?</h3>
+                <p className="mt-1 text-muted-foreground leading-relaxed">
+                  Yes! All listings and group joins on Groupor are 100% free. We never charge subscription fees or require personal account creation.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-bold text-foreground">What should I do if a group invite link is full or broken?</h3>
+                <p className="mt-1 text-muted-foreground leading-relaxed">
+                  WhatsApp groups have a capacity limit of 1,024 members. If an invite link has expired or reached capacity, click "Report Group" so our moderators can update or remove the link.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-bold text-foreground">Can I submit my own WhatsApp group for free?</h3>
+                <p className="mt-1 text-muted-foreground leading-relaxed">
+                  Absolutly! If you are a group admin, click "+ Add WhatsApp Group" in the header to submit your public invite link to our global search directory.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Enhanced Contextual Internal Linking (18 Links) */}
         <section className="mt-16 border-t border-border pt-10 space-y-8">
           <h2 className="text-2xl font-bold text-foreground">Explore Related Categories, Country Hubs & Guides</h2>
 
