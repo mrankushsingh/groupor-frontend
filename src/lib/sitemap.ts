@@ -46,7 +46,9 @@ function escapeXml(value: string) {
 }
 
 function normalizeGroup(raw: ApiGroup | Group): Group | null {
-  const link = "link" in raw ? String(raw.link ?? "") : "";
+  const rawLink = "link" in raw && raw.link ? String(raw.link) : "url" in raw && (raw as { url?: string }).url ? String((raw as { url?: string }).url) : "";
+  const inviteCode = "invite_code" in raw && (raw as { invite_code?: string }).invite_code ? String((raw as { invite_code?: string }).invite_code) : "";
+  const link = rawLink || (inviteCode ? `https://chat.whatsapp.com/${inviteCode}` : "");
   const code = inviteCodeOf(link);
   if (!code) return null;
   const status = String(raw.status || "active").toLowerCase();

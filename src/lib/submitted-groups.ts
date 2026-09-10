@@ -38,6 +38,9 @@ export function inviteCode(link: string): string {
 }
 
 function mapApiGroup(raw: Record<string, unknown>): Group {
+  const rawLink = String(raw["link"] ?? raw["url"] ?? "").trim();
+  const inviteCode = String(raw["invite_code"] ?? raw["code"] ?? "").trim();
+  const link = rawLink || (inviteCode ? `https://chat.whatsapp.com/${inviteCode}` : "");
   return {
     id: String(raw["id"] ?? ""),
     name: String(raw["name"] ?? ""),
@@ -48,7 +51,7 @@ function mapApiGroup(raw: Record<string, unknown>): Group {
     country: String(raw["country"] ?? ""),
     language: String(raw["language"] ?? "") || undefined,
     tags: Array.isArray(raw["tags"]) ? (raw["tags"] as string[]) : undefined,
-    link: String(raw["link"] ?? ""),
+    link,
     image: typeof raw["image"] === "string" ? raw["image"] : undefined,
     status: (raw["status"] as Group["status"]) || "active",
     source: "user_submission",
