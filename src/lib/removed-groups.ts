@@ -112,7 +112,7 @@ export function useRemovedGroups() {
     (id: string | number, link?: string) => {
       if (ids.includes(String(id))) return true;
       if (link) {
-        const code = inviteCode(link);
+        const code = inviteCode(link).toLowerCase();
         if (code && codes.includes(code)) return true;
       }
       return false;
