@@ -101,7 +101,10 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             {group.image ? (
               <img
                 src={group.image}
-                alt={`${group.name} WhatsApp group photo`}
+                alt={`${group.name} WhatsApp Group`}
+                loading="lazy"
+                width="120"
+                height="120"
                 className="size-[120px] rounded-full object-cover"
               />
             ) : (

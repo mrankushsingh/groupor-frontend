@@ -1,7 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
-import { categories, groups, slugify } from "@/data/groups";
+import { categories, groups } from "@/data/groups";
+import { getCategoryIntro } from "@/data/category-intros";
 import { absoluteUrl, categoryPath } from "@/lib/seo";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
@@ -14,13 +15,34 @@ export const Route = createFileRoute("/group/category/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
-    const title = loaderData.category.name + " WhatsApp Groups | Groupor";
-    const description = "Browse active " + loaderData.category.name.toLowerCase() + " WhatsApp groups on Groupor. Find communities by country and language.";
+    const title = `${loaderData.category.name} WhatsApp Group Links (2026) | Groupor`;
+    const intro = getCategoryIntro(loaderData.category.slug);
+    const description = intro.description.slice(0, 155);
     const url = absoluteUrl(categoryPath(loaderData.category.slug));
     return {
-      meta: [{ title }, { name: "description", content: description }, { name: "robots", content: "index, follow" }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }, { property: "og:type", content: "website" }],
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { name: "robots", content: "index, follow" },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
+      ],
       links: [{ rel: "canonical", href: url }],
-      scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", name: title, url }) }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: title,
+            description: description,
+            url: url,
+          }),
+        },
+      ],
     };
   },
   component: GroupCategoryComponent,
@@ -41,11 +63,15 @@ function GroupCategoryComponent() {
     );
   }, [category.slug, submitted, isRemoved]);
 
+  const categoryIntro = getCategoryIntro(category.slug);
+
   return (
     <GroupLandingPage
       parent="Categories"
-      heading={category.name + " WhatsApp Groups"}
-      intro={"Discover active " + category.name.toLowerCase() + " WhatsApp communities. Listings are moderated and public invite links are reviewed when possible."}
+      heading={`${category.name} WhatsApp Group Links (2026)`}
+      intro={categoryIntro.description}
+      categoryIntro={categoryIntro}
+      categorySlug={category.slug}
       groups={categoryGroups}
     />
   );

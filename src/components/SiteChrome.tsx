@@ -70,10 +70,13 @@ export function SiteHeader() {
             {[
               { to: "/", label: "Home" },
               { to: "/group/addgroup", label: "Add Group" },
+              { to: "/safety", label: "Safety" },
+              { to: "/moderation-policy", label: "Moderation" },
+              { to: "/editorial-policy", label: "Editorial" },
+              { to: "/how-reporting-works", label: "Reporting" },
               { to: "/faq", label: "FAQ" },
               { to: "/terms", label: "Terms" },
               { to: "/privacy", label: "Privacy" },
-              { to: "/disclaimer", label: "Disc" },
               { to: "/contact", label: "Contact" },
             ].map((item) => (
               <Link
@@ -144,6 +147,27 @@ export function SiteFooter() {
                 {c.name}
               </Link>
             ))}
+          </div>
+        </div>
+
+        {/* E-E-A-T Trust & Safety Links */}
+        <div className="border-t border-border/60 pt-6">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-foreground mb-3">
+            Trust, Safety & Editorial Standards
+          </h3>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-foreground">
+            <Link to="/safety" className="hover:text-primary transition-colors">
+              Safety Center
+            </Link>
+            <Link to="/moderation-policy" className="hover:text-primary transition-colors">
+              Moderation Policy
+            </Link>
+            <Link to="/editorial-policy" className="hover:text-primary transition-colors">
+              Editorial Policy
+            </Link>
+            <Link to="/how-reporting-works" className="hover:text-primary transition-colors">
+              How Reporting Works
+            </Link>
           </div>
         </div>
 

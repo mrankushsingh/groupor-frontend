@@ -16,13 +16,33 @@ export const Route = createFileRoute("/group/country/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
-    const title = loaderData.country + " WhatsApp Groups | Groupor";
-    const description = "Browse active WhatsApp groups for " + loaderData.country + " on Groupor.";
+    const title = `WhatsApp Groups in ${loaderData.country} (2026) | Groupor`;
+    const description = `Join active WhatsApp groups in ${loaderData.country} (2026). Discover verified local communities for jobs, networking, education, and social discussion.`;
     const url = absoluteUrl(countryPath(loaderData.country));
     return {
-      meta: [{ title }, { name: "description", content: description }, { name: "robots", content: "index, follow" }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:url", content: url }, { property: "og:type", content: "website" }],
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { name: "robots", content: "index, follow" },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
+      ],
       links: [{ rel: "canonical", href: url }],
-      scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "CollectionPage", name: title, url }) }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: title,
+            description: description,
+            url: url,
+          }),
+        },
+      ],
     };
   },
   component: GroupCountryComponent,
@@ -46,8 +66,8 @@ function GroupCountryComponent() {
   return (
     <GroupLandingPage
       parent="Countries"
-      heading={country + " WhatsApp Groups"}
-      intro={"Find public WhatsApp communities relevant to people in " + country + "."}
+      heading={`WhatsApp Groups in ${country} (2026)`}
+      intro={`Explore public WhatsApp group links and active local communities for people in ${country}. Discover jobs, education, local trading, and social discussion groups.`}
       groups={countryGroups}
     />
   );

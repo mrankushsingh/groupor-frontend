@@ -13,9 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
+import { Route as EditorialPolicyRouteImport } from './routes/editorial-policy'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as HowReportingWorksRouteImport } from './routes/how-reporting-works'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as ModerationPolicyRouteImport } from './routes/moderation-policy'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SubmitRouteImport } from './routes/submit'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -54,9 +58,19 @@ const DisclaimerRoute = DisclaimerRouteImport.update({
   path: '/disclaimer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditorialPolicyRoute = EditorialPolicyRouteImport.update({
+  id: '/editorial-policy',
+  path: '/editorial-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowReportingWorksRoute = HowReportingWorksRouteImport.update({
+  id: '/how-reporting-works',
+  path: '/how-reporting-works',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
@@ -64,9 +78,19 @@ const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
   path: '/llms.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ModerationPolicyRoute = ModerationPolicyRouteImport.update({
+  id: '/moderation-policy',
+  path: '/moderation-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SafetyRoute = SafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -163,9 +187,13 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
+  '/how-reporting-works': typeof HowReportingWorksRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/moderation-policy': typeof ModerationPolicyRoute
   '/privacy': typeof PrivacyRoute
+  '/safety': typeof SafetyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/submit': typeof SubmitRoute
   '/terms': typeof TermsRoute
@@ -189,9 +217,13 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
+  '/how-reporting-works': typeof HowReportingWorksRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/moderation-policy': typeof ModerationPolicyRoute
   '/privacy': typeof PrivacyRoute
+  '/safety': typeof SafetyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/submit': typeof SubmitRoute
   '/terms': typeof TermsRoute
@@ -215,9 +247,13 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/disclaimer': typeof DisclaimerRoute
+  '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
+  '/how-reporting-works': typeof HowReportingWorksRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/moderation-policy': typeof ModerationPolicyRoute
   '/privacy': typeof PrivacyRoute
+  '/safety': typeof SafetyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/submit': typeof SubmitRoute
   '/terms': typeof TermsRoute
@@ -243,9 +279,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/disclaimer'
+    | '/editorial-policy'
     | '/faq'
+    | '/how-reporting-works'
     | '/llms.txt'
+    | '/moderation-policy'
     | '/privacy'
+    | '/safety'
     | '/sitemap.xml'
     | '/submit'
     | '/terms'
@@ -269,9 +309,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/disclaimer'
+    | '/editorial-policy'
     | '/faq'
+    | '/how-reporting-works'
     | '/llms.txt'
+    | '/moderation-policy'
     | '/privacy'
+    | '/safety'
     | '/sitemap.xml'
     | '/submit'
     | '/terms'
@@ -294,9 +338,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/disclaimer'
+    | '/editorial-policy'
     | '/faq'
+    | '/how-reporting-works'
     | '/llms.txt'
+    | '/moderation-policy'
     | '/privacy'
+    | '/safety'
     | '/sitemap.xml'
     | '/submit'
     | '/terms'
@@ -321,9 +369,13 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DisclaimerRoute: typeof DisclaimerRoute
+  EditorialPolicyRoute: typeof EditorialPolicyRoute
   FaqRoute: typeof FaqRoute
+  HowReportingWorksRoute: typeof HowReportingWorksRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
+  ModerationPolicyRoute: typeof ModerationPolicyRoute
   PrivacyRoute: typeof PrivacyRoute
+  SafetyRoute: typeof SafetyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SubmitRoute: typeof SubmitRoute
   TermsRoute: typeof TermsRoute
@@ -370,11 +422,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/editorial-policy': {
+      id: '/editorial-policy'
+      path: '/editorial-policy'
+      fullPath: '/editorial-policy'
+      preLoaderRoute: typeof EditorialPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-reporting-works': {
+      id: '/how-reporting-works'
+      path: '/how-reporting-works'
+      fullPath: '/how-reporting-works'
+      preLoaderRoute: typeof HowReportingWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms.txt': {
@@ -384,11 +450,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/moderation-policy': {
+      id: '/moderation-policy'
+      path: '/moderation-policy'
+      fullPath: '/moderation-policy'
+      preLoaderRoute: typeof ModerationPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/safety': {
+      id: '/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -536,9 +616,13 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DisclaimerRoute: DisclaimerRoute,
+  EditorialPolicyRoute: EditorialPolicyRoute,
   FaqRoute: FaqRoute,
+  HowReportingWorksRoute: HowReportingWorksRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
+  ModerationPolicyRoute: ModerationPolicyRoute,
   PrivacyRoute: PrivacyRoute,
+  SafetyRoute: SafetyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SubmitRoute: SubmitRoute,
   TermsRoute: TermsRoute,

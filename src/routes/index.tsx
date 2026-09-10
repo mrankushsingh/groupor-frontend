@@ -1,12 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
-import { SearchX } from "lucide-react";
+import { SearchX, ShieldCheck, Users, Globe, BookOpen, HelpCircle } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { GroupCard } from "@/components/GroupCard";
 import { categories, countries, groups, languages } from "@/data/groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
-import { absoluteUrl, SITE_URL } from "@/lib/seo";
+import { absoluteUrl, categoryPath, countryPath, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => {
@@ -15,16 +15,16 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "WhatsApp Group Links — Join Active Groups | Groupor.link" },
+      { title: "Join Active WhatsApp Groups by Category & Country | Groupor" },
       {
         name: "description",
         content:
-          "Find and join active WhatsApp groups by category, country and language: jobs, crypto, education, movies, tech and more. Submit your own group free.",
+          "Discover active WhatsApp group links for Gaming, Jobs, Education, Sports and 180+ countries. Join safely with verified community listings.",
       },
-      { property: "og:title", content: "WhatsApp Group Links — Join Active Groups" },
+      { property: "og:title", content: "Join Active WhatsApp Groups by Category & Country | Groupor" },
       {
         property: "og:description",
-        content: "Browse thousands of active WhatsApp group invite links by category.",
+        content: "Discover active WhatsApp group links for Gaming, Jobs, Education, Sports and 180+ countries.",
       },
       { property: "og:url", content: absoluteUrl("/") },
       { property: "og:type", content: "website" },
@@ -44,6 +44,17 @@ export const Route = createFileRoute("/")({
             target: `${SITE_URL}/group/find?q={search_term_string}`,
             "query-input": "required name=search_term_string",
           },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Groupor",
+          url: absoluteUrl("/"),
+          logo: absoluteUrl("/og-image.png"),
+          description: "Global directory of verified public WhatsApp group invite links.",
         }),
       },
     ],
@@ -91,25 +102,25 @@ function Index() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
-      <main className="mx-auto max-w-5xl px-4 pt-8">
+      <main className="mx-auto max-w-5xl px-4 pt-8 pb-16">
+        {/* Hero Section */}
         <div className="text-center">
           <Link
             to="/group/addgroup"
             className="inline-block rounded-md bg-cta px-6 py-3 text-lg font-bold text-cta-foreground transition-opacity hover:opacity-90"
           >
-            + Add Whatsapp Group
+            + Add WhatsApp Group
           </Link>
-          <h1 className="mx-auto mt-6 max-w-3xl text-3xl font-bold tracking-tight text-foreground">
-            Find WhatsApp Groups by Category, Country and Language
+          <h1 className="mx-auto mt-6 max-w-3xl text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            Join Active WhatsApp Groups by Category & Country
           </h1>
-          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-            Groupor helps you discover public WhatsApp communities for work, education, gaming,
-            technology and more. Browse by topic, location or language, then join the groups that
-            match your interests.
+          <p className="mx-auto mt-3 max-w-3xl text-base leading-relaxed text-muted-foreground">
+            Groupor is your premier global directory for discovering active WhatsApp group invite links. Browse thousands of moderated communities across 28 categories, 180+ countries, and multiple languages.
           </p>
         </div>
 
-        <form className="mt-6 flex flex-col gap-3 sm:flex-row" onSubmit={goFind}>
+        {/* Filter Bar */}
+        <form className="mt-8 flex flex-col gap-3 sm:flex-row" onSubmit={goFind}>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -160,7 +171,8 @@ function Index() {
           </button>
         </form>
 
-        <section className="mt-4">
+        {/* Group Listings */}
+        <section className="mt-8">
           <div className="flex flex-col gap-3">
             {results.slice(0, visible).map((g) => (
               <GroupCard key={g.id} group={g} />
@@ -189,6 +201,175 @@ function Index() {
               </p>
             </div>
           )}
+        </section>
+
+        {/* Extended SEO Content Section (900-1500 Words) */}
+        <section className="mt-16 border-t border-border pt-12 space-y-12 text-foreground">
+          {/* Section 1: What is Groupor */}
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              What is Groupor and How Does Joining WhatsApp Groups Work?
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              Groupor is a specialized search engine and verified index for public WhatsApp group invite links. In today’s interconnected digital landscape, messaging groups have evolved into vibrant digital spaces where millions of people exchange ideas, learn new skills, network professionally, and form friendships. Finding genuine, active group links on generic search engines often leads to dead links, spam redirects, or unsafe websites.
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              At Groupor, we solve this problem by organizing public WhatsApp group links into clean, curated categories and regional hubs. Whether you are looking for job vacancy updates in India, cryptocurrency trading signals in the United States, BGMI gaming clans, or language learning exchange groups, Groupor makes finding and joining active communities simple, fast, and secure.
+            </p>
+            <div className="mt-6 grid gap-6 sm:grid-cols-3">
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <div className="rounded-lg bg-primary/10 p-2.5 w-fit text-primary">
+                  <ShieldCheck className="size-5" />
+                </div>
+                <h3 className="mt-3 font-bold text-foreground">Hand-Reviewed Listings</h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  Every submitted group link passes automated validation and human review to filter out spam and dead links.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <div className="rounded-lg bg-primary/10 p-2.5 w-fit text-primary">
+                  <Users className="size-5" />
+                </div>
+                <h3 className="mt-3 font-bold text-foreground">28 Diverse Categories</h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  Explore niches ranging from Education and Jobs to Gaming, Business, Entertainment, and Lifestyle.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <div className="rounded-lg bg-primary/10 p-2.5 w-fit text-primary">
+                  <Globe className="size-5" />
+                </div>
+                <h3 className="mt-3 font-bold text-foreground">Global Regional Hubs</h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  Find local group links across 180+ countries including India, USA, UK, Nigeria, Brazil, and Pakistan.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Explore Top Categories */}
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Explore Popular WhatsApp Group Categories
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              Our directory organizes groups into specific interest hubs so you can easily connect with people who share your exact passions and goals. Here are some of our most popular categories:
+            </p>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.slice(1, 13).map((cat) => (
+                <Link
+                  key={cat.slug}
+                  to={categoryPath(cat.slug)}
+                  className="group rounded-xl border border-border bg-card p-4 transition-all hover:border-primary hover:shadow-md"
+                >
+                  <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
+                    {cat.name} WhatsApp Groups
+                  </h3>
+                  <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+                    Join active {cat.name.toLowerCase()} groups for networking, discussion, and regular updates.
+                  </p>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4 text-center">
+              <Link to="/group/find" className="text-sm font-semibold text-primary underline hover:opacity-80">
+                View All 28 WhatsApp Group Categories →
+              </Link>
+            </div>
+          </div>
+
+          {/* Section 3: Country & Language Communities */}
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Connect by Country and Language
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              Localization is central to community building. Finding a group operating in your native language or regional location ensures higher engagement and relevant local discussions. Groupor supports country hubs for over 180 nations alongside multi-language filtering.
+            </p>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {countries.slice(1, 9).map((cnt) => (
+                <Link
+                  key={cnt.code}
+                  to={countryPath(cnt.name)}
+                  className="rounded-lg border border-border bg-card p-3 text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-all text-center"
+                >
+                  WhatsApp Groups in {cnt.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 4: Safety & Moderation */}
+          <div className="rounded-3xl border border-border bg-card p-8">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              User Safety, Moderation & Reporting Standards
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              Your safety and privacy are our highest priorities. Because public WhatsApp invite links allow anyone to join, we enforce rigorous safety guidelines and community moderation policies. We continuously purge expired invite links and ban spam submissions.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <Link
+                to="/safety"
+                className="rounded-xl bg-muted px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                Safety Guidelines
+              </Link>
+              <Link
+                to="/moderation-policy"
+                className="rounded-xl bg-muted px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                Moderation Policy
+              </Link>
+              <Link
+                to="/how-reporting-works"
+                className="rounded-xl bg-muted px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                How Takedowns Work
+              </Link>
+            </div>
+          </div>
+
+          {/* Section 5: Frequently Asked Questions (FAQ) */}
+          <div>
+            <div className="flex items-center gap-2">
+              <HelpCircle className="size-6 text-primary" />
+              <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                Frequently Asked Questions (FAQ)
+              </h2>
+            </div>
+
+            <div className="mt-6 space-y-6">
+              <div className="rounded-2xl border border-border bg-card p-6">
+                <h3 className="text-lg font-bold text-foreground">How do I join a WhatsApp group on Groupor?</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  Simply select a category or search for your topic of interest, click on the group card, and hit the "Join Group" button. You will be redirected safely to WhatsApp where you can preview the group title and confirm your entry.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-card p-6">
+                <h3 className="text-lg font-bold text-foreground">Is it free to submit and list my WhatsApp group?</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  Yes, listing your WhatsApp group on Groupor is completely free. Click "+ Add WhatsApp Group" in the header, enter your group link and details, and submit. Once verified by our team, your group will be indexed publicly.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-card p-6">
+                <h3 className="text-lg font-bold text-foreground">What should I do if a group link is full or invalid?</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  WhatsApp groups have a capacity limit of 1,024 members. If an invite link has expired or reached capacity, please click the "Report Group" button on the group page so our automated system can update or remove the listing.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-card p-6">
+                <h3 className="text-lg font-bold text-foreground">How does Groupor protect member privacy?</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  Groupor never requests phone numbers or personal account access. We strictly index public invite links. We advise all users to adjust their WhatsApp privacy settings before joining public groups.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
 

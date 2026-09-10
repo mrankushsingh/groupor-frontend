@@ -38,8 +38,10 @@ export function GroupCard({ group }: { group: Group }) {
         {group.image ? (
           <img
             src={group.image}
-            alt={`${group.name} group icon`}
+            alt={`${group.name} WhatsApp Group`}
             loading="lazy"
+            width="56"
+            height="56"
             className="size-14 shrink-0 rounded-full object-cover"
           />
         ) : (

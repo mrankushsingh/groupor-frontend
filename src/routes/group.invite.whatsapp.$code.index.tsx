@@ -16,7 +16,7 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
     if (!loaderData?.group || loaderData.group.status === "inactive") {
       return {
         meta: [
-          { title: "Group not found — Groupor.link" },
+          { title: "Group not found — Groupor" },
           { name: "robots", content: "noindex" },
         ],
       };
@@ -59,8 +59,8 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
                 ],
               },
               {
-                "@type": "SocialMediaPosting",
-                headline: title,
+                "@type": "WebPage",
+                name: title,
                 description,
                 url,
                 ...(group.image ? { image: group.image } : {}),

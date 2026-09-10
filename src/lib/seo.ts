@@ -25,11 +25,9 @@ export function groupSeo(group: Group) {
   const code = inviteCodeOf(group.link);
   const path = code ? "/group/invite/whatsapp/" + code : "/";
   const categoryName = categories.find((category) => category.slug === group.category)?.name ?? "Community";
-  const countryText = group.country ? ` in ${group.country}` : "";
-  const languageText = group.language ? ` (${group.language})` : "";
-  const title = `${group.name} WhatsApp Group Invite Link – ${categoryName}${countryText} | ${SITE_NAME}`;
-  const descBase = group.description ? group.description.trim() : `Join active ${group.name} WhatsApp group for ${categoryName}${countryText}${languageText}. Discover active communities on Groupor.`;
-  const description = (`Join ${group.name} WhatsApp group${countryText}${languageText}. ${descBase}`).slice(0, 155);
+  const title = `${group.name} WhatsApp Invite Link | ${SITE_NAME}`;
+  const descBase = group.description ? group.description.trim() : `Join active ${group.name} WhatsApp group link for ${categoryName}${group.country ? ` in ${group.country}` : ""}. Discover active verified communities on Groupor.`;
+  const description = (`Join ${group.name} WhatsApp group link. ${descBase}`).slice(0, 155);
   return { url: absoluteUrl(path), title, description };
 }
 
