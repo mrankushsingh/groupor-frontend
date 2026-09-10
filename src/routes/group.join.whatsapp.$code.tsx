@@ -7,32 +7,51 @@ import { findGroupByCode, inviteCodeOf, joinHref } from "@/data/groups";
 import { SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/group/join/whatsapp/$code")({
-  loader: ({ params }) => ({ code: params.code }),
-  head: ({ params }) => ({
-    meta: [
-      { title: "WhatsApp Invite Link | Groupor" },
-      {
-        name: "description",
-        content: "Read the WhatsApp group rules, then agree and join the group.",
-      },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [
-      {
-        rel: "canonical",
-        href: `${SITE_URL}/group/join/whatsapp/${params.code}`,
-      },
-    ],
-  }),
+  loader: async ({ params }) => {
+    let group = findGroupByCode(params.code) ?? null;
+    if (!group && typeof window === "undefined") {
+      try {
+        const { findSubmittedByCode } = await import("@/lib/submitted-groups.store");
+        group = (await findSubmittedByCode(params.code)) ?? null;
+      } catch {
+        group = null;
+      }
+    }
+    return { group, code: params.code };
+  },
+  head: ({ loaderData, params }) => {
+    const title = loaderData?.group
+      ? `Rules for ${loaderData.group.name} | Groupor`
+      : "WhatsApp Invite Link | Groupor";
+    return {
+      meta: [
+        { title },
+        {
+          name: "description",
+          content: "Read the WhatsApp group rules, then agree and join the group.",
+        },
+        { name: "robots", content: "noindex, follow" },
+      ],
+      links: [
+        {
+          rel: "canonical",
+          href: `${SITE_URL}/group/join/whatsapp/${params.code}`,
+        },
+      ],
+    };
+  },
   component: JoinAgreePage,
 });
 
 function JoinAgreePage() {
-  const { code } = Route.useLoaderData();
+  const { group: staticGroup, code } = Route.useLoaderData();
   const submitted = useSubmittedGroups();
   const { isCodeRemoved } = useRemovedGroups();
+  const codeNorm = (code ?? "").trim().toLowerCase();
   const group =
-    findGroupByCode(code) ?? submitted.find((g) => inviteCodeOf(g.link) === code) ?? null;
+    staticGroup ??
+    submitted.find((g) => inviteCodeOf(g.link).toLowerCase() === codeNorm) ??
+    null;
 
   if (!group || isCodeRemoved(code)) return <GroupNotFound />;
 

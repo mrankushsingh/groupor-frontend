@@ -5,8 +5,16 @@ import { categories, findGroupByCode, inviteCodeOf } from "@/data/groups";
 import { DEFAULT_OG_IMAGE, groupSeo, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
-  loader: ({ params }) => {
-    const group = findGroupByCode(params.code) ?? null;
+  loader: async ({ params }) => {
+    let group = findGroupByCode(params.code) ?? null;
+    if (!group && typeof window === "undefined") {
+      try {
+        const { findSubmittedByCode } = await import("@/lib/submitted-groups.store");
+        group = (await findSubmittedByCode(params.code)) ?? null;
+      } catch {
+        group = null;
+      }
+    }
     const categorySlug = group?.category ?? "";
     const category = categories.find((c) => c.slug === categorySlug);
     return { group, categoryName: category?.name ?? categorySlug, code: params.code };
@@ -77,7 +85,11 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
 function GroupInvitePage() {
   const { group: staticGroup, categoryName, code } = Route.useLoaderData();
   const submitted = useSubmittedGroups();
-  const group = staticGroup ?? submitted.find((g) => inviteCodeOf(g.link) === code) ?? null;
+  const codeNorm = (code ?? "").trim().toLowerCase();
+  const group =
+    staticGroup ??
+    submitted.find((g) => inviteCodeOf(g.link).toLowerCase() === codeNorm) ??
+    null;
 
   if (!group) return <GroupNotFound />;
 

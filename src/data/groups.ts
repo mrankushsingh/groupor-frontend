@@ -436,7 +436,9 @@ export function groupPath(group: Pick<Group, "id" | "name" | "category" | "link"
 }
 
 export function findGroupByCode(code: string) {
-  return groups.find((g) => inviteCodeOf(g.link) === code);
+  const norm = (code ?? "").trim().toLowerCase();
+  if (!norm) return undefined;
+  return groups.find((g) => inviteCodeOf(g.link).toLowerCase() === norm);
 }
 
 export function findGroupBySlug(category: string, slug: string) {
