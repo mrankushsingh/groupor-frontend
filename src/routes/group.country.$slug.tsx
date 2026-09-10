@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
-import { countries, groups, slugify } from "@/data/groups";
+import { countries, groups, slugify, sortGroups } from "@/data/groups";
 import { absoluteUrl, countryPath } from "@/lib/seo";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
@@ -54,7 +54,7 @@ function GroupCountryComponent() {
   const { isRemoved } = useRemovedGroups();
 
   const countryGroups = useMemo(() => {
-    const all = [...submitted, ...groups];
+    const all = sortGroups([...submitted, ...groups]);
     return all.filter(
       (g) =>
         g.status !== "inactive" &&

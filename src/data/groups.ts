@@ -444,3 +444,28 @@ export function findGroupByCode(code: string) {
 export function findGroupBySlug(category: string, slug: string) {
   return groups.find((g) => g.category === category && groupSlug(g) === slug);
 }
+
+export function getGroupOrderKey(g: Group): number {
+  if (g.createdAt) {
+    const time = new Date(g.createdAt).getTime();
+    if (!Number.isNaN(time)) return time;
+  }
+  const digits = g.id.replace(/\D/g, "");
+  if (digits) {
+    const val = Number(digits);
+    if (!Number.isNaN(val)) return val;
+  }
+  return 0;
+}
+
+/**
+ * Guarantees a 100% deterministic, stable group order across SSR and client renders.
+ * Newest creation date / largest numeric ID comes first.
+ */
+export function sortGroups(list: Group[]): Group[] {
+  return [...list].sort((a, b) => {
+    const keyDiff = getGroupOrderKey(b) - getGroupOrderKey(a);
+    if (keyDiff !== 0) return keyDiff;
+    return a.id.localeCompare(b.id);
+  });
+}

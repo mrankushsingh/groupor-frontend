@@ -3,7 +3,7 @@ import * as React from "react";
 import { SearchX, ShieldCheck, Users, Globe, BookOpen, HelpCircle } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { GroupCard } from "@/components/GroupCard";
-import { categories, countries, groups, languages } from "@/data/groups";
+import { categories, countries, groups, languages, sortGroups } from "@/data/groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
 import { absoluteUrl, categoryPath, countryPath, SITE_URL } from "@/lib/seo";
@@ -93,9 +93,7 @@ function Index() {
   };
 
   const filteredResults = React.useMemo(() => {
-    const all = [...submitted, ...[...groups].sort((a, b) => Number(b.id) - Number(a.id))].filter(
-      (g) => !isRemoved(g.id, g.link),
-    );
+    const all = sortGroups([...submitted, ...groups]).filter((g) => !isRemoved(g.id, g.link));
     return all.filter((g) => {
       if (category && g.category !== category) return false;
       if (country && g.country !== country) return false;

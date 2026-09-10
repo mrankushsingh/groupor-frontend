@@ -9,6 +9,7 @@ import {
   groups,
   languages,
   slugify,
+  sortGroups,
   type Group,
 } from "@/data/groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
@@ -105,7 +106,7 @@ function FindPage() {
   const appliedLanguage = search.language ?? "";
 
   const results = React.useMemo(() => {
-    return [...submitted, ...[...groups].sort((a, b) => Number(b.id) - Number(a.id))].filter(
+    return sortGroups([...submitted, ...groups]).filter(
       (g) =>
         !isRemoved(g.id, g.link) &&
         matchesQuery(g, keyword) &&

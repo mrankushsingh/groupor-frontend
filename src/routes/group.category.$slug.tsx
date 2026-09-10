@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
-import { categories, groups } from "@/data/groups";
+import { categories, groups, sortGroups } from "@/data/groups";
 import { getCategoryIntro } from "@/data/category-intros";
 import { absoluteUrl, categoryPath } from "@/lib/seo";
 import { useSubmittedGroups } from "@/lib/submitted-groups";
@@ -54,7 +54,7 @@ function GroupCategoryComponent() {
   const { isRemoved } = useRemovedGroups();
 
   const categoryGroups = useMemo(() => {
-    const all = [...submitted, ...groups];
+    const all = sortGroups([...submitted, ...groups]);
     return all.filter(
       (g) =>
         g.status !== "inactive" &&
