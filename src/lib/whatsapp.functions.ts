@@ -1,20 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { cleanText } from "@/lib/seo";
 
 const schema = z.object({
   link: z.string().url().max(300),
 });
 
 function decodeEntities(value: string) {
-  return value
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#0?39;/g, "'")
-    .replace(/&#x27;/gi, "'")
-    .replace(/&nbsp;/g, " ")
-    .trim();
+  return cleanText(value);
 }
 
 function metaContent(html: string, property: string) {
@@ -154,7 +147,7 @@ export const fetchGroupPreview = createServerFn({ method: "POST" })
         };
       }
 
-      return { ok: true, name: title.slice(0, 80), image, description: description.slice(0, 300) };
+      return { ok: true, name: cleanText(title).slice(0, 80), image, description: cleanText(description).slice(0, 300) };
     } catch {
       return {
         ok: false,

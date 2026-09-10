@@ -22,26 +22,53 @@ export function languagePath(language: string) {
 }
 
 /**
- * Decodes numeric HTML entities (e.g. &#x1d5d4;) and normalizes fancy mathematical
- * unicode characters (e.g. 𝙰𝚕𝚕 𝙲𝚊𝚝𝚎𝚐𝚘𝚛𝚒𝚎𝚜) into clean standard text.
+ * Decodes all numeric hex/decimal and named HTML entities (including unclosed or truncated fragments like &#x1d5f),
+ * and normalizes fancy mathematical Unicode characters (e.g. 𝙰𝚕𝚕 𝙲𝚊𝚝𝚎𝚐𝚘𝚛𝚒𝚎𝚜) into clean standard text.
  */
 export function cleanText(value?: string | null): string {
   if (!value) return "";
   let text = String(value);
-  text = text.replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => {
+
+  // Decode valid hex entities with or without trailing semicolon
+  text = text.replace(/&#x([0-9a-fA-F]{2,6});?/gi, (_, hex) => {
     try {
-      return String.fromCodePoint(parseInt(hex, 16));
+      const codePoint = parseInt(hex, 16);
+      if (codePoint > 0 && codePoint <= 0x10ffff) {
+        return String.fromCodePoint(codePoint);
+      }
     } catch {
-      return _;
+      /* pass */
     }
+    return "";
   });
-  text = text.replace(/&#([0-9]+);/g, (_, dec) => {
+
+  // Decode valid decimal entities with or without trailing semicolon
+  text = text.replace(/&#([0-9]{2,7});?/g, (_, dec) => {
     try {
-      return String.fromCodePoint(parseInt(dec, 10));
+      const codePoint = parseInt(dec, 10);
+      if (codePoint > 0 && codePoint <= 0x10ffff) {
+        return String.fromCodePoint(codePoint);
+      }
     } catch {
-      return _;
+      /* pass */
     }
+    return "";
   });
+
+  // Strip any remaining truncated/broken entity fragments (e.g. &#x1d5f)
+  text = text.replace(/&#x?[0-9a-fA-F]*/gi, "");
+
+  // Decode named HTML entities
+  text = text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, " ");
+
+  // Normalize fancy mathematical unicode fonts (A-Z, a-z, 0-9) to clean ASCII
   return text.normalize("NFKD").trim();
 }
 
