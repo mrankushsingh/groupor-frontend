@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: "Groupor.link",
+          name: "Groupor",
           url: absoluteUrl("/"),
           potentialAction: {
             "@type": "SearchAction",

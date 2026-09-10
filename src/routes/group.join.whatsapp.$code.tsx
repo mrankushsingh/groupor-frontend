@@ -10,7 +10,7 @@ export const Route = createFileRoute("/group/join/whatsapp/$code")({
   loader: ({ params }) => ({ code: params.code }),
   head: ({ params }) => ({
     meta: [
-      { title: "I Agree & Join Group — Groupor.link" },
+      { title: "WhatsApp Invite Link | Groupor" },
       {
         name: "description",
         content: "Read the WhatsApp group rules, then agree and join the group.",

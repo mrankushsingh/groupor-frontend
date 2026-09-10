@@ -37,8 +37,8 @@ export const Route = createFileRoute("/privacy")({
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: "Privacy Policy — Groupor.link",
-            description: "How Groupor.link collects and uses visitor information.",
+            name: "Privacy Policy — Groupor",
+            description: "How Groupor collects and uses visitor information.",
             url: absoluteUrl("/privacy"),
             publisher: { "@id": `${SITE_URL}/#organization` },
           },

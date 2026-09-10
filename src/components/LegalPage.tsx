@@ -5,7 +5,7 @@ type Section = { heading: string; body: ReactNode };
 
 function normalizeBrandCopy(value: string) {
   return value
-    .replaceAll("GroupSor.com", "Groupor.link")
+    .replaceAll("GroupSor.com", "Groupor")
     .replaceAll("GroupSor", "Groupor")
     .replaceAll("Groupsor", "Groupor")
     .replaceAll("groupsor.link", "groupor.link");

@@ -6,13 +6,13 @@ import { absoluteUrl } from "@/lib/seo";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Groupor.link — Company, Editorial Team & Mission" },
+      { title: "About Groupor — Company, Editorial Team & Mission" },
       {
         name: "description",
         content:
-          "Learn about Groupor.link, our hand-reviewed WhatsApp group directory, trust & safety editorial standards, company mission, and verification process.",
+          "Learn about Groupor, our hand-reviewed WhatsApp group directory, trust & safety editorial standards, company mission, and verification process.",
       },
-      { property: "og:title", content: "About Groupor.link — Company & Editorial Standards" },
+      { property: "og:title", content: "About Groupor — Company & Editorial Standards" },
       {
         property: "og:description",
         content: "Discover how Groupor verifies public messaging group links safely.",
@@ -59,7 +59,7 @@ function AboutPage() {
             </span>
           </div>
           <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-            About Groupor.link
+            About Groupor
           </h1>
           <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
             Groupor is a dedicated global index and discovery platform for public WhatsApp group invite links. Founded to solve the widespread issue of broken links, spam, and unmoderated social messaging feeds, Groupor connects individuals with active, high-quality online communities.

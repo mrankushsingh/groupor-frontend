@@ -37,9 +37,9 @@ export const Route = createFileRoute("/disclaimer")({
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: "Disclaimer — Groupor.link",
+            name: "Disclaimer — Groupor",
             description:
-              "Groupor.link is an independent link directory and is not associated with WhatsApp Messenger.",
+              "Groupor is an independent link directory and is not associated with WhatsApp Messenger.",
             url: absoluteUrl("/disclaimer"),
             publisher: { "@id": `${SITE_URL}/#organization` },
           },
@@ -77,8 +77,8 @@ function DisclaimerPage() {
                 <p>All logos, product names, and brands are property of their respective owners.</p>
                 <p>WhatsApp™ is a trademark of WhatsApp Inc.</p>
                 <p>Facebook™ is a trademark of Facebook Inc.</p>
-                <p>Groupor.link is not affiliated with, or sponsored or endorsed by, WhatsApp Inc.</p>
-                <p>Groupor.link is not affiliated with, or sponsored or endorsed by, Facebook Inc.</p>
+                <p>Groupor is not affiliated with, or sponsored or endorsed by, WhatsApp Inc.</p>
+                <p>Groupor is not affiliated with, or sponsored or endorsed by, Facebook Inc.</p>
                 <p>We do not have any direct collaboration with WhatsApp or any other social network.</p>
                 <p>This website is developed for connecting people all over the world via public WhatsApp groups.</p>
                 <p>The information contained within this website is strictly for educational purposes.</p>

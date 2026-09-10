@@ -163,7 +163,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
           ) : (
             <div className="mx-auto mt-5 w-full max-w-2xl rounded border border-border bg-card px-4 py-3 text-left text-sm leading-relaxed text-muted-foreground">
               <h2 className="text-base font-semibold text-foreground mb-1">About {group.name}</h2>
-              Join the official public invite link for <strong>{group.name}</strong> on Groupor.link. Connect with like-minded members in {categoryName}{group.country ? ` based in ${group.country}` : ""}{group.language ? ` speaking ${group.language}` : ""}.
+              Join the official public invite link for <strong>{group.name}</strong> on Groupor. Connect with like-minded members in {categoryName}{group.country ? ` based in ${group.country}` : ""}{group.language ? ` speaking ${group.language}` : ""}.
             </div>
           )}
 
@@ -256,7 +256,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
               <div className="mt-3 space-y-3 text-sm text-muted-foreground">
                 <div>
                   <h3 className="font-semibold text-foreground">Is joining {group.name} free?</h3>
-                  <p>Yes, all WhatsApp group invite links listed on Groupor.link are 100% free to join.</p>
+                  <p>Yes, all WhatsApp group invite links listed on Groupor are 100% free to join.</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">What if the WhatsApp group is full?</h3>

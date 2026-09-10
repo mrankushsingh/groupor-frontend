@@ -290,7 +290,7 @@ export const categoryIntros: Record<string, CategoryIntro> = {
 
 export function getCategoryIntro(slug: string): CategoryIntro {
   return categoryIntros[slug] || {
-    description: `Discover active WhatsApp group invite links for ${slug.replace(/-/g, " ")}. Join moderated public communities on Groupor.link.`,
+    description: `Discover active WhatsApp group invite links for ${slug.replace(/-/g, " ")}. Join moderated public communities on Groupor.`,
     whoItIsFor: `Community members interested in ${slug.replace(/-/g, " ")} discussions, networking, and updates.`,
     popularTypes: ["Public Community Chats", "Topic Discussions", "Regional Groups", "Member Network"],
     safetyTips: [
