@@ -29,6 +29,18 @@ export function GroupLandingPage({
         <section className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label={heading}>
           {groups.map((group) => <GroupCard key={group.id} group={group} />)}
         </section>
+        {groups.length === 0 && (
+          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card p-10 text-center shadow-card">
+            <h3 className="text-lg font-semibold text-foreground">No groups listed here yet</h3>
+            <p className="mt-2 text-sm text-muted-foreground">Be the first to submit a group for this community!</p>
+            <Link
+              to="/group/addgroup"
+              className="mt-5 inline-block rounded-md bg-cta px-6 py-2.5 text-sm font-bold text-cta-foreground transition-opacity hover:opacity-90"
+            >
+              + Add WhatsApp Group
+            </Link>
+          </div>
+        )}
       </main>
       <SiteFooter />
     </div>
