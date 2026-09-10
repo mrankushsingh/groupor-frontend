@@ -121,7 +121,7 @@ export function addSubmittedGroup(group: Omit<Group, "id" | "platform"> & { id?:
 
 /** Groups from the server store (+ brief local cache). Empty during SSR/first paint. */
 export function useSubmittedGroups() {
-  const [list, setList] = useState<Group[]>([]);
+  const [list, setList] = useState<Group[]>(() => readLocal());
 
   useEffect(() => {
     let alive = true;

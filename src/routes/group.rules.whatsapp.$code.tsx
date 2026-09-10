@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { GroupNotFound } from "@/components/GroupDetail";
-import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { apiUrl, hasRemoteApi } from "@/lib/api";
+import { normalizeApiGroup, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { findGroupByCode, inviteCodeOf, joinHref } from "@/data/groups";
 import { trackEvent } from "@/lib/analytics";
@@ -16,6 +17,28 @@ export const Route = createFileRoute("/group/rules/whatsapp/$code")({
         group = (await findSubmittedByCode(params.code)) ?? null;
       } catch {
         group = null;
+      }
+      if (!group && hasRemoteApi()) {
+        try {
+          const codeNorm = (params.code ?? "").trim().toLowerCase();
+          const res = await fetch(apiUrl("/api/groups?page_size=50"), {
+            headers: { Accept: "application/json" },
+          });
+          if (res.ok) {
+            const json = (await res.json()) as { groups?: unknown[] };
+            if (Array.isArray(json?.groups)) {
+              for (const raw of json.groups) {
+                const mapped = normalizeApiGroup(raw);
+                if (mapped && inviteCodeOf(mapped.link).toLowerCase() === codeNorm) {
+                  group = mapped;
+                  break;
+                }
+              }
+            }
+          }
+        } catch {
+          /* fallback */
+        }
       }
     }
     return { group, code: params.code };
