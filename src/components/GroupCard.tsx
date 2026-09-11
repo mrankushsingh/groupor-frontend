@@ -29,13 +29,15 @@ function ShareButton({
   );
 }
 
-export function GroupCard({ group }: { group: Group }) {
+export function GroupCard({ group, priority = false }: { group: Group; priority?: boolean }) {
   const categoryName = categories.find((c) => c.slug === group?.category)?.name ?? group?.category ?? "Community";
   const code = inviteCodeOf(group?.link ?? "");
   const share = groupFindShare(group);
   const name = cleanText(group?.name ?? "");
   const description = cleanText(group?.description ?? "");
-  const imageUrl = group?.image ? optimizeImageUrl(group.image, { width: 64, height: 64, quality: 70 }) : undefined;
+  const imageUrl = group?.image
+    ? optimizeImageUrl(group.image, { width: 56, height: 56, quality: 65 })
+    : undefined;
 
   return (
     <article className="rounded-sm border border-border/70 bg-card px-4 py-4">
@@ -44,8 +46,9 @@ export function GroupCard({ group }: { group: Group }) {
           <img
             src={imageUrl}
             alt={`${name} WhatsApp Group`}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
             decoding="async"
+            {...(priority ? { fetchpriority: "high" } : {})}
             width="56"
             height="56"
             onError={(e) => {

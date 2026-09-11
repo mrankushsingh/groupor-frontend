@@ -183,8 +183,8 @@ function Index() {
         {/* Group Listings */}
         <section className="mt-8">
           <div className="flex flex-col gap-3">
-            {filteredResults.slice(0, visible).map((g) => (
-              <GroupCard key={g.id} group={g} />
+            {filteredResults.slice(0, visible).map((g, index) => (
+              <GroupCard key={g.id} group={g} priority={index === 0} />
             ))}
           </div>
 

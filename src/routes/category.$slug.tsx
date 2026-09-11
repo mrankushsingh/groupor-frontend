@@ -211,8 +211,8 @@ function CategoryPage() {
         </div>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((g) => (
-            <GroupCard key={g.id} group={g} />
+          {list.map((g, index) => (
+            <GroupCard key={g.id} group={g} priority={index === 0} />
           ))}
         </div>
         {list.length === 0 && (

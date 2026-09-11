@@ -6,7 +6,7 @@
  */
 export function optimizeImageUrl(
   url?: string | null,
-  options?: { width?: number; height?: number; quality?: number }
+  options?: { width?: number; height?: number; quality?: number; format?: "webp" | "avif" }
 ): string {
   if (!url || typeof url !== "string") return "";
   const trimmed = url.trim();
@@ -17,11 +17,12 @@ export function optimizeImageUrl(
     return trimmed;
   }
 
-  // Target dimensions (defaults to 64x64 for 56px display)
-  const w = options?.width ?? 64;
-  const h = options?.height ?? 64;
-  const q = options?.quality ?? 70;
+  // Target dimensions (defaults to 56x56 for standard avatar display)
+  const w = options?.width ?? 56;
+  const h = options?.height ?? 56;
+  const q = options?.quality ?? 65;
+  const fmt = options?.format ?? "webp";
 
-  // Use wsrv.nl CDN (Cloudflare Edge) for fast WebP conversion & resizing
-  return `https://wsrv.nl/?url=${encodeURIComponent(trimmed)}&w=${w}&h=${h}&fit=cover&output=webp&q=${q}`;
+  // Use wsrv.nl CDN (Cloudflare Edge) for fast WebP/AVIF conversion & resizing
+  return `https://wsrv.nl/?url=${encodeURIComponent(trimmed)}&w=${w}&h=${h}&fit=cover&output=${fmt}&q=${q}`;
 }

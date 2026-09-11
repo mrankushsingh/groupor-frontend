@@ -241,8 +241,8 @@ function FindPage() {
           </p>
 
           <div className="flex flex-col gap-3">
-            {results.slice(0, visible).map((g) => (
-              <GroupCard key={g.id} group={g} />
+            {results.slice(0, visible).map((g, index) => (
+              <GroupCard key={g.id} group={g} priority={index === 0} />
             ))}
           </div>
 

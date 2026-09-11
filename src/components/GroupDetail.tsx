@@ -109,10 +109,11 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
           <div className="flex justify-center">
             {group.image ? (
               <img
-                src={optimizeImageUrl(group.image, { width: 160, height: 160, quality: 70 })}
+                src={optimizeImageUrl(group.image, { width: 120, height: 120, quality: 65 })}
                 alt={`${group.name} WhatsApp Group`}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
+                {...({ fetchpriority: "high" } as React.HTMLAttributes<HTMLImageElement>)}
                 width="120"
                 height="120"
                 onError={(e) => {

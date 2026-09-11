@@ -112,8 +112,10 @@ export const Route = createRootRouteWithContext<{
       { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
     links: [
-      { rel: "preconnect", href: "https://wsrv.nl" },
+      { rel: "preconnect", href: "https://wsrv.nl", crossOrigin: "anonymous" },
       { rel: "dns-prefetch", href: "https://wsrv.nl" },
+      { rel: "preconnect", href: "https://pps.whatsapp.net" },
+      { rel: "dns-prefetch", href: "https://pps.whatsapp.net" },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "icon", href: "/groupor-logo.png", type: "image/png" },
