@@ -44,4 +44,4 @@ Disallow: /_serverFn/
 
 # Canonical Sitemap & LLM Index
 Sitemap: https://www.groupor.link/sitemap.xml
-LLMs-txt: https://www.groupor.link/llms.txt
+# LLMs-txt: https://www.groupor.link/llms.txt
