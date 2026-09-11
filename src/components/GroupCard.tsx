@@ -35,7 +35,7 @@ export function GroupCard({ group }: { group: Group }) {
   const share = groupFindShare(group);
   const name = cleanText(group.name);
   const description = cleanText(group.description);
-  const imageUrl = group.image ? optimizeImageUrl(group.image, { width: 112, height: 112 }) : undefined;
+  const imageUrl = group.image ? optimizeImageUrl(group.image, { width: 64, height: 64, quality: 70 }) : undefined;
 
   return (
     <article className="rounded-sm border border-border/70 bg-card px-4 py-4">

@@ -100,7 +100,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
           <div className="flex justify-center">
             {group.image ? (
               <img
-                src={optimizeImageUrl(group.image, { width: 240, height: 240 })}
+                src={optimizeImageUrl(group.image, { width: 160, height: 160, quality: 70 })}
                 alt={`${group.name} WhatsApp Group`}
                 loading="lazy"
                 decoding="async"

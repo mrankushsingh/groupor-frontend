@@ -17,10 +17,10 @@ export function optimizeImageUrl(
     return trimmed;
   }
 
-  // Target dimensions (defaults to 112x112 for retina 56px display)
-  const w = options?.width ?? 112;
-  const h = options?.height ?? 112;
-  const q = options?.quality ?? 80;
+  // Target dimensions (defaults to 64x64 for 56px display)
+  const w = options?.width ?? 64;
+  const h = options?.height ?? 64;
+  const q = options?.quality ?? 70;
 
   // Use wsrv.nl CDN (Cloudflare Edge) for fast WebP conversion & resizing
   return `https://wsrv.nl/?url=${encodeURIComponent(trimmed)}&w=${w}&h=${h}&fit=cover&output=webp&q=${q}`;
