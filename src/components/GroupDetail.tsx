@@ -15,16 +15,17 @@ import { useRemovedGroups } from "@/lib/removed-groups";
 import { trackEvent } from "@/lib/analytics";
 import { groupFindShare } from "@/lib/share";
 import { optimizeImageUrl } from "@/lib/image";
+import { groups, inviteCodeOf, joinHref, type Group } from "@/data/groups";
 
 const PAGE_SIZE = 10;
 
 /** Display time like the reference group pages: 2026-08-10 09:54:06 */
 function formatGroupTiming(group: Group) {
   const fromId =
-    group.id.startsWith("u") && /^\d+$/.test(group.id.slice(1))
+    typeof group?.id === "string" && group.id.startsWith("u") && /^\d+$/.test(group.id.slice(1))
       ? Number(group.id.slice(1))
       : null;
-  const raw = group.createdAt || fromId;
+  const raw = group?.createdAt || fromId;
   const date =
     typeof raw === "number"
       ? new Date(raw)
@@ -56,41 +57,49 @@ export function GroupNotFound() {
 
 export function GroupDetail({ group, categoryName }: { group: Group; categoryName: string }) {
   const { isRemoved } = useRemovedGroups();
-  const reported = isRemoved(group.id, group.link);
+  const reported = isRemoved(group?.id ?? "", group?.link ?? "");
   const [visible, setVisible] = useState(PAGE_SIZE);
 
   useEffect(() => {
-    trackEvent("group_view", { group_id: group.id, platform: group.platform, category: group.category });
-  }, [group.id, group.platform, group.category]);
+    if (group?.id) {
+      trackEvent("group_view", { group_id: group.id, platform: group.platform, category: group.category });
+    }
+  }, [group?.id, group?.platform, group?.category]);
 
   useEffect(() => {
     setVisible(PAGE_SIZE);
-  }, [group.id]);
+  }, [group?.id]);
 
-  const related = groups
+  const related = (groups || [])
     .filter(
       (g) =>
-        g.id !== group.id &&
+        g &&
+        g.id !== group?.id &&
         g.status !== "inactive" &&
         !isRemoved(g.id, g.link),
     )
     .map((candidate) => ({
       candidate,
       score:
-        (candidate.category === group.category ? 5 : 0) +
-        (candidate.country === group.country ? 2 : 0) +
-        (candidate.language === group.language ? 2 : 0) +
-        (candidate.tags?.filter((tag) =>
-          group.tags?.some((t) => t.toLowerCase() === tag.toLowerCase()),
-        ).length ?? 0),
+        (candidate.category === group?.category ? 5 : 0) +
+        (candidate.country === group?.country ? 2 : 0) +
+        (candidate.language === group?.language ? 2 : 0) +
+        (Array.isArray(candidate.tags)
+          ? candidate.tags.filter(
+              (tag) =>
+                typeof tag === "string" &&
+                Array.isArray(group?.tags) &&
+                group.tags.some((t) => typeof t === "string" && t.toLowerCase() === tag.toLowerCase()),
+            ).length
+          : 0),
     }))
     .sort((a, b) => b.score - a.score)
     .map(({ candidate }) => candidate);
 
-  const { url } = joinHref(group.link);
-  const timing = formatGroupTiming(group);
-  const code = inviteCodeOf(group.link);
-  const share = groupFindShare(group);
+  const { url } = joinHref(group?.link ?? "");
+  const timing = group ? formatGroupTiming(group) : "";
+  const code = inviteCodeOf(group?.link ?? "");
+  const share = group ? groupFindShare(group) : { url: "", text: "", encoded: "" };
 
   return (
     <div className="min-h-screen bg-background">
@@ -125,15 +134,17 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
           </h1>
 
           <p className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[13px] text-[#777]">
-            <Link
-              to="/group/category/$slug"
-              params={{ slug: group.category }}
-              className="inline-flex items-center gap-1.5 hover:text-primary font-medium"
-            >
-              <LayoutGrid className="size-3.5" />
-              {categoryName}
-            </Link>
-            {group.country ? (
+            {group.category ? (
+              <Link
+                to="/group/category/$slug"
+                params={{ slug: group.category }}
+                className="inline-flex items-center gap-1.5 hover:text-primary font-medium"
+              >
+                <LayoutGrid className="size-3.5" />
+                {categoryName}
+              </Link>
+            ) : null}
+            {typeof group.country === "string" && group.country.trim() ? (
               <Link
                 to="/group/country/$slug"
                 params={{ slug: group.country.toLowerCase().replace(/[^a-z0-9]+/g, "-") }}
@@ -143,7 +154,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
                 {group.country}
               </Link>
             ) : null}
-            {group.language ? (
+            {typeof group.language === "string" && group.language.trim() ? (
               <Link
                 to="/group/language/$slug"
                 params={{ slug: group.language.toLowerCase().replace(/[^a-z0-9]+/g, "-") }}
@@ -161,7 +172,7 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             ) : null}
           </p>
 
-          {group.description.trim() ? (
+          {typeof group.description === "string" && group.description.trim() ? (
             <div className="mx-auto mt-5 w-full max-w-2xl rounded border border-border bg-card px-4 py-3 text-left text-sm leading-relaxed text-foreground whitespace-pre-wrap">
               <h2 className="text-base font-semibold text-foreground mb-1">About {group.name}</h2>
               {group.description}
@@ -173,16 +184,18 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             </div>
           )}
 
-          {group.tags && group.tags.length > 0 ? (
+          {Array.isArray(group.tags) && group.tags.length > 0 ? (
             <ul className="mx-auto mt-4 flex max-w-2xl flex-wrap justify-center gap-2">
-              {group.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[13px] font-normal leading-none text-primary"
-                >
-                  #{tag}
-                </li>
-              ))}
+              {group.tags
+                .filter((tag): tag is string => typeof tag === "string" && tag.trim().length > 0)
+                .map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[13px] font-normal leading-none text-primary"
+                  >
+                    #{tag}
+                  </li>
+                ))}
             </ul>
           ) : null}
 

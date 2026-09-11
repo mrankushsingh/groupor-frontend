@@ -408,6 +408,7 @@ export function formatMembers(n: number) {
 }
 
 export function slugify(value: string) {
+  if (typeof value !== "string") return "";
   return value
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -421,28 +422,29 @@ export function slugify(value: string) {
 
 /** Unique, SEO-friendly slug for a group: name + short id suffix to guarantee uniqueness. */
 export function groupSlug(group: Pick<Group, "id" | "name">) {
-  const base = slugify(group.name) || "group";
-  return `${base}-${group.id}`;
+  const base = slugify(group?.name ?? "") || "group";
+  return `${base}-${group?.id ?? "0"}`;
 }
 
 /** The WhatsApp invite code for a group link, or "" when the link is invalid. */
 export function inviteCodeOf(link: string): string {
+  if (typeof link !== "string") return "";
   const canonical = joinUrl(link);
   return canonical ? (canonical.split("/").pop() ?? "") : "";
 }
 
 /** Canonical public URL of a group page: /group/invite/whatsapp/<code>. */
 export function groupPath(group: Pick<Group, "id" | "name" | "category" | "link">) {
-  const code = inviteCodeOf(group.link);
+  const code = inviteCodeOf(group?.link ?? "");
   return code
     ? `/group/invite/whatsapp/${code}`
-    : `/category/${group.category}/${groupSlug(group)}`;
+    : `/category/${group?.category ?? "all"}/${groupSlug(group)}`;
 }
 
 export function findGroupByCode(code: string) {
   const norm = (code ?? "").trim().toLowerCase();
   if (!norm) return undefined;
-  return groups.find((g) => inviteCodeOf(g.link).toLowerCase() === norm);
+  return groups.find((g) => g && g.link && inviteCodeOf(g.link).toLowerCase() === norm);
 }
 
 export function findGroupBySlug(category: string, slug: string) {

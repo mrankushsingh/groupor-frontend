@@ -30,17 +30,17 @@ function ShareButton({
 }
 
 export function GroupCard({ group }: { group: Group }) {
-  const categoryName = categories.find((c) => c.slug === group.category)?.name ?? group.category;
-  const code = inviteCodeOf(group.link);
+  const categoryName = categories.find((c) => c.slug === group?.category)?.name ?? group?.category ?? "Community";
+  const code = inviteCodeOf(group?.link ?? "");
   const share = groupFindShare(group);
-  const name = cleanText(group.name);
-  const description = cleanText(group.description);
-  const imageUrl = group.image ? optimizeImageUrl(group.image, { width: 64, height: 64, quality: 70 }) : undefined;
+  const name = cleanText(group?.name ?? "");
+  const description = cleanText(group?.description ?? "");
+  const imageUrl = group?.image ? optimizeImageUrl(group.image, { width: 64, height: 64, quality: 70 }) : undefined;
 
   return (
     <article className="rounded-sm border border-border/70 bg-card px-4 py-4">
       <div className="flex items-start gap-4">
-        {group.image ? (
+        {group?.image ? (
           <img
             src={imageUrl}
             alt={`${name} WhatsApp Group`}
@@ -73,10 +73,10 @@ export function GroupCard({ group }: { group: Group }) {
           ) : (
             <Link
               to="/category/$slug/$group"
-              params={{ slug: group.category, group: groupSlug(group) }}
+              params={{ slug: group?.category ?? "all", group: groupSlug(group) }}
               className="text-lg font-bold leading-snug text-foreground transition-colors hover:text-primary"
             >
-              <h3>{group.name}</h3>
+              <h3>{group?.name}</h3>
             </Link>
           )}
 
@@ -85,32 +85,38 @@ export function GroupCard({ group }: { group: Group }) {
               <LayoutGrid className="size-3.5" />
               {categoryName}
             </span>
-            <span className="flex items-center gap-1">
-              <Globe className="size-3.5" />
-              {group.country}
-            </span>
-            <span className="flex items-center gap-1">
-              <Languages className="size-3.5" />
-              {group.language}
-            </span>
+            {group?.country ? (
+              <span className="flex items-center gap-1">
+                <Globe className="size-3.5" />
+                {group.country}
+              </span>
+            ) : null}
+            {group?.language ? (
+              <span className="flex items-center gap-1">
+                <Languages className="size-3.5" />
+                {group.language}
+              </span>
+            ) : null}
           </div>
         </div>
       </div>
 
-      {group.description.trim() ? (
+      {typeof group?.description === "string" && group.description.trim() ? (
         <p className="mt-3 line-clamp-2 text-sm text-muted-foreground">{group.description}</p>
       ) : null}
 
-      {group.tags && group.tags.length > 0 ? (
+      {Array.isArray(group?.tags) && group.tags.length > 0 ? (
         <ul className="mt-3 flex flex-wrap gap-1.5">
-          {group.tags.map((tag) => (
-            <li
-              key={tag}
-              className="rounded-full bg-[#0f766e] dark:bg-teal-900 px-2.5 py-0.5 text-[12px] font-medium text-white dark:text-teal-100"
-            >
-              {tag}
-            </li>
-          ))}
+          {group.tags
+            .filter((tag): tag is string => typeof tag === "string" && tag.trim().length > 0)
+            .map((tag) => (
+              <li
+                key={tag}
+                className="rounded-full bg-[#0f766e] dark:bg-teal-900 px-2.5 py-0.5 text-[12px] font-medium text-white dark:text-teal-100"
+              >
+                {tag}
+              </li>
+            ))}
         </ul>
       ) : null}
 
