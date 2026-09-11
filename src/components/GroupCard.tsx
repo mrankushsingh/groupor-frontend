@@ -106,7 +106,7 @@ export function GroupCard({ group }: { group: Group }) {
           {group.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-full bg-[#5bc0de] px-2.5 py-0.5 text-[12px] font-normal text-white"
+              className="rounded-full bg-[#0f766e] dark:bg-teal-900 px-2.5 py-0.5 text-[12px] font-medium text-white dark:text-teal-100"
             >
               {tag}
             </li>

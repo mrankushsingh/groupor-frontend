@@ -72,7 +72,7 @@ export function BrandLogo({
       <span className="min-w-0 leading-tight">
         <span className={`block font-bold tracking-tight ${title}`}>
           <span className={onDark ? "text-white" : "text-foreground"}>Group</span>
-          <span className="text-primary">or</span>
+          <span className={onDark ? "text-primary" : "text-link"}>or</span>
         </span>
         {showTagline ? (
           <span
@@ -80,7 +80,7 @@ export function BrandLogo({
               onDark ? "text-white/70" : "text-muted-foreground"
             }`}
           >
-            Find. <span className="text-primary">Connect.</span> Grow together.
+            Find. <span className={onDark ? "text-primary" : "text-link"}>Connect.</span> Grow together.
           </span>
         ) : null}
       </span>

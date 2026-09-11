@@ -301,7 +301,7 @@ function Index() {
               ))}
             </div>
             <div className="mt-4 text-center">
-              <Link to="/group/find" className="text-sm font-semibold text-primary underline hover:opacity-80">
+              <Link to="/group/find" className="text-sm font-semibold text-link underline hover:opacity-80">
                 View All 28 WhatsApp Group Categories →
               </Link>
             </div>

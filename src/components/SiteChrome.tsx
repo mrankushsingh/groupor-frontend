@@ -157,7 +157,7 @@ export function SiteFooter() {
             Topical Guides & E-E-A-T Standards
           </h3>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-foreground">
-            <Link to="/guides" className="text-primary hover:underline">
+            <Link to="/guides" className="text-link font-semibold hover:underline">
               Guides Hub
             </Link>
             <Link to="/guides/how-to-join-whatsapp-groups-safely" className="hover:text-primary transition-colors">
