@@ -114,13 +114,6 @@ export const Route = createRootRouteWithContext<{
     links: [
       { rel: "preconnect", href: "https://wsrv.nl" },
       { rel: "dns-prefetch", href: "https://wsrv.nl" },
-      { rel: "preconnect", href: "https://pps.whatsapp.net" },
-      { rel: "dns-prefetch", href: "https://pps.whatsapp.net" },
-      { rel: "preconnect", href: "https://chat.whatsapp.com" },
-      { rel: "dns-prefetch", href: "https://chat.whatsapp.com" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "icon", href: "/groupor-logo.png", type: "image/png" },
