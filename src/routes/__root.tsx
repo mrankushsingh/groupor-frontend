@@ -112,6 +112,8 @@ export const Route = createRootRouteWithContext<{
       { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
     links: [
+      { rel: "preconnect", href: "https://wsrv.nl" },
+      { rel: "dns-prefetch", href: "https://wsrv.nl" },
       { rel: "preconnect", href: "https://pps.whatsapp.net" },
       { rel: "dns-prefetch", href: "https://pps.whatsapp.net" },
       { rel: "preconnect", href: "https://chat.whatsapp.com" },

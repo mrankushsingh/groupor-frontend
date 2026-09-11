@@ -3,6 +3,7 @@ import { MessageCircle, LayoutGrid, Globe, Languages } from "lucide-react";
 import { groupSlug, categories, inviteCodeOf, type Group } from "@/data/groups";
 import { groupFindShare } from "@/lib/share";
 import { cleanText } from "@/lib/seo";
+import { optimizeImageUrl } from "@/lib/image";
 
 function ShareButton({
   href,
@@ -34,17 +35,24 @@ export function GroupCard({ group }: { group: Group }) {
   const share = groupFindShare(group);
   const name = cleanText(group.name);
   const description = cleanText(group.description);
+  const imageUrl = group.image ? optimizeImageUrl(group.image, { width: 112, height: 112 }) : undefined;
 
   return (
     <article className="rounded-sm border border-border/70 bg-card px-4 py-4">
       <div className="flex items-start gap-4">
         {group.image ? (
           <img
-            src={group.image}
+            src={imageUrl}
             alt={`${name} WhatsApp Group`}
             loading="lazy"
+            decoding="async"
             width="56"
             height="56"
+            onError={(e) => {
+              if (group.image && e.currentTarget.src !== group.image) {
+                e.currentTarget.src = group.image;
+              }
+            }}
             className="size-14 shrink-0 rounded-full object-cover"
           />
         ) : (

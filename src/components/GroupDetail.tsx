@@ -12,9 +12,9 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { ReportGroup } from "@/components/ReportGroup";
 import { GroupCard } from "@/components/GroupCard";
 import { useRemovedGroups } from "@/lib/removed-groups";
-import { groups, joinHref, inviteCodeOf, type Group } from "@/data/groups";
 import { trackEvent } from "@/lib/analytics";
 import { groupFindShare } from "@/lib/share";
+import { optimizeImageUrl } from "@/lib/image";
 
 const PAGE_SIZE = 10;
 
@@ -100,11 +100,17 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
           <div className="flex justify-center">
             {group.image ? (
               <img
-                src={group.image}
+                src={optimizeImageUrl(group.image, { width: 240, height: 240 })}
                 alt={`${group.name} WhatsApp Group`}
                 loading="lazy"
+                decoding="async"
                 width="120"
                 height="120"
+                onError={(e) => {
+                  if (group.image && e.currentTarget.src !== group.image) {
+                    e.currentTarget.src = group.image;
+                  }
+                }}
                 className="size-[120px] rounded-full object-cover"
               />
             ) : (
