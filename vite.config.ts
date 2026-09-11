@@ -11,6 +11,10 @@ export default defineConfig({
   // Lovable sandbox builds still force Cloudflare internally.
   nitro: {
     preset: "vercel",
+    compressPublicAssets: {
+      gzip: true,
+      brotli: true,
+    },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
