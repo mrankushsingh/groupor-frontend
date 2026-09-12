@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { GroupCard } from "@/components/GroupCard";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { categories, countries, type Group } from "@/data/groups";
 import type { CategoryIntro } from "@/data/category-intros";
 import { categoryPath, countryPath } from "@/lib/seo";
 import { ShieldCheck, CheckCircle2, BookOpen, HelpCircle, MessageSquare } from "lucide-react";
+
+const PAGE_SIZE = 50;
 
 export function GroupLandingPage({
   heading,
@@ -21,6 +24,12 @@ export function GroupLandingPage({
   categoryIntro?: CategoryIntro;
   categorySlug?: string;
 }) {
+  const [visible, setVisible] = useState(PAGE_SIZE);
+
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [heading]);
+
   const relatedCategories = categories
     .filter((c) => c.slug !== categorySlug && c.slug !== "all")
     .slice(0, 6);
@@ -87,8 +96,21 @@ export function GroupLandingPage({
 
         {/* Group Grid */}
         <section className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label={heading}>
-          {groups.map((group, index) => <GroupCard key={group.id} group={group} priority={index === 0} />)}
+          {groups.slice(0, visible).map((group, index) => (
+            <GroupCard key={group.id} group={group} priority={index === 0} />
+          ))}
         </section>
+
+        {groups.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setVisible((v) => v + PAGE_SIZE)}
+            disabled={visible >= groups.length}
+            className="mt-6 rounded-md bg-cta px-5 py-3 text-lg font-normal text-cta-foreground transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-70"
+          >
+            {visible >= groups.length ? "No more groups" : "Show more"}
+          </button>
+        )}
 
         {groups.length === 0 && (
           <div className="mt-8 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card p-10 text-center shadow-card">

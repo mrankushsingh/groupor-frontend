@@ -95,7 +95,7 @@ function FindPage() {
   const [language, setLanguage] = React.useState(search.language ?? "");
   const { isRemoved } = useRemovedGroups();
   const submitted = useSubmittedGroups(loaderData?.submitted);
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 50;
   const [visible, setVisible] = React.useState(PAGE_SIZE);
 
   React.useEffect(() => {

@@ -76,7 +76,7 @@ function Index() {
   const [category, setCategory] = React.useState("");
   const { isRemoved } = useRemovedGroups();
   const submitted = useSubmittedGroups(loaderData?.submitted);
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 50;
   const [visible, setVisible] = React.useState(PAGE_SIZE);
 
   // Legacy ?q= on home → find page

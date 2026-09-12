@@ -62,11 +62,14 @@ export const Route = createFileRoute("/category/$slug")({
   component: CategoryPage,
 });
 
+const PAGE_SIZE = 50;
+
 function CategoryPage() {
   const { name, slug } = Route.useLoaderData();
   const [country, setCountry] = useState("");
   const [language, setLanguage] = useState("");
   const [query, setQuery] = useState("");
+  const [visible, setVisible] = useState(PAGE_SIZE);
   const { isRemoved } = useRemovedGroups();
   const submitted = useSubmittedGroups();
 
@@ -211,10 +214,21 @@ function CategoryPage() {
         </div>
 
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((g, index) => (
+          {list.slice(0, visible).map((g, index) => (
             <GroupCard key={g.id} group={g} priority={index === 0} />
           ))}
         </div>
+
+        {list.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setVisible((v) => v + PAGE_SIZE)}
+            disabled={visible >= list.length}
+            className="mt-6 rounded-md bg-cta px-5 py-3 text-lg font-normal text-cta-foreground transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-70"
+          >
+            {visible >= list.length ? "No more groups" : "Show more"}
+          </button>
+        )}
         {list.length === 0 && (
           <p className="mt-12 text-center text-sm text-muted-foreground">
             No groups here yet. Be the first to submit one.
