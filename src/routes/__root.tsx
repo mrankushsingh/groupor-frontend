@@ -98,6 +98,7 @@ export const Route = createRootRouteWithContext<{
       { name: "theme-color", content: "#17D292" },
       { title: "Join Active WhatsApp Groups by Category & Country | Groupor" },
       { name: "description", content: "Discover active WhatsApp group links for Gaming, Jobs, Education, Sports and 180+ countries. Join safely with verified community listings." },
+      { name: "yandex-verification", content: "77187a23d3820167" },
       { name: "author", content: "Groupor" },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
       { property: "og:site_name", content: "Groupor" },

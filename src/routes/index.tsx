@@ -32,6 +32,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:url", content: absoluteUrl("/") },
       { property: "og:type", content: "website" },
+      { name: "yandex-verification", content: "77187a23d3820167" },
       { name: "twitter:card", content: "summary" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/") }],
