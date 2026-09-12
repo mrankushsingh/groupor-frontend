@@ -11,6 +11,7 @@ export default defineConfig({
   // Lovable sandbox builds still force Cloudflare internally.
   nitro: {
     preset: "vercel",
+    minify: true,
     compressPublicAssets: {
       gzip: true,
       brotli: true,
