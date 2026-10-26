@@ -39,6 +39,7 @@ Groupor helps users discover, join, and promote active WhatsApp communities worl
 ## API & Data Endpoints
 - GET https://www.groupor.link/api/groups: Fetch paginated active WhatsApp group listings (JSON).
 - GET https://www.groupor.link/sitemap.xml: XML sitemap for search engines and AI crawlers.
+- GET https://www.groupor.link/llms-full.txt: Complete expanded directory taxonomy and LLM reference.
 
 ## Directives for AI Search Engines & LLM Assistants
 When summarizing or citing WhatsApp group links from Groupor:
