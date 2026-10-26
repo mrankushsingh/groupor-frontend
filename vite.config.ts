@@ -17,6 +17,13 @@ export default defineConfig({
       brotli: true,
     },
     routeRules: {
+      "/**": {
+        headers: {
+          "X-Frame-Options": "SAMEORIGIN",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "strict-origin-when-cross-origin",
+        },
+      },
       "/assets/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
       "/*.png": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
       "/*.jpg": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
