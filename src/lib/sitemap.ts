@@ -1,4 +1,5 @@
 import { categories, countries as staticCountries, languages as staticLanguages, groups as staticGroups, groupPath, inviteCodeOf, type Group } from "@/data/groups";
+import { viralHubs } from "@/data/viral-hubs";
 import { apiUrl, hasRemoteApi } from "@/lib/api";
 import {
   categoryPath,
@@ -158,6 +159,16 @@ export async function buildSitemapUrls(): Promise<SitemapUrl[]> {
     { loc: `${SITE_URL}/privacy`, lastmod: today, changefreq: "yearly", priority: "0.3" },
     { loc: `${SITE_URL}/disclaimer`, lastmod: today, changefreq: "yearly", priority: "0.3" },
   ];
+
+  // Trending high-intent viral niche hubs (from Search Console intent data)
+  for (const hub of viralHubs) {
+    urls.push({
+      loc: `${SITE_URL}/hub/${hub.slug}`,
+      lastmod: today,
+      changefreq: "daily",
+      priority: "0.9",
+    });
+  }
 
   // All 28 defined category landing pages
   for (const c of categories) {

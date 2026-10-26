@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import * as React from "react";
-import { SearchX, ShieldCheck, Users, Globe, BookOpen, HelpCircle } from "lucide-react";
+import { SearchX, ShieldCheck, Users, Globe, BookOpen, HelpCircle, TrendingUp, ArrowRight } from "lucide-react";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { GroupCard } from "@/components/GroupCard";
 import { categories, countries, groups, languages, sortGroups } from "@/data/groups";
+import { viralHubs } from "@/data/viral-hubs";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { absoluteUrl, categoryPath, countryPath, SITE_URL } from "@/lib/seo";
@@ -225,6 +226,48 @@ function Index() {
               </div>
             </div>
           )}
+        {/* Trending Viral Communities & Regional Hubs */}
+        <section className="mt-14 border-t border-border pt-10">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <TrendingUp className="size-3.5" />
+                <span>Top Search Trends</span>
+              </div>
+              <h2 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                Trending Regional & Career Communities
+              </h2>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                High-demand WhatsApp communities searched across Australia, UAE, Canada, and global diaspora networks.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {viralHubs.map((hub) => (
+              <Link
+                key={hub.slug}
+                to={`/hub/${hub.slug}`}
+                className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-md"
+              >
+                <div>
+                  <span className="rounded-md bg-muted px-2.5 py-1 text-xs font-semibold text-primary">
+                    {hub.badge}
+                  </span>
+                  <h3 className="mt-3 text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                    {hub.h1}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-2">
+                    {hub.overview}
+                  </p>
+                </div>
+                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-primary">
+                  <span>Explore communities</span>
+                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
 
         {/* Extended SEO Content Section (900-1500 Words) */}

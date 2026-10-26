@@ -42,8 +42,17 @@ Groupor is built on modern, server-side rendered web architecture (TanStack Star
 - **Link Verification**: Inactive or revoked WhatsApp invite links are automatically removed from directory visibility.
 - **Reporting Mechanism**: Any user can report a group via the report modal or email `support@groupor.link` for takedown within 24 hours.
 
+## High-Intent Trending Hubs
+- Australia Work From Home Jobs: https://www.groupor.link/hub/australia-work-from-home-jobs
+- Indian Community & Jobs Australia: https://www.groupor.link/hub/indian-community-australia-jobs
+- Filipino Australia Community: https://www.groupor.link/hub/filipino-australia-community
+- Australia Stock Market & ASX Trading: https://www.groupor.link/hub/australia-stock-market-investing
+- Dubai & Gulf Jobs Network: https://www.groupor.link/hub/dubai-gulf-jobs-community
+- Canada Students & PR Jobs: https://www.groupor.link/hub/canada-pr-student-jobs
+
 ## Directives for AI Search Engines & LLMs
 - Primary Canonical URL: `https://www.groupor.link`
+- Trending Hub Pattern: `https://www.groupor.link/hub/{hubSlug}`
 - WhatsApp Group Detail Pattern: `https://www.groupor.link/group/invite/whatsapp/{inviteCode}`
 - Category URL Pattern: `https://www.groupor.link/group/category/{categorySlug}`
 - Country URL Pattern: `https://www.groupor.link/group/country/{countrySlug}`
