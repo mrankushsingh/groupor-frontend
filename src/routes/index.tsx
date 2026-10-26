@@ -7,11 +7,12 @@ import { categories, countries, groups, languages, sortGroups } from "@/data/gro
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { absoluteUrl, categoryPath, countryPath, SITE_URL } from "@/lib/seo";
+import { isSafeGroupForPublicFeed } from "@/lib/moderation";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     const submitted = await fetchSubmittedForSsr();
-    return { submitted };
+    return { submitted: submitted.filter((g) => isSafeGroupForPublicFeed(g, false)) };
   },
   validateSearch: (search: Record<string, unknown>) => {
     const q = typeof search.q === "string" ? search.q.trim() : "";
@@ -44,22 +45,15 @@ export const Route = createFileRoute("/")({
           "@type": "WebSite",
           name: "Groupor",
           url: absoluteUrl("/"),
+          publisher: {
+            "@type": "Organization",
+            "@id": `${SITE_URL}/#organization`,
+          },
           potentialAction: {
             "@type": "SearchAction",
             target: `${SITE_URL}/group/find?q={search_term_string}`,
             "query-input": "required name=search_term_string",
           },
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Groupor",
-          url: absoluteUrl("/"),
-          logo: absoluteUrl("/og-image.png"),
-          description: "Global directory of verified public WhatsApp group invite links.",
         }),
       },
     ],
@@ -101,6 +95,7 @@ function Index() {
   const filteredResults = React.useMemo(() => {
     const all = sortGroups([...submitted, ...groups]).filter((g) => !isRemoved(g.id, g.link));
     return all.filter((g) => {
+      if (!isSafeGroupForPublicFeed(g, category === "adult")) return false;
       if (category && g.category !== category) return false;
       if (country && g.country !== country) return false;
       if (language && g.language !== language) return false;

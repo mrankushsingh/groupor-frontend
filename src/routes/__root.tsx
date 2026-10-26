@@ -133,9 +133,20 @@ export const Route = createRootRouteWithContext<{
           "@id": `${SITE_URL}/#organization`,
           name: "Groupor",
           url: SITE_URL,
+          logo: `${SITE_URL}/og-image.png`,
           email: "support@groupor.link",
           description:
-            "Free directory of active WhatsApp group invite links by category, country and language.",
+            "Global directory of verified public WhatsApp group invite links organized by category, country, and language.",
+          sameAs: [
+            "https://x.com/groupor_link",
+            "https://github.com/mrankushsingh/groupor-frontend",
+            "https://github.com/mrankushsingh/groupor-backend"
+          ],
+          contactPoint: {
+            "@type": "ContactPoint",
+            email: "support@groupor.link",
+            contactType: "customer support"
+          }
         }),
       },
     ],

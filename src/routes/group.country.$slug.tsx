@@ -13,7 +13,10 @@ export const Route = createFileRoute("/group/country/$slug")({
     );
     const countryName = match ? match.name : params.slug.replace(/-/g, " ");
     const countryCode = match ? match.code : "";
-    return { country: countryName, code: countryCode, slug: params.slug };
+    const groupCount = groups.filter(
+      (g) => g.status !== "inactive" && (g.country === countryName || slugify(g.country) === params.slug)
+    ).length;
+    return { country: countryName, code: countryCode, slug: params.slug, groupCount };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
@@ -22,12 +25,13 @@ export const Route = createFileRoute("/group/country/$slug")({
     const url = absoluteUrl(countryPath(loaderData.country));
     const ogLocale = getOgLocale(loaderData.country);
     const hreflangs = getCountryHreflangs();
+    const robotsContent = (loaderData.groupCount ?? 0) > 0 ? "index, follow" : "noindex, follow";
 
     return {
       meta: [
         { title },
         { name: "description", content: description },
-        { name: "robots", content: "index, follow" },
+        { name: "robots", content: robotsContent },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:url", content: url },

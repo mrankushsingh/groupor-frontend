@@ -95,16 +95,48 @@ export function ModerationPolicyPage() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">Takedown Request Process</h2>
-            <p className="mt-2 text-muted-foreground">
-              If you are a group admin wanting your group removed, or a copyright holder submitting a notice, you can submit a removal request anytime via our quick report flow or by contacting our team.
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">Prohibited Content Categories</h2>
+            <p className="mt-2 text-muted-foreground leading-relaxed">
+              Groupor maintains strict community standards to ensure users discover legitimate, safe, and active groups. The following categories of content are strictly prohibited across all directory submissions:
             </p>
-            <div className="mt-4 flex gap-4">
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground leading-relaxed">
+              <li><strong>Financial Fraud & Quick-Earning Schemes:</strong> Groups promoting multi-level marketing (MLM), Ponzi schemes, task-based salary fraud, crypto pump-and-dump groups, or unverified betting/gambling services.</li>
+              <li><strong>Unauthorized Data & Privacy Violations:</strong> Groups dedicated to leaking private databases, personal phone numbers, credential stuffing, hacked accounts, or doxxing individuals.</li>
+              <li><strong>Adult & Explicit Material:</strong> Non-consensual media, explicit pornography, prostitution/escort advertisements, and any child-exploitative material (reported immediately to law enforcement).</li>
+              <li><strong>Malicious Software & Cyber Threats:</strong> Distribution of malware, keyloggers, phishing kits, cracked software, carding methodologies, or OTP bypass tools.</li>
+              <li><strong>Harassment & Hate Speech:</strong> Content inciting violence, discrimination, or coordinated harassment based on race, religion, gender, ethnicity, or sexual orientation.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">Admin Responsibilities & Best Practices</h2>
+            <p className="mt-2 text-muted-foreground leading-relaxed">
+              Community managers and WhatsApp group administrators listing their groups on Groupor agree to maintain active oversight. Recommended practices include:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground leading-relaxed">
+              <li>Configuring group permissions to prevent unauthorized members from spamming links or renaming the group.</li>
+              <li>Publishing clear group rules in the WhatsApp group description and pinning them for new arrivals.</li>
+              <li>Promptly removing spammers and resetting the invite link when the group reaches capacity or is targeted by spam bots.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">Takedown Request & Appeals Process</h2>
+            <p className="mt-2 text-muted-foreground leading-relaxed">
+              If you are a group admin requesting removal of your group from Groupor, or a rights holder filing an intellectual property or privacy notice, our Trust & Safety team processes requests within 24 hours. Once verified, the listing and all associated cached metadata are permanently purged from public indexation.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-4">
               <Link
                 to="/how-reporting-works"
                 className="inline-flex rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
               >
                 Submit Report or Takedown Request
+              </Link>
+              <Link
+                to="/safety"
+                className="inline-flex rounded-xl border border-input bg-background px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-accent"
+              >
+                Review Safety Guidelines
               </Link>
             </div>
           </div>
