@@ -226,6 +226,8 @@ function Index() {
               </div>
             </div>
           )}
+        </section>
+
         {/* Trending Viral Communities & Regional Hubs */}
         <section className="mt-14 border-t border-border pt-10">
           <div className="flex items-center justify-between">

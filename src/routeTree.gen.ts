@@ -16,6 +16,7 @@ import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as EditorialPolicyRouteImport } from './routes/editorial-policy'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as HowReportingWorksRouteImport } from './routes/how-reporting-works'
+import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as ModerationPolicyRouteImport } from './routes/moderation-policy'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -33,6 +34,7 @@ import { Route as GuidesHowToJoinWhatsappGroupsSafelyRouteImport } from './route
 import { Route as GuidesWhatsappCommunityVsGroupRouteImport } from './routes/guides.whatsapp-community-vs-group'
 import { Route as GuidesWhatsappGroupAdminGuidelinesRouteImport } from './routes/guides.whatsapp-group-admin-guidelines'
 import { Route as GuidesWhatsappGroupsCountryJoiningGuideRouteImport } from './routes/guides.whatsapp-groups-country-joining-guide'
+import { Route as HubSlugRouteImport } from './routes/hub.$slug'
 import { Route as CategorySlugGroupRouteImport } from './routes/category.$slug_.$group'
 import { Route as GroupCategorySlugRouteImport } from './routes/group.category.$slug'
 import { Route as GroupCountrySlugRouteImport } from './routes/group.country.$slug'
@@ -77,6 +79,11 @@ const FaqRoute = FaqRouteImport.update({
 const HowReportingWorksRoute = HowReportingWorksRouteImport.update({
   id: '/how-reporting-works',
   path: '/how-reporting-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
+  id: '/llms-full.txt',
+  path: '/llms-full.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
@@ -169,6 +176,11 @@ const GuidesWhatsappGroupsCountryJoiningGuideRoute =
     path: '/guides/whatsapp-groups-country-joining-guide',
     getParentRoute: () => rootRouteImport,
   } as any)
+const HubSlugRoute = HubSlugRouteImport.update({
+  id: '/hub/$slug',
+  path: '/hub/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorySlugGroupRoute = CategorySlugGroupRouteImport.update({
   id: '/category/$slug_/$group',
   path: '/category/$slug/$group',
@@ -231,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-reporting-works': typeof HowReportingWorksRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/moderation-policy': typeof ModerationPolicyRoute
   '/privacy': typeof PrivacyRoute
@@ -247,6 +260,7 @@ export interface FileRoutesByFullPath {
   '/guides/whatsapp-community-vs-group': typeof GuidesWhatsappCommunityVsGroupRoute
   '/guides/whatsapp-group-admin-guidelines': typeof GuidesWhatsappGroupAdminGuidelinesRoute
   '/guides/whatsapp-groups-country-joining-guide': typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  '/hub/$slug': typeof HubSlugRoute
   '/guides/': typeof GuidesIndexRoute
   '/category/$slug/$group': typeof CategorySlugGroupRoute
   '/group/category/$slug': typeof GroupCategorySlugRoute
@@ -267,6 +281,7 @@ export interface FileRoutesByTo {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-reporting-works': typeof HowReportingWorksRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/moderation-policy': typeof ModerationPolicyRoute
   '/privacy': typeof PrivacyRoute
@@ -283,6 +298,7 @@ export interface FileRoutesByTo {
   '/guides/whatsapp-community-vs-group': typeof GuidesWhatsappCommunityVsGroupRoute
   '/guides/whatsapp-group-admin-guidelines': typeof GuidesWhatsappGroupAdminGuidelinesRoute
   '/guides/whatsapp-groups-country-joining-guide': typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  '/hub/$slug': typeof HubSlugRoute
   '/guides': typeof GuidesIndexRoute
   '/category/$slug/$group': typeof CategorySlugGroupRoute
   '/group/category/$slug': typeof GroupCategorySlugRoute
@@ -303,6 +319,7 @@ export interface FileRoutesById {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-reporting-works': typeof HowReportingWorksRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/moderation-policy': typeof ModerationPolicyRoute
   '/privacy': typeof PrivacyRoute
@@ -319,6 +336,7 @@ export interface FileRoutesById {
   '/guides/whatsapp-community-vs-group': typeof GuidesWhatsappCommunityVsGroupRoute
   '/guides/whatsapp-group-admin-guidelines': typeof GuidesWhatsappGroupAdminGuidelinesRoute
   '/guides/whatsapp-groups-country-joining-guide': typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  '/hub/$slug': typeof HubSlugRoute
   '/guides/': typeof GuidesIndexRoute
   '/category/$slug_/$group': typeof CategorySlugGroupRoute
   '/group/category/$slug': typeof GroupCategorySlugRoute
@@ -341,6 +359,7 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-reporting-works'
+    | '/llms-full.txt'
     | '/llms.txt'
     | '/moderation-policy'
     | '/privacy'
@@ -357,6 +376,7 @@ export interface FileRouteTypes {
     | '/guides/whatsapp-community-vs-group'
     | '/guides/whatsapp-group-admin-guidelines'
     | '/guides/whatsapp-groups-country-joining-guide'
+    | '/hub/$slug'
     | '/guides/'
     | '/category/$slug/$group'
     | '/group/category/$slug'
@@ -377,6 +397,7 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-reporting-works'
+    | '/llms-full.txt'
     | '/llms.txt'
     | '/moderation-policy'
     | '/privacy'
@@ -393,6 +414,7 @@ export interface FileRouteTypes {
     | '/guides/whatsapp-community-vs-group'
     | '/guides/whatsapp-group-admin-guidelines'
     | '/guides/whatsapp-groups-country-joining-guide'
+    | '/hub/$slug'
     | '/guides'
     | '/category/$slug/$group'
     | '/group/category/$slug'
@@ -412,6 +434,7 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-reporting-works'
+    | '/llms-full.txt'
     | '/llms.txt'
     | '/moderation-policy'
     | '/privacy'
@@ -428,6 +451,7 @@ export interface FileRouteTypes {
     | '/guides/whatsapp-community-vs-group'
     | '/guides/whatsapp-group-admin-guidelines'
     | '/guides/whatsapp-groups-country-joining-guide'
+    | '/hub/$slug'
     | '/guides/'
     | '/category/$slug_/$group'
     | '/group/category/$slug'
@@ -449,6 +473,7 @@ export interface RootRouteChildren {
   EditorialPolicyRoute: typeof EditorialPolicyRoute
   FaqRoute: typeof FaqRoute
   HowReportingWorksRoute: typeof HowReportingWorksRoute
+  LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   ModerationPolicyRoute: typeof ModerationPolicyRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -465,6 +490,7 @@ export interface RootRouteChildren {
   GuidesWhatsappCommunityVsGroupRoute: typeof GuidesWhatsappCommunityVsGroupRoute
   GuidesWhatsappGroupAdminGuidelinesRoute: typeof GuidesWhatsappGroupAdminGuidelinesRoute
   GuidesWhatsappGroupsCountryJoiningGuideRoute: typeof GuidesWhatsappGroupsCountryJoiningGuideRoute
+  HubSlugRoute: typeof HubSlugRoute
   GuidesIndexRoute: typeof GuidesIndexRoute
   CategorySlugGroupRoute: typeof CategorySlugGroupRoute
   GroupCategorySlugRoute: typeof GroupCategorySlugRoute
@@ -524,6 +550,13 @@ declare module '@tanstack/react-router' {
       path: '/how-reporting-works'
       fullPath: '/how-reporting-works'
       preLoaderRoute: typeof HowReportingWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms-full.txt': {
+      id: '/llms-full.txt'
+      path: '/llms-full.txt'
+      fullPath: '/llms-full.txt'
+      preLoaderRoute: typeof LlmsFullDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms.txt': {
@@ -645,6 +678,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesWhatsappGroupsCountryJoiningGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hub/$slug': {
+      id: '/hub/$slug'
+      path: '/hub/$slug'
+      fullPath: '/hub/$slug'
+      preLoaderRoute: typeof HubSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$slug_/$group': {
       id: '/category/$slug_/$group'
       path: '/category/$slug/$group'
@@ -744,6 +784,7 @@ const rootRouteChildren: RootRouteChildren = {
   EditorialPolicyRoute: EditorialPolicyRoute,
   FaqRoute: FaqRoute,
   HowReportingWorksRoute: HowReportingWorksRoute,
+  LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   ModerationPolicyRoute: ModerationPolicyRoute,
   PrivacyRoute: PrivacyRoute,
@@ -763,6 +804,7 @@ const rootRouteChildren: RootRouteChildren = {
     GuidesWhatsappGroupAdminGuidelinesRoute,
   GuidesWhatsappGroupsCountryJoiningGuideRoute:
     GuidesWhatsappGroupsCountryJoiningGuideRoute,
+  HubSlugRoute: HubSlugRoute,
   GuidesIndexRoute: GuidesIndexRoute,
   CategorySlugGroupRoute: CategorySlugGroupRoute,
   GroupCategorySlugRoute: GroupCategorySlugRoute,
