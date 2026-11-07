@@ -54,6 +54,7 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
       };
     }
     const { group, categoryName } = loaderData;
+    const isAdult = group.category === "adult";
     const seo = groupSeo(group);
     const title = seo.title;
     const description = seo.description;
@@ -65,6 +66,12 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
         { title },
         { name: "description", content: description },
         { name: "robots", content: "index, follow" },
+        ...(isAdult
+          ? [
+              { name: "rating", content: "adult" },
+              { name: "rating", content: "RTA-5042-1996-1400-1577-RTA" },
+            ]
+          : []),
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:url", content: url },
@@ -101,6 +108,8 @@ export const Route = createFileRoute("/group/invite/whatsapp/$code/")({
                 description,
                 url,
                 inLanguage: langCode,
+                isFamilyFriendly: !isAdult,
+                ...(isAdult ? { contentRating: "18+" } : {}),
                 ...(group.country ? { areaServed: { "@type": "Country", name: group.country } } : {}),
                 ...(group.image ? { image: group.image } : {}),
               },

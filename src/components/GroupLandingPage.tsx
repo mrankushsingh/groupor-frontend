@@ -50,6 +50,12 @@ export function GroupLandingPage({
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">{heading}</h1>
         <p className="mt-3 max-w-4xl text-base leading-relaxed text-muted-foreground">{intro}</p>
 
+        {categorySlug === "adult" && (
+          <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-800 dark:text-amber-200">
+            <span className="font-bold">⚠️ 18+ Age Restricted Directory:</span> All communities listed in this section are strictly for consenting adults aged 18 and older. Groupor enforces a strict zero-tolerance policy against non-consensual media, fraud, and illegal conduct.
+          </div>
+        )}
+
         {/* Category Intro & Structured Data Block */}
         {categoryIntro && (
           <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-sm space-y-6">

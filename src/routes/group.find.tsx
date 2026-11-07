@@ -15,6 +15,7 @@ import {
 import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { absoluteUrl } from "@/lib/seo";
+import { isAdultContent, isIllegalContent, isSafeGroupForPublicFeed } from "@/lib/moderation";
 
 type FindSearch = {
   category?: string;
@@ -26,7 +27,11 @@ type FindSearch = {
 export const Route = createFileRoute("/group/find")({
   loader: async () => {
     const submitted = await fetchSubmittedForSsr();
-    return { submitted };
+    return {
+      submitted: submitted.filter(
+        (g) => !isIllegalContent(g.name) && !isIllegalContent(g.description),
+      ),
+    };
   },
   validateSearch: (search: Record<string, unknown>): FindSearch => {
     const out: FindSearch = {};
@@ -111,9 +116,15 @@ function FindPage() {
   const appliedLanguage = search.language ?? "";
 
   const results = React.useMemo(() => {
+    const isAdultSearch =
+      appliedCategory === "adult" ||
+      isAdultContent(keyword) ||
+      /\b(adult|18\+|hot)\b/i.test(keyword);
+
     return sortGroups([...submitted, ...groups]).filter(
       (g) =>
         !isRemoved(g.id, g.link) &&
+        isSafeGroupForPublicFeed(g, isAdultSearch) &&
         matchesQuery(g, keyword) &&
         (appliedCategory === "" || g.category === appliedCategory) &&
         (appliedCountry === "" ||

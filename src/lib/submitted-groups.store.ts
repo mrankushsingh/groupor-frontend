@@ -3,6 +3,7 @@ import path from "node:path";
 import type { Group } from "@/data/groups";
 import { inviteCodeOf, joinUrl } from "@/data/groups";
 import { isInviteReported } from "@/lib/reported-groups.store";
+import { isAdultContent, isIllegalContent } from "@/lib/moderation";
 
 type Store = { groups: Group[] };
 
@@ -110,13 +111,28 @@ export async function addGroupToStore(input: AddGroupInput): Promise<AddGroupRes
     `WhatsApp Group ${code.slice(0, 8)}`;
   const tags = normalizeTags(input.tags);
   const finalLink = /^https:\/\/chat\.whatsapp\.com\//i.test(withScheme) ? withScheme : canonical;
+
+  const combinedContent = `${name} ${input.description ?? ""} ${(tags ?? []).join(" ")}`;
+  if (isIllegalContent(combinedContent)) {
+    return {
+      ok: false,
+      status: 400,
+      message: "This group contains terms that violate Groupor Trust & Safety Policy.",
+    };
+  }
+
+  let category = (input.category ?? "").trim() || "all";
+  if (isAdultContent(combinedContent) || category.toLowerCase() === "adult") {
+    category = "adult";
+  }
+
   const group: Group = {
     id: `u${now}`,
     name: name.slice(0, 80),
     image: input.image?.trim() || undefined,
     description: (input.description ?? "").trim(),
     platform: "whatsapp",
-    category: (input.category ?? "").trim() || "all",
+    category,
     members: 0,
     country: (input.country ?? "").trim(),
     ...(input.language?.trim() ? { language: input.language.trim() } : {}),

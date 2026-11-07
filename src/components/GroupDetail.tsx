@@ -134,6 +134,12 @@ export function GroupDetail({ group, categoryName }: { group: Group; categoryNam
             {group.name} WhatsApp Group Invite Link
           </h1>
 
+          {group.category === "adult" && (
+            <div className="mx-auto mt-4 w-full max-w-2xl rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-left text-xs text-amber-700 dark:text-amber-300">
+              <span className="font-semibold">⚠️ 18+ Age Restricted Community:</span> This group is strictly intended for consenting adults aged 18 and older. Groupor maintains zero tolerance for non-consensual media, fraud, or unlawful conduct.
+            </div>
+          )}
+
           <p className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[13px] text-[#777]">
             {group.category ? (
               <Link

@@ -13,6 +13,7 @@ import { cacheSubmittedGroup, findGroupByLink, inviteCode, normalizeApiGroup } f
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { trackEvent } from "@/lib/analytics";
 import { absoluteUrl } from "@/lib/seo";
+import { isAdultContent } from "@/lib/moderation";
 
 
 
@@ -213,12 +214,18 @@ function SubmitPage() {
                 return;
               }
 
+              let targetCategory = category || "all";
+              const combinedText = `${finalName} ${description} ${tags}`;
+              if (isAdultContent(combinedText) || targetCategory.toLowerCase() === "adult") {
+                targetCategory = "adult";
+              }
+
               const payload = {
                 link: href,
                 name: finalName,
                 image: finalImage,
                 description: description.trim(),
-                category: category || "all",
+                category: targetCategory,
                 country,
                 language,
                 tags,

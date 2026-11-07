@@ -8,12 +8,16 @@ import { viralHubs } from "@/data/viral-hubs";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { absoluteUrl, categoryPath, countryPath, SITE_URL } from "@/lib/seo";
-import { isSafeGroupForPublicFeed } from "@/lib/moderation";
+import { isIllegalContent, isSafeGroupForPublicFeed } from "@/lib/moderation";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     const submitted = await fetchSubmittedForSsr();
-    return { submitted: submitted.filter((g) => isSafeGroupForPublicFeed(g, false)) };
+    return {
+      submitted: submitted.filter(
+        (g) => !isIllegalContent(g.name) && !isIllegalContent(g.description),
+      ),
+    };
   },
   validateSearch: (search: Record<string, unknown>) => {
     const q = typeof search.q === "string" ? search.q.trim() : "";
