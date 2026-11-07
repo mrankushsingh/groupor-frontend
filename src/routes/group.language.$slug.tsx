@@ -3,14 +3,21 @@ import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
 import { groups, languages, slugify } from "@/data/groups";
 import { absoluteUrl, getLanguageCode, getLanguageHreflangs, getOgLocale, languagePath } from "@/lib/seo";
-import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 
 export const Route = createFileRoute("/group/language/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const match = languages.find((l) => slugify(l) === params.slug);
     const languageName = match ?? params.slug.replace(/-/g, " ");
-    return { language: languageName, slug: params.slug };
+    const submitted = await fetchSubmittedForSsr();
+    const all = [...submitted, ...groups];
+    const groupCount = all.filter(
+      (g) =>
+        g.status !== "inactive" &&
+        (g.language === languageName || slugify(g.language ?? "") === params.slug),
+    ).length;
+    return { language: languageName, slug: params.slug, groupCount, submitted };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
@@ -20,12 +27,13 @@ export const Route = createFileRoute("/group/language/$slug")({
     const langCode = getLanguageCode(loaderData.language);
     const ogLocale = getOgLocale(loaderData.language);
     const hreflangs = getLanguageHreflangs();
+    const robotsContent = (loaderData.groupCount ?? 0) > 0 ? "index, follow" : "noindex, follow";
 
     return {
       meta: [
         { title },
         { name: "description", content: description },
-        { name: "robots", content: "index, follow" },
+        { name: "robots", content: robotsContent },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:url", content: url },
@@ -65,8 +73,9 @@ export const Route = createFileRoute("/group/language/$slug")({
 });
 
 function GroupLanguageComponent() {
-  const { language, slug } = Route.useLoaderData();
-  const submitted = useSubmittedGroups();
+  const loaderData = Route.useLoaderData();
+  const { language, slug } = loaderData;
+  const submitted = useSubmittedGroups(loaderData?.submitted);
   const { isRemoved } = useRemovedGroups();
 
   const languageGroups = useMemo(() => {

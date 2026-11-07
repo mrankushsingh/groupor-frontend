@@ -3,20 +3,22 @@ import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
 import { countries, groups, slugify, sortGroups } from "@/data/groups";
 import { absoluteUrl, countryPath, getCountryHreflangs, getOgLocale } from "@/lib/seo";
-import { useSubmittedGroups } from "@/lib/submitted-groups";
+import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 
 export const Route = createFileRoute("/group/country/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const match = countries.find(
       (c) => slugify(c.name) === params.slug || c.code.toLowerCase() === params.slug,
     );
     const countryName = match ? match.name : params.slug.replace(/-/g, " ");
     const countryCode = match ? match.code : "";
-    const groupCount = groups.filter(
+    const submitted = await fetchSubmittedForSsr();
+    const all = [...submitted, ...groups];
+    const groupCount = all.filter(
       (g) => g.status !== "inactive" && (g.country === countryName || slugify(g.country) === params.slug)
     ).length;
-    return { country: countryName, code: countryCode, slug: params.slug, groupCount };
+    return { country: countryName, code: countryCode, slug: params.slug, groupCount, submitted };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
@@ -75,8 +77,9 @@ export const Route = createFileRoute("/group/country/$slug")({
 });
 
 function GroupCountryComponent() {
-  const { country, slug } = Route.useLoaderData();
-  const submitted = useSubmittedGroups();
+  const loaderData = Route.useLoaderData();
+  const { country, slug } = loaderData;
+  const submitted = useSubmittedGroups(loaderData?.submitted);
   const { isRemoved } = useRemovedGroups();
 
   const countryGroups = useMemo(() => {

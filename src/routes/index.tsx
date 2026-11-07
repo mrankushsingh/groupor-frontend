@@ -13,10 +13,12 @@ import { isIllegalContent, isSafeGroupForPublicFeed } from "@/lib/moderation";
 export const Route = createFileRoute("/")({
   loader: async () => {
     const submitted = await fetchSubmittedForSsr();
+    const safeSubmitted = submitted.filter(
+      (g) => !isIllegalContent(g.name) && !isIllegalContent(g.description),
+    );
+    // Limit initial SSR hydration to top 50 submissions to keep HTML document compact & fast
     return {
-      submitted: submitted.filter(
-        (g) => !isIllegalContent(g.name) && !isIllegalContent(g.description),
-      ),
+      submitted: safeSubmitted.slice(0, 50),
     };
   },
   validateSearch: (search: Record<string, unknown>) => {

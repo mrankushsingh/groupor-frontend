@@ -1,4 +1,4 @@
-import { categories, countries as staticCountries, languages as staticLanguages, groups as staticGroups, groupPath, inviteCodeOf, type Group } from "@/data/groups";
+import { categories, countries as staticCountries, languages as staticLanguages, groups as staticGroups, groupPath, inviteCodeOf, slugify, type Group } from "@/data/groups";
 import { viralHubs } from "@/data/viral-hubs";
 import { apiUrl, hasRemoteApi } from "@/lib/api";
 import {
@@ -181,26 +181,42 @@ export async function buildSitemapUrls(): Promise<SitemapUrl[]> {
     });
   }
 
-  // All predefined country hub landing pages
-  for (const c of staticCountries) {
-    if (!c.code || !c.name) continue;
-    urls.push({
-      loc: `${SITE_URL}${countryPath(c.name)}`,
-      lastmod: today,
-      changefreq: "daily",
-      priority: "0.7",
-    });
+  // Map populated countries and languages to avoid submitting zero-group "noindex" hubs
+  const populatedCountries = new Set<string>();
+  const populatedLanguages = new Set<string>();
+  for (const g of allGroups) {
+    if (g.country) {
+      populatedCountries.add(slugify(g.country));
+    }
+    if (g.language) {
+      populatedLanguages.add(slugify(g.language));
+    }
   }
 
-  // All predefined language hub pages
+  // Predefined country hub landing pages (include populated hubs with active listings)
+  for (const c of staticCountries) {
+    if (!c.code || !c.name) continue;
+    if (populatedCountries.has(slugify(c.name))) {
+      urls.push({
+        loc: `${SITE_URL}${countryPath(c.name)}`,
+        lastmod: today,
+        changefreq: "daily",
+        priority: "0.7",
+      });
+    }
+  }
+
+  // Predefined language hub pages (include populated hubs with active listings)
   for (const lang of staticLanguages) {
     if (!lang || lang === "Any Language") continue;
-    urls.push({
-      loc: `${SITE_URL}${languagePath(lang)}`,
-      lastmod: today,
-      changefreq: "weekly",
-      priority: "0.6",
-    });
+    if (populatedLanguages.has(slugify(lang))) {
+      urls.push({
+        loc: `${SITE_URL}${languagePath(lang)}`,
+        lastmod: today,
+        changefreq: "weekly",
+        priority: "0.6",
+      });
+    }
   }
 
   for (const group of allGroups) {
