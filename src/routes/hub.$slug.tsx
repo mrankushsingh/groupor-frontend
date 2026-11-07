@@ -4,7 +4,7 @@ import { getViralHubBySlug, viralHubs, type ViralHub } from "@/data/viral-hubs";
 import { groups, sortGroups, type Group } from "@/data/groups";
 import { GroupCard } from "@/components/GroupCard";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
-import { absoluteUrl, SITE_URL } from "@/lib/seo";
+import { absoluteUrl, countryPath, SITE_URL } from "@/lib/seo";
 import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 import { isSafeGroupForPublicFeed } from "@/lib/moderation";
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/hub/$slug")({
                 "@type": "BreadcrumbList",
                 itemListElement: [
                   { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-                  { "@type": "ListItem", position: 2, name: "Trending Hubs", item: absoluteUrl("/") },
+                  { "@type": "ListItem", position: 2, name: hub.country, item: absoluteUrl(countryPath(hub.country)) },
                   { "@type": "ListItem", position: 3, name: hub.h1, item: url },
                 ],
               },
@@ -134,11 +134,15 @@ function ViralHubComponent() {
             <li>/</li>
             <li>
               <Link to="/group/find" className="hover:text-foreground">
-                Communities
+                Countries
               </Link>
             </li>
             <li>/</li>
-            <li className="font-medium text-foreground">{hub.country}</li>
+            <li>
+              <Link to={countryPath(hub.country)} className="font-medium text-foreground hover:underline">
+                {hub.country}
+              </Link>
+            </li>
           </ol>
         </nav>
 
@@ -241,6 +245,24 @@ function ViralHubComponent() {
               </details>
             ))}
           </div>
+        </section>
+
+        {/* Country Hub Cross-Link Banner */}
+        <section className="mt-12 rounded-2xl border border-primary/20 bg-primary/5 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h3 className="text-base font-bold text-foreground">
+              Looking for all WhatsApp communities in {hub.country}?
+            </h3>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Browse our complete directory of verified local, student, and professional WhatsApp groups across {hub.country}.
+            </p>
+          </div>
+          <Link
+            to={countryPath(hub.country)}
+            className="shrink-0 rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground hover:opacity-90"
+          >
+            View All {hub.country} Groups &rarr;
+          </Link>
         </section>
 
         {/* Related Viral Hubs Section */}

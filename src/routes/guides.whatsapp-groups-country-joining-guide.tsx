@@ -134,9 +134,11 @@ export function CountryJoiningGuidePage() {
               On Groupor's homepage and category pages, use the country and language dropdown filters:
             </p>
             <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-              <li><strong>India:</strong> Popular for UPSC, NEET exam prep, IT jobs, and cricket fan communities.</li>
-              <li><strong>United States & UK:</strong> Popular for tech startups, remote work, university housing, and gaming clans.</li>
-              <li><strong>Nigeria & Kenya:</strong> Active hubs for digital marketing, affiliate business, crypto trading, and entertainment.</li>
+              <li><strong><Link to="/group/country/australia" className="text-primary hover:underline">Australia:</Link></strong> Trending for verified work from home roles, expat diaspora networks (Indians & Filipinos), ASX stock market investing, and student housing across Sydney, Melbourne, and Brisbane.</li>
+              <li><strong><Link to="/group/country/india" className="text-primary hover:underline">India:</Link></strong> Popular for UPSC, NEET exam prep, IT jobs, and cricket fan communities.</li>
+              <li><strong><Link to="/group/country/united-states" className="text-primary hover:underline">United States</Link> & <Link to="/group/country/united-kingdom" className="text-primary hover:underline">UK:</Link></strong> Popular for tech startups, remote work, university housing, and gaming clans.</li>
+              <li><strong><Link to="/group/country/canada" className="text-primary hover:underline">Canada:</Link></strong> Popular for Express Entry PR discussion, international student housing in Toronto and Vancouver, and newcomer job preparation.</li>
+              <li><strong><Link to="/group/country/nigeria" className="text-primary hover:underline">Nigeria</Link> & Kenya:</strong> Active hubs for digital marketing, affiliate business, crypto trading, and entertainment.</li>
               <li><strong>Brazil & Latin America:</strong> Dedicated language exchanges, football discussions, and local marketplace groups.</li>
             </ul>
 

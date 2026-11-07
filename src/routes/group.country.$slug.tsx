@@ -2,32 +2,62 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { GroupLandingPage } from "@/components/GroupLandingPage";
 import { countries, groups, slugify, sortGroups } from "@/data/groups";
+import { getCountryProfile } from "@/data/country-profiles";
+import { viralHubs } from "@/data/viral-hubs";
 import { absoluteUrl, countryPath, getCountryHreflangs, getOgLocale } from "@/lib/seo";
 import { fetchSubmittedForSsr, useSubmittedGroups } from "@/lib/submitted-groups";
 import { useRemovedGroups } from "@/lib/removed-groups";
 
 export const Route = createFileRoute("/group/country/$slug")({
   loader: async ({ params }) => {
-    const match = countries.find(
-      (c) => slugify(c.name) === params.slug || c.code.toLowerCase() === params.slug,
+    const profile = getCountryProfile(params.slug);
+    const relatedViralHubs = viralHubs.filter(
+      (h) =>
+        h.country.toLowerCase() === profile.name.toLowerCase() ||
+        profile.viralHubSlugs.includes(h.slug),
     );
-    const countryName = match ? match.name : params.slug.replace(/-/g, " ");
-    const countryCode = match ? match.code : "";
+
     const submitted = await fetchSubmittedForSsr();
     const all = [...submitted, ...groups];
     const groupCount = all.filter(
-      (g) => g.status !== "inactive" && (g.country === countryName || slugify(g.country) === params.slug)
+      (g) =>
+        g.status !== "inactive" &&
+        (g.country.toLowerCase() === profile.name.toLowerCase() ||
+          slugify(g.country) === params.slug ||
+          (g.countryCode && profile.code && g.countryCode.toUpperCase() === profile.code.toUpperCase())),
     ).length;
-    return { country: countryName, code: countryCode, slug: params.slug, groupCount, submitted };
+
+    return {
+      profile,
+      relatedViralHubs,
+      country: profile.name,
+      code: profile.code,
+      slug: params.slug,
+      groupCount,
+      submitted,
+    };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ name: "robots", content: "noindex" }] };
-    const title = `WhatsApp Groups in ${loaderData.country} (2026) | Groupor`;
-    const description = `Join active WhatsApp groups in ${loaderData.country} (2026). Discover verified local communities for jobs, networking, education, and social discussion.`;
+    const { profile } = loaderData;
+    const title = profile.title;
+    const description = profile.metaDescription;
     const url = absoluteUrl(countryPath(loaderData.country));
     const ogLocale = getOgLocale(loaderData.country);
     const hreflangs = getCountryHreflangs();
-    const robotsContent = (loaderData.groupCount ?? 0) > 0 ? "index, follow" : "noindex, follow";
+    const robotsContent =
+      (loaderData.groupCount ?? 0) > 0
+        ? "index, follow, max-image-preview:large, max-snippet:-1"
+        : "noindex, follow";
+
+    const faqSchemaItems = profile.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    }));
 
     return {
       meta: [
@@ -39,7 +69,9 @@ export const Route = createFileRoute("/group/country/$slug")({
         { property: "og:url", content: url },
         { property: "og:type", content: "website" },
         { property: "og:locale", content: ogLocale },
-        { name: "twitter:card", content: "summary" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
       ],
       links: [{ rel: "canonical", href: url }, ...hreflangs],
       scripts: [
@@ -58,7 +90,7 @@ export const Route = createFileRoute("/group/country/$slug")({
               },
               {
                 "@type": "CollectionPage",
-                name: title,
+                name: profile.h1,
                 description: description,
                 url: url,
                 areaServed: {
@@ -66,6 +98,10 @@ export const Route = createFileRoute("/group/country/$slug")({
                   name: loaderData.country,
                   ...(loaderData.code ? { identifier: loaderData.code } : {}),
                 },
+              },
+              {
+                "@type": "FAQPage",
+                mainEntity: faqSchemaItems,
               },
             ],
           }),
@@ -78,7 +114,7 @@ export const Route = createFileRoute("/group/country/$slug")({
 
 function GroupCountryComponent() {
   const loaderData = Route.useLoaderData();
-  const { country, slug } = loaderData;
+  const { profile, relatedViralHubs, country, slug } = loaderData;
   const submitted = useSubmittedGroups(loaderData?.submitted);
   const { isRemoved } = useRemovedGroups();
 
@@ -88,16 +124,20 @@ function GroupCountryComponent() {
       (g) =>
         g.status !== "inactive" &&
         !isRemoved(g.id, g.link) &&
-        (g.country === country || slugify(g.country) === slug),
+        (g.country.toLowerCase() === country.toLowerCase() ||
+          slugify(g.country) === slug ||
+          (g.countryCode && profile.code && g.countryCode.toUpperCase() === profile.code.toUpperCase())),
     );
-  }, [country, slug, submitted, isRemoved]);
+  }, [country, slug, profile.code, submitted, isRemoved]);
 
   return (
     <GroupLandingPage
       parent="Countries"
-      heading={`WhatsApp Groups in ${country} (2026)`}
-      intro={`Explore public WhatsApp group links and active local communities for people in ${country}. Discover jobs, education, local trading, and social discussion groups.`}
+      heading={profile.h1}
+      intro={profile.heroIntro}
       groups={countryGroups}
+      countryProfile={profile}
+      relatedViralHubs={relatedViralHubs}
     />
   );
 }
