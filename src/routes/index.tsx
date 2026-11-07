@@ -364,13 +364,26 @@ function Index() {
             </p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {countries.slice(1, 9).map((cnt) => (
+              {[
+                "India",
+                "Pakistan",
+                "Indonesia",
+                "South Africa",
+                "Australia",
+                "United States",
+                "United Kingdom",
+                "Canada",
+                "United Arab Emirates",
+                "Nigeria",
+                "Germany",
+                "Brazil",
+              ].map((cName) => (
                 <Link
-                  key={cnt.code}
-                  to={countryPath(cnt.name)}
+                  key={cName}
+                  to={countryPath(cName)}
                   className="rounded-lg border border-border bg-card p-3 text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-all text-center"
                 >
-                  WhatsApp Groups in {cnt.name}
+                  WhatsApp Groups in {cName}
                 </Link>
               ))}
             </div>

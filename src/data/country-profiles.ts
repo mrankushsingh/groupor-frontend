@@ -349,6 +349,8 @@ export const countryProfiles: Record<string, CountryProfile> = {
       }
     ],
     viralHubSlugs: [
+      "india-it-jobs-freshers-interviews",
+      "india-upsc-govt-exam-preparation",
       "indian-community-australia-jobs"
     ],
     safetyAndLegal: {
@@ -553,6 +555,237 @@ export const countryProfiles: Record<string, CountryProfile> = {
         answer: "Yes, community admins can submit their group invite link for free using the '+ Add WhatsApp Group' button."
       }
     ]
+  },
+
+  pakistan: {
+    name: "Pakistan",
+    slug: "pakistan",
+    code: "PK",
+    demonym: "Pakistani",
+    title: "WhatsApp Groups in Pakistan (2026) — Freelancing, Remote IT & Gulf Jobs | Groupor",
+    metaDescription: "Discover active WhatsApp groups in Pakistan (2026). Join verified communities in Lahore, Karachi & Islamabad for freelancing, remote IT jobs, university & Gulf visas.",
+    h1: "WhatsApp Groups in Pakistan (2026): Connect Across Karachi, Lahore & Islamabad",
+    heroIntro: "Join verified public WhatsApp communities across Pakistan. Connect with digital freelancers, software engineers, university students, and overseas workers in Lahore, Karachi, Islamabad, and Rawalpindi for remote IT jobs, Gulf recruitment, MDCAT/ECAT prep, and business networking.",
+    aboutSection: {
+      heading: "WhatsApp Communities Across Pakistan",
+      paragraphs: [
+        "In Pakistan, WhatsApp is the indispensable center for business transactions, digital freelancing, academic study groups, and overseas employment coordination. From software developers in Lahore's Arfa Karim Tower to e-commerce merchants in Karachi and digital agencies in Islamabad, active groups facilitate real-time peer learning and business referrals.",
+        "Whether you are looking for Upwork and Fiverr proposal tips, freelance payment solutions (Payoneer, Sadapay, Nayapay), medical exam prep (MDCAT), or verified Gulf work opportunities in Saudi Arabia and the UAE, Groupor curates active, moderated invite links.",
+        "Groupor checks and verifies Pakistani group links daily to eliminate online financial task scams, deceptive pyramid schemes, and expired links."
+      ]
+    },
+    cities: [
+      {
+        name: "Karachi",
+        stateOrRegion: "Sindh",
+        popularTopics: ["B2B Wholesale & E-Commerce", "Software & FinTech", "KU & IBA Students", "Import/Export & Shipping", "Local Classifieds"]
+      },
+      {
+        name: "Lahore",
+        stateOrRegion: "Punjab",
+        popularTopics: ["IT Software Exports", "Freelancing & Digital Marketing", "FAST, LUMS & PU Study Groups", "Textile & Manufacturing", "Graphic Design"]
+      },
+      {
+        name: "Islamabad & Rawalpindi",
+        stateOrRegion: "Federal Capital & Potohar",
+        popularTopics: ["Govt & Public Policy", "NUST & COMSATS Tech Circles", "Gulf Visa Trade Tests", "NGOs & Research", "Remote Contractors"]
+      },
+      {
+        name: "Faisalabad & Multan",
+        stateOrRegion: "Punjab",
+        popularTopics: ["Textile Wholesale", "Agribusiness", "MDCAT & Engineering Prep", "Youth Freelance Centers"]
+      },
+      {
+        name: "Peshawar",
+        stateOrRegion: "Khyber Pakhtunkhwa (KPK)",
+        popularTopics: ["Cross-Border Trade", "University of Peshawar", "Overseas Employment Promoters", "Youth IT Skills"]
+      }
+    ],
+    viralHubSlugs: [
+      "pakistan-freelancing-remote-it-jobs",
+      "pakistan-gulf-overseas-jobs"
+    ],
+    safetyAndLegal: {
+      authority: "Pakistan Telecommunication Authority (PTA) & FIA Cyber Crime Wing",
+      workNotice: "Overseas employment opportunities must be arranged through licensed Overseas Employment Promoters (OEP) registered with the Bureau of Emigration (BEEOE). Never pay money to unlicensed sub-agents.",
+      privacyNotice: "Under the Prevention of Electronic Crimes Act (PECA), keep your CNIC number, bank OTPs, and digital wallet PINs strictly private."
+    },
+    faqs: [
+      {
+        question: "How do I find active WhatsApp groups for Pakistani freelancers?",
+        answer: "Explore our Pakistan directory or dedicated Pakistan Freelancing & Remote IT Jobs hub for verified communities covering Upwork, Fiverr, and remote contracts."
+      },
+      {
+        question: "Can I find verified Gulf job alerts for Saudi Arabia and UAE in Pakistan?",
+        answer: "Yes, Groupor features specialized overseas career groups that share BEEOE-licensed job postings, trade interview dates, and protector documentation advice."
+      },
+      {
+        question: "Are there WhatsApp study groups for MDCAT, ECAT, and CSS exams?",
+        answer: "Yes, students actively share past papers, test series notes, and syllabus updates for CSS competitive examinations and university entry tests."
+      },
+      {
+        question: "How can I avoid financial scams in Pakistani WhatsApp groups?",
+        answer: "Never send money via JazzCash or EasyPaisa to unverified individuals promising daily profits from task-completion or crypto schemes."
+      },
+      {
+        question: "Is it free to list a Pakistani WhatsApp group on Groupor?",
+        answer: "Yes! Group admins can click '+ Add WhatsApp Group' to list their active communities for free."
+      }
+    ]
+  },
+
+  indonesia: {
+    name: "Indonesia",
+    slug: "indonesia",
+    code: "ID",
+    demonym: "Indonesian",
+    title: "Grup WhatsApp Indonesia (2026) — Loker BUMN, Bisnis Online & Komunitas | Groupor",
+    metaDescription: "Temukan ribuan link grup WhatsApp aktif di Indonesia (2026). Komunitas lowongan kerja BUMN, bisnis online reseller/affiliate, mahasiswa Jabodetabek & Surabaya.",
+    h1: "Link Grup WhatsApp Indonesia (2026): Loker BUMN, Bisnis Online & Komunitas",
+    heroIntro: "Temukan kumpulan link grup WhatsApp publik dan terverifikasi di Indonesia. Terhubung dengan komunitas pencari kerja (loker BUMN & swasta), pebisnis online (reseller & affiliate), mahasiswa Jabodetabek, dan komunitas teknologi di Jakarta, Surabaya, Bandung, dan kota lainnya.",
+    aboutSection: {
+      heading: "Budaya Komunitas WhatsApp di Indonesia",
+      paragraphs: [
+        "Di Indonesia, WhatsApp merupakan sarana utama dalam koordinasi karir, bisnis e-commerce UMKM, dunia akademis, dan interaksi sosial harian. Mulai dari informasi Rekrutmen Bersama BUMN, seleksi CPNS, lowongan magang mahasiswa, hingga komunitas reseller dan affiliate di TikTok Shop dan Shopee, grup WhatsApp memberikan akses informasi yang cepat dan langsung.",
+        "Bagi para pencari kerja (jobseekers), grup WhatsApp memungkinkan pertukaran informasi seputar kisi-kisi tes psikotes, wawancara kerja, dan info loker terpercaya di kota-kota besar seperti Jakarta, Surabaya, Bandung, dan Medan.",
+        "Groupor memverifikasi setiap tautan grup WhatsApp di Indonesia untuk memastikan pengguna terlindungi dari modus penipuan berkedok rekrutmen kerja atau skema investasi bodong."
+      ]
+    },
+    cities: [
+      {
+        name: "Jakarta & Jabodetabek",
+        stateOrRegion: "DKI Jakarta & Sekitarnya",
+        popularTopics: ["Karir & Startup Tech", "Loker BUMN & Multinasional", "Info Kost Mahasiswa UI & Trisakti", "Bisnis E-Commerce", "Magang Mahasiswa"]
+      },
+      {
+        name: "Surabaya",
+        stateOrRegion: "Jawa Timur",
+        popularTopics: ["Perdagangan & Manufaktur", "Mahasiswa ITS & Unair", "Loker Jawa Timur", "Komunitas Kuliner & Retail"]
+      },
+      {
+        name: "Bandung",
+        stateOrRegion: "Jawa Barat",
+        popularTopics: ["Industri Kreatif & Fashion", "Mahasiswa ITB, Unpad, Telkom", "Distributor & Reseller", "Developer & UI/UX"]
+      },
+      {
+        name: "Yogyakarta & Semarang",
+        stateOrRegion: "DI Yogyakarta & Jawa Tengah",
+        popularTopics: ["Mahasiswa UGM & Undip", "Kerja Remote & Freelancer", "Pariwisata & Budaya", "Loker Fresh Graduate"]
+      },
+      {
+        name: "Medan",
+        stateOrRegion: "Sumatera Utara",
+        popularTopics: ["Perkebunan & Agribisnis", "Perdagangan Grosir", "Loker Sumatera", "Komunitas Mahasiswa USU"]
+      }
+    ],
+    viralHubSlugs: [
+      "indonesia-loker-bumn-karir-remote",
+      "indonesia-bisnis-online-reseller-affiliate"
+    ],
+    safetyAndLegal: {
+      authority: "Kementerian Ketenagakerjaan (Kemnaker) & Kominfo Indonesia",
+      workNotice: "Perusahaan resmi dan BUMN TIDAK PERNAH memungut biaya apapun (seperti biaya tiket travel, seragam, atau akomodasi) dalam proses rekrutmen kerja.",
+      privacyNotice: "Berdasarkan Undang-Undang Perlindungan Data Pribadi (UU PDP), lindungi nomor NIK KTP, KK, dan kode OTP perbankan Anda dari pihak tidak berwenang."
+    },
+    faqs: [
+      {
+        question: "Bagaimana cara bergabung dengan grup WhatsApp di Indonesia melalui Groupor?",
+        answer: "Pilih grup yang sesuai dari daftar di atas, baca deskripsi dan aturan grup, lalu klik 'Join Group'. Anda akan diarahkan langsung ke aplikasi WhatsApp."
+      },
+      {
+        question: "Apakah tersedia grup loker BUMN dan CPNS di Indonesia?",
+        answer: "Ya, Groupor menyediakan grup komunitas pencari kerja yang membagikan info Rekrutmen Bersama BUMN, panduan tes TKD, Core Values AKHLAK, dan formasi CPNS."
+      },
+      {
+        question: "Bagaimana cara menghindari penipuan loker di grup WhatsApp?",
+        answer: "Pastikan undangan wawancara menggunakan alamat email resmi perusahaan. Jangan pernah mentransfer uang dengan alasan reservasi tiket atau akomodasi travel palsu."
+      },
+      {
+        question: "Apakah bergabung ke grup WhatsApp di Groupor berbayar?",
+        answer: "Tidak! Seluruh layanan pencarian dan bergabung ke grup di Groupor adalah 100% gratis tanpa biaya langganan."
+      },
+      {
+        question: "Bisakah admin grup mendaftarkan komunitasnya di Groupor?",
+        answer: "Tentu saja! Admin komunitas dapat mengklik tombol '+ Add WhatsApp Group' untuk mempublikasikan tautan undangannya secara gratis."
+      }
+    ]
+  },
+
+  "south-africa": {
+    name: "South Africa",
+    slug: "south-africa",
+    code: "ZA",
+    demonym: "South African",
+    title: "WhatsApp Groups in South Africa (2026) — Jobs, Learnerships & SASSA | Groupor",
+    metaDescription: "Join active South Africa WhatsApp groups (2026). Discover verified communities in Johannesburg, Cape Town & Durban for jobs, SETA learnerships, SASSA & students.",
+    h1: "WhatsApp Groups in South Africa (2026): Johannesburg, Cape Town & Durban",
+    heroIntro: "Connect with verified public WhatsApp communities across South Africa. Join active groups in Gauteng, Western Cape, KwaZulu-Natal, and nationwide for employment opportunities, SETA learnerships, SASSA grant updates, matric revision, and university student housing.",
+    aboutSection: {
+      heading: "WhatsApp Communities Across South Africa",
+      paragraphs: [
+        "In South Africa, WhatsApp is the dominant communication channel for job seekers, university students, small business entrepreneurs, and local neighborhood networks. With high mobile data consciousness, WhatsApp groups provide an accessible, low-bandwidth way for youth to receive verified employment leads, learnership applications, and academic support.",
+        "From BPO call center opportunities in Cape Town to corporate positions in Sandton (Johannesburg) and logistics roles in Durban, community members support each other through peer advice, interview tips, and verified bursary notices.",
+        "Groupor screens and verifies South African WhatsApp group invite links daily to weed out bogus recruitment agencies, upfront placement fee scams, and expired invite codes."
+      ]
+    },
+    cities: [
+      {
+        name: "Johannesburg & Ekurhuleni",
+        stateOrRegion: "Gauteng",
+        popularTopics: ["Corporate Finance & IT", "Retail & Hospitality", "Wits & UJ Student Accommodation", "SETA Learnerships", "Youth Networking"]
+      },
+      {
+        name: "Cape Town",
+        stateOrRegion: "Western Cape",
+        popularTopics: ["BPO & International Call Centers", "Tech Startups & Web3", "UCT & Stellenbosch Students", "Tourism & Creative Arts", "Remote Jobs"]
+      },
+      {
+        name: "Durban",
+        stateOrRegion: "KwaZulu-Natal (KZN)",
+        popularTopics: ["Logistics & Port Operations", "Manufacturing & Trades", "UKZN Students", "Local Community Classifieds"]
+      },
+      {
+        name: "Pretoria (Tshwane)",
+        stateOrRegion: "Gauteng",
+        popularTopics: ["Public Sector & Government", "UP (Tuks) Students", "Automotive Assembly", "Diplomatic & Research Hubs"]
+      },
+      {
+        name: "Gqeberha (Port Elizabeth)",
+        stateOrRegion: "Eastern Cape",
+        popularTopics: ["Automotive & Component Manufacturing", "Nelson Mandela University", "Local Job Alerts"]
+      }
+    ],
+    viralHubSlugs: [
+      "south-africa-jobs-careers-hiring",
+      "south-africa-sassa-nsfas-bursaries"
+    ],
+    safetyAndLegal: {
+      authority: "CCMA, Department of Employment and Labour (DoEL) & SASSA",
+      workNotice: "Under South African labor law, employment agencies are legally prohibited from charging job seekers placement fees. Any recruiter demanding money for uniforms, background checks, or interviews is committing fraud.",
+      privacyNotice: "Under the Protection of Personal Information Act (POPIA), never disclose your South African ID number, SASSA card PIN, or banking passwords in public groups."
+    },
+    faqs: [
+      {
+        question: "How do I find legitimate learnerships and jobs in South Africa?",
+        answer: "Explore our South Africa directory or our dedicated South Africa Jobs & Learnerships hub for verified openings accredited by official SETAs."
+      },
+      {
+        question: "Can I receive SASSA grant and NSFAS updates in WhatsApp groups?",
+        answer: "Yes, community groups share timely notifications on SRD R370 pay dates, banking verification steps, and NSFAS allowance payment timelines."
+      },
+      {
+        question: "How can I avoid job scams in South African WhatsApp groups?",
+        answer: "Never pay money for a job opportunity, medical test, or uniform. Legitimate South African employers cover all onboarding expenses."
+      },
+      {
+        question: "Are these South African WhatsApp groups free to join?",
+        answer: "Yes, Groupor provides 100% free access to verified community links with zero subscription or registration fees."
+      },
+      {
+        question: "Can I submit my South African WhatsApp group to Groupor?",
+        answer: "Yes! Community leaders and admins can use '+ Add WhatsApp Group' to list their group for instant global indexing."
+      }
+    ]
   }
 };
 
@@ -623,3 +856,4 @@ export function getCountryProfile(countryNameOrSlug: string): CountryProfile {
     ]
   };
 }
+

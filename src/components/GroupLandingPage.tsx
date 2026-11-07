@@ -60,7 +60,16 @@ export function GroupLandingPage({
   const relatedCategories = categories
     .filter((c) => c.slug !== categorySlug && c.slug !== "all")
     .slice(0, 6);
-  const topCountries = countries.filter((c) => Boolean(c.code)).slice(0, 4);
+  const topCountries = [
+    { name: "India", code: "IN" },
+    { name: "Pakistan", code: "PK" },
+    { name: "Indonesia", code: "ID" },
+    { name: "South Africa", code: "ZA" },
+    { name: "Australia", code: "AU" },
+    { name: "United States", code: "US" },
+    { name: "United Kingdom", code: "GB" },
+    { name: "Canada", code: "CA" },
+  ];
 
   return (
     <div className="min-h-screen bg-background">

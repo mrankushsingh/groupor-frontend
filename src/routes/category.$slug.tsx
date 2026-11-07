@@ -265,13 +265,22 @@ function CategoryPage() {
                   {c.name} WhatsApp Groups
                 </Link>
               ))}
-            {countries.slice(1, 9).map((cnt) => (
+            {[
+              "India",
+              "Pakistan",
+              "Indonesia",
+              "South Africa",
+              "Australia",
+              "United States",
+              "United Kingdom",
+              "Canada",
+            ].map((cName) => (
               <Link
-                key={cnt.code}
-                to={countryPath(cnt.name)}
+                key={cName}
+                to={countryPath(cName)}
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
-                WhatsApp Groups in {cnt.name}
+                WhatsApp Groups in {cName}
               </Link>
             ))}
           </div>

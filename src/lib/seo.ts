@@ -191,6 +191,7 @@ export function getOgLocale(languageOrCountry?: string): string {
   if (lower.includes("indonesia")) return "id_ID";
   if (lower.includes("turkey")) return "tr_TR";
   if (lower.includes("russia")) return "ru_RU";
+  if (lower.includes("south africa")) return "en_ZA";
   return "en_US";
 }
 
@@ -216,6 +217,7 @@ export function getCountryHreflangs() {
     { name: "United Arab Emirates", code: "ar-AE" },
     { name: "Canada", code: "en-CA" },
     { name: "Australia", code: "en-AU" },
+    { name: "South Africa", code: "en-ZA" },
     { name: "Turkey", code: "tr-TR" },
     { name: "Bangladesh", code: "bn-BD" },
     { name: "Egypt", code: "ar-EG" },
