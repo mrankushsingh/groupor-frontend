@@ -22,6 +22,78 @@ export const Route = createFileRoute("/guides/how-to-join-whatsapp-groups-safely
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/guides/how-to-join-whatsapp-groups-safely") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "How to Join WhatsApp Groups Safely",
+                  item: absoluteUrl("/guides/how-to-join-whatsapp-groups-safely"),
+                },
+              ],
+            },
+            {
+              "@type": "Article",
+              headline: "How to Join WhatsApp Groups Safely: Complete Security Guide",
+              description:
+                "Learn how to join public WhatsApp groups safely. Protect your phone number, configure privacy settings, avoid suspicious links, and prevent spam.",
+              url: absoluteUrl("/guides/how-to-join-whatsapp-groups-safely"),
+              datePublished: "2026-09-15T08:00:00Z",
+              dateModified: "2026-11-01T10:00:00Z",
+              mainEntityOfPage: absoluteUrl("/guides/how-to-join-whatsapp-groups-safely"),
+              author: {
+                "@type": "Organization",
+                name: "Groupor Trust & Safety Team",
+                url: absoluteUrl("/safety"),
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Groupor",
+                url: absoluteUrl("/"),
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Can other members see my phone number in a WhatsApp group?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. In standard WhatsApp group chats, all members can see your phone number in the participant roster. If you need privacy, use a secondary virtual or business SIM card.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "How do I stop random people from adding me to unknown groups?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Open WhatsApp Settings > Privacy > Groups, and change the permission from 'Everyone' to 'My Contacts' or 'My Contacts Except...'. This forces admins to send you a private invite link instead of automatically adding your number.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "Are public WhatsApp links safe to click on Groupor?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. Groupor verifies the official chat.whatsapp.com link structure, automatically screens for spam and malicious keywords, and offers 1-click community takedown reporting.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: SafetyGuidePage,
 });

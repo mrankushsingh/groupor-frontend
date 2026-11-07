@@ -22,6 +22,78 @@ export const Route = createFileRoute("/guides/whatsapp-groups-country-joining-gu
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/guides/whatsapp-groups-country-joining-guide") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "Country-Specific WhatsApp Joining Guide",
+                  item: absoluteUrl("/guides/whatsapp-groups-country-joining-guide"),
+                },
+              ],
+            },
+            {
+              "@type": "Article",
+              headline: "International & Country-Specific WhatsApp Joining Guide",
+              description:
+                "Discover how to find and join local WhatsApp groups across 180+ countries. Region-specific networking, language filtering, and local safety rules.",
+              url: absoluteUrl("/guides/whatsapp-groups-country-joining-guide"),
+              datePublished: "2026-09-25T08:00:00Z",
+              dateModified: "2026-11-01T10:00:00Z",
+              mainEntityOfPage: absoluteUrl("/guides/whatsapp-groups-country-joining-guide"),
+              author: {
+                "@type": "Organization",
+                name: "Groupor Global Operations Team",
+                url: absoluteUrl("/about"),
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Groupor",
+                url: absoluteUrl("/"),
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Can I join WhatsApp groups in another country?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. Public WhatsApp invite links allow international participation regardless of geographic location, provided you comply with group rules and local terms of service.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "How do I filter WhatsApp communities by language on Groupor?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Use the Language selector on Groupor's homepage or search page (/group/find) to discover verified communities in English, Hindi, Spanish, Arabic, Portuguese, and over 40 languages.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "What should I be mindful of when joining international groups?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Be mindful of time zone differences to avoid disturbing members with late-night notifications, use the group's designated language, and respect local cultural norms.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: CountryJoiningGuidePage,
 });

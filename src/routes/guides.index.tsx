@@ -22,6 +22,35 @@ export const Route = createFileRoute("/guides/")({
       { name: "twitter:card", content: "summary" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/guides") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                { "@type": "ListItem", position: 2, name: "Guides Hub", item: absoluteUrl("/guides") },
+              ],
+            },
+            {
+              "@type": "CollectionPage",
+              name: "WhatsApp Community & Group Guides Hub | Groupor",
+              description:
+                "Master WhatsApp communities with our expert guides: safety practices, group vs community features, scam prevention, group admin growth tips, and country joining guides.",
+              url: absoluteUrl("/guides"),
+              publisher: {
+                "@type": "Organization",
+                name: "Groupor",
+                url: absoluteUrl("/"),
+              },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: GuidesHubPage,
 });

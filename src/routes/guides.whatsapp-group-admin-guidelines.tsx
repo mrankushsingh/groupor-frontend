@@ -22,6 +22,78 @@ export const Route = createFileRoute("/guides/whatsapp-group-admin-guidelines")(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/guides/whatsapp-group-admin-guidelines") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "WhatsApp Group Admin Guidelines",
+                  item: absoluteUrl("/guides/whatsapp-group-admin-guidelines"),
+                },
+              ],
+            },
+            {
+              "@type": "Article",
+              headline: "WhatsApp Group Admin Guidelines: Management & Best Practices",
+              description:
+                "Essential guide for community managers: group creation, setting rules, admin permissions, spam prevention, and scaling member engagement.",
+              url: absoluteUrl("/guides/whatsapp-group-admin-guidelines"),
+              datePublished: "2026-09-22T08:00:00Z",
+              dateModified: "2026-11-01T10:00:00Z",
+              mainEntityOfPage: absoluteUrl("/guides/whatsapp-group-admin-guidelines"),
+              author: {
+                "@type": "Organization",
+                name: "Groupor Editorial Board",
+                url: absoluteUrl("/editorial-policy"),
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Groupor",
+                url: absoluteUrl("/"),
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "How can I prevent spam links in my WhatsApp group?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Enable 'Approve New Members' in Group Settings, restrict 'Edit Group Info' to admins, and pin clear community guidelines in the group description.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "How do I reset my WhatsApp invite link if it gets leaked to spammers?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Tap Group Name > Invite via Link > Reset Link. This permanently invalidates the previous link code so spammers can no longer join.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "What is the maximum member limit for a WhatsApp group in 2026?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Standard WhatsApp groups support up to 1,024 members. For larger audiences, create a WhatsApp Community to connect multiple sub-groups.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: AdminGuidelinesPage,
 });

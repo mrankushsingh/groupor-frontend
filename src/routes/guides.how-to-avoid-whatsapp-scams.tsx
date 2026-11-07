@@ -22,6 +22,78 @@ export const Route = createFileRoute("/guides/how-to-avoid-whatsapp-scams")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/guides/how-to-avoid-whatsapp-scams") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "How to Avoid WhatsApp Scams",
+                  item: absoluteUrl("/guides/how-to-avoid-whatsapp-scams"),
+                },
+              ],
+            },
+            {
+              "@type": "Article",
+              headline: "How to Avoid WhatsApp Scams & Fraudulent Groups",
+              description:
+                "Identify and avoid financial scams, crypto doubling frauds, fake job offers, and phishing attempts operating in public WhatsApp messaging groups.",
+              url: absoluteUrl("/guides/how-to-avoid-whatsapp-scams"),
+              datePublished: "2026-09-20T08:00:00Z",
+              dateModified: "2026-11-01T10:00:00Z",
+              mainEntityOfPage: absoluteUrl("/guides/how-to-avoid-whatsapp-scams"),
+              author: {
+                "@type": "Organization",
+                name: "Groupor Fraud Prevention Desk",
+                url: absoluteUrl("/safety"),
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Groupor",
+                url: absoluteUrl("/"),
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "What are the most common WhatsApp messaging scams?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "The three most common scams are: 1) Crypto & high-yield investment doubling Ponzi schemes, 2) Pay-per-task / fake job hiring scams requiring upfront deposits, and 3) OTP phishing and account impersonation.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "How can I report a fraudulent group link on Groupor?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Click the 'Report this group' button on any group listing page on Groupor. Submissions undergo immediate quarantine screening to prevent other users from being harmed.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "What should I do if an unknown group member sends me private financial offers?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Never send money, click unknown financial links, or share OTPs. Block the sender immediately in WhatsApp and report their contact to WhatsApp and group moderators.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: ScamPreventionGuidePage,
 });

@@ -22,6 +22,78 @@ export const Route = createFileRoute("/guides/whatsapp-community-vs-group")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/guides/whatsapp-community-vs-group") }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "WhatsApp Community vs Group",
+                  item: absoluteUrl("/guides/whatsapp-community-vs-group"),
+                },
+              ],
+            },
+            {
+              "@type": "Article",
+              headline: "WhatsApp Community vs WhatsApp Group: Key Differences Explained",
+              description:
+                "Detailed breakdown comparing WhatsApp Communities, Sub-groups, and Announcement Channels. Learn member limits, privacy features, and admin controls.",
+              url: absoluteUrl("/guides/whatsapp-community-vs-group"),
+              datePublished: "2026-09-18T08:00:00Z",
+              dateModified: "2026-11-01T10:00:00Z",
+              mainEntityOfPage: absoluteUrl("/guides/whatsapp-community-vs-group"),
+              author: {
+                "@type": "Organization",
+                name: "Groupor Technical Editorial Team",
+                url: absoluteUrl("/about"),
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Groupor",
+                url: absoluteUrl("/"),
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "How many members can join a WhatsApp Community?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "A WhatsApp Community can link up to 100 sub-groups with an Announcement Channel that can reach up to 5,000+ total members.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "Can members see each other's phone numbers in a WhatsApp Community Announcement Channel?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "No. In the main Community Announcement Group, phone numbers are masked and hidden from other regular members, visible only to community administrators.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "What is the difference between a sub-group and an announcement channel?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "An announcement channel allows broadcast messages only from admins to all community participants. Sub-groups allow bidirectional discussion among members on specific topics.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: CommunityVsGroupGuidePage,
 });
