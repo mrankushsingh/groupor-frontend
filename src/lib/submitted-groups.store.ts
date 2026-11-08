@@ -8,6 +8,7 @@ import { isAdultContent, isIllegalContent } from "@/lib/moderation";
 type Store = { groups: Group[] };
 
 const STORE_PATH = path.join(process.cwd(), "data", "submitted-groups.json");
+const TMP_STORE_PATH = path.join("/tmp", "submitted-groups.json");
 
 let cache: Store | null = null;
 
@@ -20,7 +21,15 @@ async function readStore(): Promise<Store> {
       groups: Array.isArray(parsed?.groups) ? (parsed.groups as Group[]) : [],
     };
   } catch {
-    cache = { groups: [] };
+    try {
+      const rawTmp = await readFile(TMP_STORE_PATH, "utf8");
+      const parsedTmp = JSON.parse(rawTmp) as Store;
+      cache = {
+        groups: Array.isArray(parsedTmp?.groups) ? (parsedTmp.groups as Group[]) : [],
+      };
+    } catch {
+      cache = { groups: [] };
+    }
   }
   return cache;
 }
@@ -30,8 +39,13 @@ async function writeStore(store: Store) {
   try {
     await mkdir(path.dirname(STORE_PATH), { recursive: true });
     await writeFile(STORE_PATH, JSON.stringify(store, null, 2), "utf8");
-  } catch (error) {
-    console.error("[submitted-groups] failed to persist store", error);
+  } catch {
+    try {
+      await mkdir(path.dirname(TMP_STORE_PATH), { recursive: true });
+      await writeFile(TMP_STORE_PATH, JSON.stringify(store, null, 2), "utf8");
+    } catch (tmpErr) {
+      console.warn("[submitted-groups] fallback tmp write failed", tmpErr);
+    }
   }
 }
 
